@@ -1,0 +1,658 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="ja" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.120.2">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/ai-robot/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/ai-robot/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-192x192.png" sizes="192x192">
+
+<title>ROS2による画像処理 | 中部大学AIロボティクス学科</title>
+<meta name="description" content="画像処理プログラミングの方法について学びます．">
+<meta property="og:title" content="ROS2による画像処理" />
+<meta property="og:description" content="画像処理プログラミングの方法について学びます．" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/yege236/" /><meta property="article:section" content="ros" />
+
+<meta property="og:site_name" content="Goldydocs2" />
+
+<meta itemprop="name" content="ROS2による画像処理">
+<meta itemprop="description" content="画像処理プログラミングの方法について学びます．">
+
+<meta itemprop="wordCount" content="815">
+<meta itemprop="keywords" content="インストール,画像処理,python," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ROS2による画像処理"/>
+<meta name="twitter:description" content="画像処理プログラミングの方法について学びます．"/>
+
+
+
+
+<link rel="preload" href="/ai-robot/scss/main.min.62ea14fa9166ac179c866e06e1ad3975aebe925c9a1168b02db611ca55de8c87.css" as="style">
+<link href="/ai-robot/scss/main.min.62ea14fa9166ac179c866e06e1ad3975aebe925c9a1168b02db611ca55de8c87.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+  crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VD6HCF8XZQ"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-VD6HCF8XZQ');
+}
+</script>
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar navbar-dark js-navbar-scroll">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/ai-robot/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">中部大学AIロボティクス学科</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/robotics/"><span>ロボティクス演習</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/project/"><span>プロジェクト演習</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/ai-robot/ros/"><span>ロボットオペレーティングシステム</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/laboratory/"><span>ロボティクスラボ</span></a>
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-ai-robotros-li">
+  <a href="/ai-robot/ros/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-ai-robotros"><span class="">ロボットオペレーティングシステム</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsneagc43-li">
+  <a href="/ai-robot/ps/neagc43/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsneagc43"><span class="">シミュレータstageのセットアップ</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsa22gy2p-li">
+  <a href="/ai-robot/ps/a22gy2p/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsa22gy2p"><span class="">launchによる複数のノードの起動</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps8wr5qh7-li">
+  <a href="/ai-robot/ps/8wr5qh7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps8wr5qh7"><span class="">トピック通信の復習</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-ai-robotpsyege236-li">
+  <a href="/ai-robot/ps/yege236/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsyege236"><span class="td-sidebar-nav-active-item">ROS2による画像処理</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsa2g5oo6-li">
+  <a href="/ai-robot/ps/a2g5oo6/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsa2g5oo6"><span class="">マーカー認識</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsjhg2r34-li">
+  <a href="/ai-robot/ps/jhg2r34/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsjhg2r34"><span class="">特定画像認識</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps893w2au-li">
+  <a href="/ai-robot/ps/893w2au/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps893w2au"><span class="">地図の作成とナビゲーション</span></a>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            
+<div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+<a id="print" href="https://cu-milab.github.io/ai-robot/ros/_print/"><i class="fa-solid fa-print fa-fw"></i> セクション全体を印刷</a>
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#目的">目的</a></li>
+    <li><a href="#インストール手順">インストール手順</a></li>
+    <li><a href="#起動と画像の表示">起動と画像の表示</a></li>
+    <li><a href="#画像処理プログラミング">画像処理プログラミング</a></li>
+    <li><a href="#プログラムの内容">プログラムの内容</a></li>
+  </ul>
+</nav>
+      </div>
+    
+            <div class="taxonomy taxonomy-terms-cloud taxo-tags">
+      <h5 class="taxonomy-title">Tag Cloud</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/launch/" data-taxonomy-term="launch"><span class="taxonomy-label">launch</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/stage/" data-taxonomy-term="stage"><span class="taxonomy-label">stage</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/turtlebot3/" data-taxonomy-term="turtlebot3"><span class="taxonomy-label">Turtlebot3</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1/" data-taxonomy-term="%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1"><span class="taxonomy-label">トピック通信</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3/" data-taxonomy-term="%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"><span class="taxonomy-label">ナビゲーション</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86/" data-taxonomy-term="%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86"><span class="taxonomy-label">画像処理</span><span class="taxonomy-count">3</span></a></li>
+        </ul>
+    </div>
+  <div class="taxonomy taxonomy-terms-cloud taxo-categories">
+      <h5 class="taxonomy-title">Categories</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92"><span class="taxonomy-label">プロジェクト演習</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0"><span class="taxonomy-label">ロボットオペレーティングシステム</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C"><span class="taxonomy-label">ロボティクスラボ</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92"><span class="taxonomy-label">ロボティクス演習</span><span class="taxonomy-count">5</span></a></li>
+        </ul>
+    </div>
+  
+	
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="https://cu-milab.github.io/ai-robot/ros/">ロボットオペレーティングシステム</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    ROS2による画像処理</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>ROS2による画像処理</h1>
+	<div class="lead">画像処理プログラミングの方法について学びます．</div>
+	<header class="article-meta">
+		<div class="taxonomy taxonomy-terms-article taxo-tags">
+  <h5 class="taxonomy-title">Tags:</h5>
+  <ul class="taxonomy-terms">
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span></a></li>
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86/" data-taxonomy-term="%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86"><span class="taxonomy-label">画像処理</span></a></li>
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span></a></li>
+    </ul>
+</div>
+<div class="taxonomy taxonomy-terms-article taxo-categories">
+  <h5 class="taxonomy-title">Categories:</h5>
+  <ul class="taxonomy-terms">
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0"><span class="taxonomy-label">ロボットオペレーティングシステム</span></a></li>
+    </ul>
+</div>
+
+  </header>
+	<h2 id="目的">目的</h2>
+<p>ロボットの自律移動に必要な外界の情報を獲得するために様々なセンサが搭載されています．
+多くのロボットに搭載されるセンサの1つとしてカメラがあります．
+講義の冒頭ではスライドを用いてディジタル画像処理について学び，
+後半では画像処理プログラミングの方法について学びます．</p>
+<h2 id="インストール手順">インストール手順</h2>
+<p>ROS2にてカメラを使うためにパッケージをインストールします．
+ノートPCに搭載されたカメラやUSBカメラを使うようにするためのパッケージは幾つかありますが，
+今回は<code>usb_cam</code>パッケージを利用します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-v4l2-camera
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="起動と画像の表示">起動と画像の表示</h2>
+<p>インストールした<code>usb_cam</code>パッケージを実行してみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run v4l2_camera v4l2_camera_node
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+<div class="alert alert-primary" role="alert">
+
+
+    カメラキャリブレーションのファイルがないというERRORが表示されますが，カメラから画像を取得するだけであれば問題ありません．
+
+</div>
+
+<p>これでROS2で画像トピックを扱えるようになります．
+コマンドラインツールでどんなトピックが配信されているか確認しましょう．</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/camera_info
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/image_raw
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/image_raw/compressed
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/image_raw/compressedDepth
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/image_raw/theora
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/parameter_events
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/rosout
+</span></span></span></code></pre></div><p>複数のトピックが配信されていることがわかりますが，画像トピックは<code>/image_raw</code>です．
+画像トピックのメッセージ型を調べてみましょう．</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic <span style="color:#204a87">type</span> /image_raw
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">sensor_msgs/msg/Image
+</span></span></span></code></pre></div><p>トピック<code>/image_raw</code>のメッセージ型は<code>sensor_msgs/msg/Image</code>であることが確認できました．
+メッセージ型<code>sensor_msgs/msg/Image</code>でどんなデータが配信されているか調べます．</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 interface show sensor_msgs/msg/Image
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> This message contains an uncompressed image
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> <span style="color:#ce5c00;font-weight:bold">(</span>0, 0<span style="color:#ce5c00;font-weight:bold">)</span> is at top-left corner of image
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">std_msgs/Header header # Header timestamp should be acquisition time of image
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	builtin_interfaces/Time stamp
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		int32 sec
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		uint32 nanosec
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	string frame_id
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                             # Header frame_id should be optical frame of camera
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                             # origin of frame should be optical center of cameara
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                             # +x should point to the right in the image
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                             # +y should point down in the image
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                             # +z should point into to plane of the image
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                             # If the frame_id here and the frame_id of the CameraInfo
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                             # message associated with the image conflict
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                             # the behavior is undefined
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">uint32 height                # image height, that is, number of rows
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">uint32 width                 # image width, that is, number of columns
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902">#</span> The legal values <span style="color:#204a87;font-weight:bold">for</span> encoding are in file src/image_encodings.cpp
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> If you want to standardize a new string format, join
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> ros-users@lists.ros.org and send an email proposing a new encoding.
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">string encoding       # Encoding of pixels -- channel meaning, ordering, size
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                      # taken from the list of strings in include/sensor_msgs/image_encodings.hpp
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">uint8 is_bigendian    # is this data bigendian?
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">uint32 step           # Full row length in bytes
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">uint8[] data          # actual matrix data, size is (step * rows)
+</span></span></span></code></pre></div><p>出力された情報が多いので分かりにくいですが，画像の縦方向の大きさが<code>height</code>，
+横方向の大きさが<code>width</code>，画像フォーマットは<code>encoding</code>，画像データは<code>width</code>にて配信されます．
+最後に<code>topic echo</code>コマンドで画像データを購読します．</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">eader:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  stamp:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    sec: 1710914261
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    nanosec: 466276747
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  frame_id: camera
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">height: 480
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">width: 640
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">encoding: rgb8
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">is_bigendian: 0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">step: 1920
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">data:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 105
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 106
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 101
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 105
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 106
+</span></span></span></code></pre></div><p>表示される情報が多いので，上記は出力の大半を省略しています．
+上記からカメラから得られた画像の大きさは，480x640画素，画像フォーマットはrgb8であることがわかります．
+rgb8とは，画像の1画像を赤，緑，青，各色8ビット(2の8乗=256色)で表現していることを表します．
+各画素の色情報を<code>data</code>で表現していますが，画素が多いためターミナルで表示するには限界があります．
+そこで，ビューアーを利用して画像を表示しましょう．
+画像を表示する方法は幾つかありますが，今回はrqtを用いた画像ビューアーを用いて確認します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run rqt_image_view rqt_image_view 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>画面左上に画像トピックを選ぶことができますので，<code>image_raw</code>を選択して画像が表示できるか確認してください．</p>
+<p>ここまでの内容で画像がトピック通信により配信されていることが確認できました．
+プログラムにより画像トピックを購読し，その情報を元にプログラミングすれば，画像処理を用いた走行が可能となります．
+ただし，購読したトピックはメッセージ型のフォーマットとなるため，
+一般的には画像処理ライブラリOpenCVで扱いやすいCV:Mat型に変換します．
+変換時に使用されるのがcv_bridgeと呼ばれるライブラリです．</p>
+<h2 id="画像処理プログラミング">画像処理プログラミング</h2>
+<p>配信されている画像トピックをプログラムで購読し，簡単な画像処理をしてみましょう．
+今回は取得した画像の色を情報を表示するプログラムを作成します．</p>
+<p>これまでに学んだ方法にてワークスペースとパッケージを作成し，
+下記のサンプルプログラムを入力してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">rclpy</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">cv2</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">rclpy.node</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Node</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">cv_bridge</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">CvBridge</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">CvBridgeError</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">sensor_msgs.msg</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Image</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">ColorChecker</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Node</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">WIDTH</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">50</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">HEIGHT</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">50</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">super</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;color_checker_node&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">image_sub</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">create_subscription</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Image</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;/image_raw&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">image_callback</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">bridge</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">CvBridge</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">image_callback</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">data</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">try</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">color_image</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">bridge</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">imgmsg_to_cv2</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;bgr8&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">except</span> <span style="color:#000">CvBridgeError</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">e</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">get_logger</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">info</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">e</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">h</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">w</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">c</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">color_image</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shape</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">x1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">w</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WIDTH</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">x2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">w</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WIDTH</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">y1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">h</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">HEIGHT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">y2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">h</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">HEIGHT</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">r</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">g</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#204a87">range</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y2</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">j</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#204a87">range</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">x2</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">color_image</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">j</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000">g</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">g</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">color_image</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">j</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000">r</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">r</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">color_image</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">j</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">ave_r</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">r</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WIDTH</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">HEIGHT</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">ave_g</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">g</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WIDTH</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">HEIGHT</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">ave_b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WIDTH</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">HEIGHT</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">cv2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">rectangle</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">color_image</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">x1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y1</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">x2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y2</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">255</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">255</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">255</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">get_logger</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">info</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">f</span><span style="color:#4e9a06">&#39;r:</span><span style="color:#4e9a06">{</span><span style="color:#000">ave_r</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">, g:</span><span style="color:#4e9a06">{</span><span style="color:#000">ave_g</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">, b:</span><span style="color:#4e9a06">{</span><span style="color:#000">ave_b</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">cv2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">imshow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Origin Image&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">color_image</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">cv2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">waitKey</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">None</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">init</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ColorChecker</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">spin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">node</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">cv2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">destroyAllWindows</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">destroy_node</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shutdown</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">__name__</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;__main__&#39;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ビルドして実行すると下記のようなウィンドウが表示されます．
+画像の中央に白色の正方形が表示され，この正方形内の画素値の平均をターミナルで出力しています．
+1枚目の画像は赤色に印刷さた用紙に白色の矩形が表示され，
+ターミナルの出力は，おおよそr(赤)が185，g(緑)が82，b(青)が101が出力されています．
+赤色の成分が強く出力されているのが確認できました．
+2枚目の画像は紫色に印刷された領域に白色の矩形が表示され，
+ターミナルの出力からは先ほどの結果よりrが小さくなり，bが強くなっています．</p>
+<p><img src="color_checker2.png#center" alt="実行結果1">
+<img src="color_checker1.png#center" alt="実行結果1"></p>
+<h2 id="プログラムの内容">プログラムの内容</h2>
+<p>プログラムの内容を確認しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">rclpy</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">cv2</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">rclpy.node</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Node</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">cv_bridge</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">CvBridge</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">CvBridgeError</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">sensor_msgs.msg</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Image</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>必要なモジュールを読み込んでいます．
+OpenCVを使用する場合にはcv2の他に，ROSのデータからOpenCVで扱えるデータ形式に変換する必要があるためCvBridgeを読み込む必要があります．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">ColorChecker</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Node</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">WIDTH</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">50</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">HEIGHT</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">50</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ColorCheckerというクラスを定義しています．
+また，クラス変数としてWIDTHとHEIGHTを宣言し，それぞれに値を代入しています．
+これら2つの変数は注目する領域の大きさを表しています．実際には，(WIDTHx2)x(HEIGHTx2)の画素数となるので注意してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">super</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;color_checker_node&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">image_sub</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">create_subscription</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Image</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;/image_raw&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">image_callback</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">bridge</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">CvBridge</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>__init__</code>関数内でトピック<code>/image_raw</code>を購読した際のコールバック関数を定義しています．
+また，メッセージ型として購読される画像をCV:Mat型に変換するためにCvBridgeを使用する準備をしています．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">image_callback</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">data</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">try</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">color_image</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">bridge</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">imgmsg_to_cv2</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;bgr8&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">except</span> <span style="color:#000">CvBridgeError</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">e</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">get_logger</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">info</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">e</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>画像を購読すると<code>image_callback</code>関数が実行されます．
+メッセージ型として購読される画像(<code>data</code>)をCvBridgeの<code>imgmsg_to_cv2</code>によりCV:Mat型に変換して<code>color_image</code>に代入しています．
+imgmsg_to_cv2の第2引数で変換する画像フォーマットを指定できます．
+今回はCV:Mat型に対応するために<code>&quot;bgr8&quot;</code>にしています．
+<code>data</code>では色の並び順がRGB(赤緑青)ですが，BGR(青緑赤)の順番になることに注意してください．
+<code>rgb8</code>も用意されていますが，後述する画像の表示にはopencvで用意されている関数を使用しており，
+色がBGRの順に並んでいることを想定しているため，画像を表示すると赤と青が入れ替わってしまいます．
+それを防ぐためにも<code>&quot;bgr8&quot;</code>を指定してプログラムで並び順に対応します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>        <span style="color:#000">h</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">w</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">c</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">color_image</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shape</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">x1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">w</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WIDTH</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">x2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">w</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WIDTH</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">y1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">h</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">HEIGHT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">y2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">h</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">HEIGHT</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>画像データから画像の縦方向の大きさ，横方向の大きさ，チャンネル数(RGBの3色)を読み取り変数に代入しています．
+また，注目領域の左上の座標(x1,y1)と右下の座標(x2,y2)を計算しています．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>        <span style="color:#000">r</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">g</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#204a87">range</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y2</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">j</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#204a87">range</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">x2</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">color_image</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">j</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000">g</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">g</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">color_image</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">j</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000">r</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">r</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">color_image</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">j</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>3次元配列で表現されている画像データ<code>color_image</code>の注目領域の画素にアクセスし，それぞれの画素値をr，g，bに足し込んでいます．
+先述した通り，画像の色がBGRの順番に並んでいることに注意してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>        <span style="color:#000">ave_r</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">r</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WIDTH</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">HEIGHT</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">ave_g</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">g</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WIDTH</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">HEIGHT</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">ave_b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WIDTH</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">HEIGHT</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>各色の平均値を計算するために，注目領域の画素数(矩形の面積)で割っています．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>        <span style="color:#000">cv2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">rectangle</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">color_image</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">x1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y1</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">x2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y2</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">255</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">255</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">255</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">get_logger</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">info</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">f</span><span style="color:#4e9a06">&#39;r:</span><span style="color:#4e9a06">{</span><span style="color:#000">ave_r</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">, g:</span><span style="color:#4e9a06">{</span><span style="color:#000">ave_g</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">, b:</span><span style="color:#4e9a06">{</span><span style="color:#000">ave_b</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">cv2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">imshow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Origin Image&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">color_image</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">cv2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">waitKey</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>rectangle</code>関数により注目領域を矩形で描画しています．
+第4引数の数値を変えることで色を操作できます．
+計算した各色の平均値をターミナルに出力しています．
+41行目では<code>imshow</code>関数を用いて画像を表示しています．
+42行目の<code>waitkey</code>関数は，画像を表示するウィンドウからキーボード入力を受け付ける関数です．
+引数は，受け付けの待ち時間[msec]です．
+指定した時間だけウィンドウに画像を表示することができます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">None</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">init</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ColorChecker</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">spin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">node</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">cv2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">destroyAllWindows</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">destroy_node</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shutdown</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">__name__</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;__main__&#39;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>main関数は以前と同じ内容ですので省略します．</p>
+
+	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+      </div>
+      <div class="col-6 col-sm-4 text-end text-xs-center order-sm-3">
+        
+      </div>
+      <div class="td-footer__copyright-etc col-12 col-sm-4 text-center py-2 order-sm-2">
+        <span>&copy; 2024 中部大学理工学部AIロボティクス学科 All Rights Reserved</span>
+        
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <script src="/ai-robot/js/main.min.f144e2c5ca4a17d62d06a21473c0b37ce1b36a5f7b700fea1760dc6d55f33bf1.js" integrity="sha256-8UTixcpKF9YtBqIUc8CzfOGzal97cA/qF2DcbVXzO/E=" crossorigin="anonymous"></script>
+<script defer src="/ai-robot/js/click-to-copy.min.f724d3de49218995223b7316aa2e53e2b34bf42026bf399ebb21bb02212402d1.js" integrity="sha256-9yTT3kkhiZUiO3MWqi5T4rNL9CAmvzmeuyG7AiEkAtE=" crossorigin="anonymous"></script>
+<script src='/ai-robot/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>中部大学AIロボティクス学科 – プロジェクト演習</title>
+    <link>https://cu-milab.github.io/ai-robot/project/</link>
+    <description>Recent content in プロジェクト演習 on 中部大学AIロボティクス学科</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    
+	  <atom:link href="https://cu-milab.github.io/ai-robot/project/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+  </channel>
+</rss>

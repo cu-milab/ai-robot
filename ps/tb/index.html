@@ -1,0 +1,461 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="ja" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.120.2">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/ai-robot/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/ai-robot/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-192x192.png" sizes="192x192">
+
+<title>メモ | 中部大学AIロボティクス学科</title>
+<meta name="description" content="tb3管理表 https://docs.google.com/spreadsheets/d/1Dsn0B4qgr0d_l07FCjJ3_7MTArnQmQWde6SJHWU4wHE/edit#gid=0
+turtlebot3のセットアップ turtlebotのマニュアルを参考に進める．
+https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
+SDカードにubuntuをインストール turtlebotに搭載されているRaspberry Piのバージョンは，4 Model B． 下記よりRaspberry Pi Imagerをダウンロードし，Ubuntuをインストール
+https://www.raspberrypi.com/software/
+Raspberry Pi Imagerを起動． OSを選択 =&amp;gt; Other gerneral-purpose OS =&amp;gt; Ubuntu =&amp;gt; Ubuntu Server 22.04.3 LTS(64bit) ストレージの選択 =&amp;gt; SDカード カスタマイズ =&amp;gt; 設定を編集する =&amp;gt; 一般 ホスト名：tb01(数字はシールと同じ) ユーザー名：ros パスワード：ros WiFi (/etc/netplan/50-cloud-init.yamlで後から変更可能) SSID：robolabB1 (適宜変更) パスワード：roboticslab wifiを使う国：JP ロケール設定をする タイムゾーン：Asia/Tokyo キーボードレイアウト：jp カスタマイズ =&amp;gt; 設定を編集する =&amp;gt; サービス SSHを有効にする パスワード認証を使う 書き込み 設定変更 ubuntu自動更新の無効化 /etc/apt/apt.conf.d/20auto-upgradesを開き，下記のように編集 APT::Periodic::Update-Package-Lists &amp;#34;0&amp;#34;; APT::Periodic::Unattended-Upgrade &amp;#34;0&amp;#34;; ネットワーク接続関係 初期設定では，ネットワークに接続するまで待機するため無効化する． $ systemctl mask systemd-networkd-wait-online.service サスペンドとスリープの無効化 $ sudo systemctl mask sleep.">
+<meta property="og:title" content="メモ" />
+<meta property="og:description" content="tb3管理表 https://docs.google.com/spreadsheets/d/1Dsn0B4qgr0d_l07FCjJ3_7MTArnQmQWde6SJHWU4wHE/edit#gid=0
+turtlebot3のセットアップ turtlebotのマニュアルを参考に進める．
+https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
+SDカードにubuntuをインストール turtlebotに搭載されているRaspberry Piのバージョンは，4 Model B． 下記よりRaspberry Pi Imagerをダウンロードし，Ubuntuをインストール
+https://www.raspberrypi.com/software/
+Raspberry Pi Imagerを起動． OSを選択 =&gt; Other gerneral-purpose OS =&gt; Ubuntu =&gt; Ubuntu Server 22.04.3 LTS(64bit) ストレージの選択 =&gt; SDカード カスタマイズ =&gt; 設定を編集する =&gt; 一般 ホスト名：tb01(数字はシールと同じ) ユーザー名：ros パスワード：ros WiFi (/etc/netplan/50-cloud-init.yamlで後から変更可能) SSID：robolabB1 (適宜変更) パスワード：roboticslab wifiを使う国：JP ロケール設定をする タイムゾーン：Asia/Tokyo キーボードレイアウト：jp カスタマイズ =&gt; 設定を編集する =&gt; サービス SSHを有効にする パスワード認証を使う 書き込み 設定変更 ubuntu自動更新の無効化 /etc/apt/apt.conf.d/20auto-upgradesを開き，下記のように編集 APT::Periodic::Update-Package-Lists &#34;0&#34;; APT::Periodic::Unattended-Upgrade &#34;0&#34;; ネットワーク接続関係 初期設定では，ネットワークに接続するまで待機するため無効化する． $ systemctl mask systemd-networkd-wait-online.service サスペンドとスリープの無効化 $ sudo systemctl mask sleep." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/tb/" /><meta property="article:section" content="" />
+
+<meta property="article:modified_time" content="2024-03-26T13:13:22+09:00" /><meta property="og:site_name" content="Goldydocs2" />
+
+<meta itemprop="name" content="メモ">
+<meta itemprop="description" content="tb3管理表 https://docs.google.com/spreadsheets/d/1Dsn0B4qgr0d_l07FCjJ3_7MTArnQmQWde6SJHWU4wHE/edit#gid=0
+turtlebot3のセットアップ turtlebotのマニュアルを参考に進める．
+https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
+SDカードにubuntuをインストール turtlebotに搭載されているRaspberry Piのバージョンは，4 Model B． 下記よりRaspberry Pi Imagerをダウンロードし，Ubuntuをインストール
+https://www.raspberrypi.com/software/
+Raspberry Pi Imagerを起動． OSを選択 =&gt; Other gerneral-purpose OS =&gt; Ubuntu =&gt; Ubuntu Server 22.04.3 LTS(64bit) ストレージの選択 =&gt; SDカード カスタマイズ =&gt; 設定を編集する =&gt; 一般 ホスト名：tb01(数字はシールと同じ) ユーザー名：ros パスワード：ros WiFi (/etc/netplan/50-cloud-init.yamlで後から変更可能) SSID：robolabB1 (適宜変更) パスワード：roboticslab wifiを使う国：JP ロケール設定をする タイムゾーン：Asia/Tokyo キーボードレイアウト：jp カスタマイズ =&gt; 設定を編集する =&gt; サービス SSHを有効にする パスワード認証を使う 書き込み 設定変更 ubuntu自動更新の無効化 /etc/apt/apt.conf.d/20auto-upgradesを開き，下記のように編集 APT::Periodic::Update-Package-Lists &#34;0&#34;; APT::Periodic::Unattended-Upgrade &#34;0&#34;; ネットワーク接続関係 初期設定では，ネットワークに接続するまで待機するため無効化する． $ systemctl mask systemd-networkd-wait-online.service サスペンドとスリープの無効化 $ sudo systemctl mask sleep.">
+<meta itemprop="dateModified" content="2024-03-26T13:13:22+09:00" />
+<meta itemprop="wordCount" content="302">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="メモ"/>
+<meta name="twitter:description" content="tb3管理表 https://docs.google.com/spreadsheets/d/1Dsn0B4qgr0d_l07FCjJ3_7MTArnQmQWde6SJHWU4wHE/edit#gid=0
+turtlebot3のセットアップ turtlebotのマニュアルを参考に進める．
+https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
+SDカードにubuntuをインストール turtlebotに搭載されているRaspberry Piのバージョンは，4 Model B． 下記よりRaspberry Pi Imagerをダウンロードし，Ubuntuをインストール
+https://www.raspberrypi.com/software/
+Raspberry Pi Imagerを起動． OSを選択 =&gt; Other gerneral-purpose OS =&gt; Ubuntu =&gt; Ubuntu Server 22.04.3 LTS(64bit) ストレージの選択 =&gt; SDカード カスタマイズ =&gt; 設定を編集する =&gt; 一般 ホスト名：tb01(数字はシールと同じ) ユーザー名：ros パスワード：ros WiFi (/etc/netplan/50-cloud-init.yamlで後から変更可能) SSID：robolabB1 (適宜変更) パスワード：roboticslab wifiを使う国：JP ロケール設定をする タイムゾーン：Asia/Tokyo キーボードレイアウト：jp カスタマイズ =&gt; 設定を編集する =&gt; サービス SSHを有効にする パスワード認証を使う 書き込み 設定変更 ubuntu自動更新の無効化 /etc/apt/apt.conf.d/20auto-upgradesを開き，下記のように編集 APT::Periodic::Update-Package-Lists &#34;0&#34;; APT::Periodic::Unattended-Upgrade &#34;0&#34;; ネットワーク接続関係 初期設定では，ネットワークに接続するまで待機するため無効化する． $ systemctl mask systemd-networkd-wait-online.service サスペンドとスリープの無効化 $ sudo systemctl mask sleep."/>
+
+
+
+
+<link rel="preload" href="/ai-robot/scss/main.min.62ea14fa9166ac179c866e06e1ad3975aebe925c9a1168b02db611ca55de8c87.css" as="style">
+<link href="/ai-robot/scss/main.min.62ea14fa9166ac179c866e06e1ad3975aebe925c9a1168b02db611ca55de8c87.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+  crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VD6HCF8XZQ"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-VD6HCF8XZQ');
+}
+</script>
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar navbar-dark js-navbar-scroll">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/ai-robot/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">中部大学AIロボティクス学科</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/robotics/"><span>ロボティクス演習</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/project/"><span>プロジェクト演習</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/ros/"><span>ロボットオペレーティングシステム</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/laboratory/"><span>ロボティクスラボ</span></a>
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-ai-robot-li">
+  <a href="/ai-robot/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-ai-robot"><span class="">中部大学AIロボティクス学科</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-ai-robotpstb-li">
+  <a href="/ai-robot/ps/tb/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-ai-robotpstb"><span class="td-sidebar-nav-active-item">メモ</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotsearch-li">
+  <a href="/ai-robot/search/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotsearch"><span class="">Search Results</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-ai-robotproject-li">
+  <a href="/ai-robot/project/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-ai-robotproject"><span class="">プロジェクト演習</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps8w6awa1-li">
+  <a href="/ai-robot/ps/8w6awa1/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps8w6awa1"><span class="">Turtlebot3を扱うためのルール</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsuwfa8i5-li">
+  <a href="/ai-robot/ps/uwfa8i5/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsuwfa8i5"><span class="">Turtlebot3の動作確認</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsc8x5n64-li">
+  <a href="/ai-robot/ps/c8x5n64/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsc8x5n64"><span class="">Turtlebot3の制御</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps13yonaq-li">
+  <a href="/ai-robot/ps/13yonaq/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps13yonaq"><span class="">最終課題</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-ai-robotros-li">
+  <a href="/ai-robot/ros/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-ai-robotros"><span class="">ロボットオペレーティングシステム</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsneagc43-li">
+  <a href="/ai-robot/ps/neagc43/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsneagc43"><span class="">シミュレータstageのセットアップ</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsa22gy2p-li">
+  <a href="/ai-robot/ps/a22gy2p/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsa22gy2p"><span class="">launchによる複数のノードの起動</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps8wr5qh7-li">
+  <a href="/ai-robot/ps/8wr5qh7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps8wr5qh7"><span class="">トピック通信の復習</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsyege236-li">
+  <a href="/ai-robot/ps/yege236/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsyege236"><span class="">ROS2による画像処理</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsa2g5oo6-li">
+  <a href="/ai-robot/ps/a2g5oo6/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsa2g5oo6"><span class="">マーカー認識</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsjhg2r34-li">
+  <a href="/ai-robot/ps/jhg2r34/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsjhg2r34"><span class="">特定画像認識</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps893w2au-li">
+  <a href="/ai-robot/ps/893w2au/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps893w2au"><span class="">地図の作成とナビゲーション</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotlaboratory-li">
+  <a href="/ai-robot/laboratory/" title="ロボティクスラボについて" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotlaboratory"><span class="">ロボティクスラボ</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-ai-robotrobotics-li">
+  <a href="/ai-robot/robotics/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-ai-robotrobotics"><span class="">ロボティクス演習</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpswe1emyp-li">
+  <a href="/ai-robot/ps/we1emyp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpswe1emyp"><span class="">ROS2のインストール</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsabc1234-li">
+  <a href="/ai-robot/ps/abc1234/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsabc1234"><span class="">トピック通信の理解</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps587etb0-li">
+  <a href="/ai-robot/ps/587etb0/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps587etb0"><span class="">ワークスペースとパッケージの作成</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpstbaet4s-li">
+  <a href="/ai-robot/ps/tbaet4s/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpstbaet4s"><span class="">トピック通信の実装</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            
+<div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tb3管理表">tb3管理表</a></li>
+    <li><a href="#turtlebot3のセットアップ">turtlebot3のセットアップ</a>
+      <ul>
+        <li><a href="#sdカードにubuntuをインストール">SDカードにubuntuをインストール</a></li>
+      </ul>
+    </li>
+    <li><a href="#設定変更">設定変更</a></li>
+    <li><a href="#ソフトウェアインストール">ソフトウェアインストール</a></li>
+    <li><a href="#無線lanの設定変更">無線LANの設定変更</a></li>
+    <li><a href="#sdカードのコピー">SDカードのコピー</a></li>
+    <li><a href="#コピーしたsdカードの設定">コピーしたSDカードの設定</a>
+      <ul>
+        <li><a href="#hostnameの設定">hostnameの設定</a></li>
+        <li><a href="#ros_domain_idの設定">ROS_DOMAIN_IDの設定</a></li>
+        <li><a href="#無線lanの設定">無線LANの設定</a></li>
+      </ul>
+    </li>
+    <li><a href="#バッテリー管理">バッテリー管理</a>
+      <ul>
+        <li><a href="#バッテリーの基本情報">バッテリーの基本情報</a></li>
+        <li><a href="#バッテリーに関しての注意事項">バッテリーに関しての注意事項</a></li>
+        <li><a href="#バッテリーの寿命">バッテリーの寿命</a></li>
+        <li><a href="#低電圧バッテリーの復旧">低電圧バッテリーの復旧</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    
+            <div class="taxonomy taxonomy-terms-cloud taxo-tags">
+      <h5 class="taxonomy-title">Tag Cloud</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/launch/" data-taxonomy-term="launch"><span class="taxonomy-label">launch</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/stage/" data-taxonomy-term="stage"><span class="taxonomy-label">stage</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/turtlebot3/" data-taxonomy-term="turtlebot3"><span class="taxonomy-label">Turtlebot3</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1/" data-taxonomy-term="%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1"><span class="taxonomy-label">トピック通信</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3/" data-taxonomy-term="%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"><span class="taxonomy-label">ナビゲーション</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86/" data-taxonomy-term="%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86"><span class="taxonomy-label">画像処理</span><span class="taxonomy-count">3</span></a></li>
+        </ul>
+    </div>
+  <div class="taxonomy taxonomy-terms-cloud taxo-categories">
+      <h5 class="taxonomy-title">Categories</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92"><span class="taxonomy-label">プロジェクト演習</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0"><span class="taxonomy-label">ロボットオペレーティングシステム</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C"><span class="taxonomy-label">ロボティクスラボ</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92"><span class="taxonomy-label">ロボティクス演習</span><span class="taxonomy-count">5</span></a></li>
+        </ul>
+    </div>
+  
+	
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="td-breadcrumbs td-breadcrumbs__single">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item active" aria-current="page">
+    メモ</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>メモ</h1>
+	
+	<header class="article-meta">
+		
+  </header>
+	<h2 id="tb3管理表">tb3管理表</h2>
+<p><a href="https://docs.google.com/spreadsheets/d/1Dsn0B4qgr0d_l07FCjJ3_7MTArnQmQWde6SJHWU4wHE/edit#gid=0">https://docs.google.com/spreadsheets/d/1Dsn0B4qgr0d_l07FCjJ3_7MTArnQmQWde6SJHWU4wHE/edit#gid=0</a></p>
+<h2 id="turtlebot3のセットアップ">turtlebot3のセットアップ</h2>
+<p>turtlebotのマニュアルを参考に進める．</p>
+<p><a href="https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup">https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup</a></p>
+<h3 id="sdカードにubuntuをインストール">SDカードにubuntuをインストール</h3>
+<p>turtlebotに搭載されているRaspberry Piのバージョンは，4 Model B．
+下記よりRaspberry Pi Imagerをダウンロードし，Ubuntuをインストール</p>
+<p><a href="https://www.raspberrypi.com/software/">https://www.raspberrypi.com/software/</a></p>
+<ol>
+<li>Raspberry Pi Imagerを起動．</li>
+<li>OSを選択 =&gt; Other gerneral-purpose OS =&gt; Ubuntu =&gt; Ubuntu Server 22.04.3 LTS(64bit)</li>
+<li>ストレージの選択 =&gt; SDカード</li>
+<li>カスタマイズ =&gt; 設定を編集する =&gt; 一般
+<ul>
+<li>ホスト名：tb01(数字はシールと同じ)</li>
+<li>ユーザー名：ros</li>
+<li>パスワード：ros</li>
+<li>WiFi (/etc/netplan/50-cloud-init.yamlで後から変更可能)
+<ul>
+<li>SSID：robolabB1 (適宜変更)</li>
+<li>パスワード：roboticslab</li>
+<li>wifiを使う国：JP</li>
+</ul>
+</li>
+<li>ロケール設定をする
+<ul>
+<li>タイムゾーン：Asia/Tokyo</li>
+<li>キーボードレイアウト：jp</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>カスタマイズ =&gt; 設定を編集する =&gt; サービス
+<ul>
+<li>SSHを有効にする
+<ul>
+<li>パスワード認証を使う</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>書き込み</li>
+</ol>
+<h2 id="設定変更">設定変更</h2>
+<ul>
+<li>ubuntu自動更新の無効化
+/etc/apt/apt.conf.d/20auto-upgradesを開き，下記のように編集</li>
+</ul>
+<pre tabindex="0"><code>APT::Periodic::Update-Package-Lists &#34;0&#34;;
+APT::Periodic::Unattended-Upgrade &#34;0&#34;;
+</code></pre><ul>
+<li>ネットワーク接続関係
+初期設定では，ネットワークに接続するまで待機するため無効化する．</li>
+</ul>
+<pre tabindex="0"><code>$  systemctl mask systemd-networkd-wait-online.service
+</code></pre><ul>
+<li>サスペンドとスリープの無効化</li>
+</ul>
+<pre tabindex="0"><code>$ sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+</code></pre><h2 id="ソフトウェアインストール">ソフトウェアインストール</h2>
+<p>ROSをインストール後，下記を実行</p>
+<pre tabindex="0"><code>$ sudo apt install python3-argcomplete python3-colcon-common-extensions libboost-system-dev build-essential
+$ sudo apt install ros-humble-hls-lfcd-lds-driver
+$ sudo apt install ros-humble-turtlebot3-msgs
+$ sudo apt install ros-humble-dynamixel-sdk
+$ sudo apt install libudev-dev
+$ mkdir -p ~/turtlebot3_ws/src &amp;&amp; cd ~/turtlebot3_ws/src
+$ git clone -b humble-devel https://github.com/ROBOTIS-GIT/turtlebot3.git
+$ git clone -b ros2-devel https://github.com/ROBOTIS-GIT/ld08_driver.git
+$ cd ~/turtlebot3_ws/src/turtlebot3
+$ cd ~/turtlebot3_ws/
+$ echo &#39;source /opt/ros/humble/setup.bash&#39; &gt;&gt; ~/.bashrc
+$ source ~/.bashrc
+$ colcon build --symlink-install --parallel-workers 1
+$ echo &#39;source ~/turtlebot3_ws/install/setup.bash&#39; &gt;&gt; ~/.bashrc
+$ source ~/.bashrc
+</code></pre><p>OpenCR関連．</p>
+<pre tabindex="0"><code>$ sudo cp `ros2 pkg prefix turtlebot3_bringup`/share/turtlebot3_bringup/script/99-turtlebot3-cdc.rules /etc/udev/rules.d/
+$ sudo udevadm control --reload-rules
+$ sudo udevadm trigger
+</code></pre><p>ROS_DOMAIN_IDの設定</p>
+<pre tabindex="0"><code>$ echo &#39;export ROS_DOMAIN_ID=30 #TURTLEBOT3&#39; &gt;&gt; ~/.bashrc
+$ source ~/.bashrc
+</code></pre><p>使用するLDSの設定．</p>
+<pre tabindex="0"><code>$ echo &#39;export LDS_MODEL=LDS-02&#39; &gt;&gt; ~/.bashrc
+$ source ~/.bashrc
+</code></pre><p>モデルの設定</p>
+<pre tabindex="0"><code>export TURTLEBOT3_MODEL=burger
+</code></pre><p>slamが起動しない．下記をインストール</p>
+<pre tabindex="0"><code>$ sudo apt install ros-humble-cartographer-ros
+</code></pre><p>カメラ</p>
+<pre tabindex="0"><code>$ sudo apt install ros-humble-v4l2-camera
+</code></pre><h2 id="無線lanの設定変更">無線LANの設定変更</h2>
+<p>SDカード内のnetwork-configを編集しても接続される無線LANを変更できない．
+これは初回のみ有効．
+ubuntu起動後は，下記のファイルを編集して再起動することで更新可能．
+インデントはタブ禁止，半角スペースでないと文法エラーとなる．</p>
+<pre tabindex="0"><code>/etc/netplan/50-cloud-init.yaml
+</code></pre><p>変更した例は下記の通り</p>
+<pre tabindex="0"><code>network:
+    version: 2
+    wifis:
+        renderer: networkd
+        wlan0:
+            access-points:
+                robolabB1:
+                    password: &#34;roboticslab&#34;
+            dhcp4: true
+            optional: true
+</code></pre><h2 id="sdカードのコピー">SDカードのコピー</h2>
+<p><a href="https://www.amazon.co.jp/U-Reach-Japan-SD312N-microSD-SD%E3%82%AB%E3%83%BC%E3%83%89%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%80%81%E6%B6%88%E5%8E%BB%E3%80%81%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88%E3%81%8C%E5%8F%AF%E8%83%BD%E3%80%82%E5%A4%89%E6%8F%9B%E3%82%A2%E3%83%80%E3%83%97%E3%82%BF%E3%81%AA%E3%81%97%E3%81%A7microSD%E3%82%AB%E3%83%BC%E3%83%89%E3%82%92%E7%9B%B4%E6%8E%A5%E6%8C%BF%E5%85%A5%E5%8F%AF%E8%83%BD%E3%80%82%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC%E9%A7%86%E5%8B%95%E5%AF%BE%E5%BF%9C/dp/B07P8YFDLG/ref=sr_1_10?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&amp;crid=3B1NAM5SRVSUZ&amp;dib=eyJ2IjoiMSJ9.6pwkRZ8FMHKEhkGm-SiBG2G2fHLsCAHmayZWD9qYsTXBi21C9JwbCa10wcJL9EoEnRT8QZQKG4btFlzOOo-3JDvucpx8x2Cvzk4A9mQo39sToLA_MRAjHnp0y2HUj96WaZP2V0KEXSOKGcC3SF3IcMdQThqupd2N6OeDWm60kbfClVmt84oJNw7dFhXLkxIR64vMT2Hfhjc_nug7DgNCdUTnap1r7jQkeKp8Gfm2XLgIGxeTvYpP3a7Zopb77STOVUqqDqMppsWUuQVJUliaW5FbL7nTHU1M5nAZilC3p0g.1BQgUj_Vzi4iWpmqnM7laLL5kNc6pZadbOCExj0yjuA&amp;dib_tag=se&amp;keywords=%E3%83%87%E3%83%A5%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%BF%E3%83%BC+sd&amp;qid=1709359193&amp;sprefix=%E3%83%87%E3%83%A5%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%BF%E3%83%BC+s%2Caps%2C161&amp;sr=8-10">デュプリケータ</a>でSDカードをコピー可能．
+ただし，コピー元よりもコピー先の容量が小さい場合には，コピー時に警告が発生する．
+その状況で警告を無視して強制的にコピーできるが，ubuntuが起動せずにbusyboxが起動する．
+busyboxでfsckコマンドで修復を試みるが失敗する．</p>
+<p>同じ容量のSDカードを購入しても，メーカーやシリーズによって微妙に容量が異なる．
+SDカード内に管理領域を確保しているが，この管理領域の容量(全体の3%程度)がメーカーやシリーズに異なるためである．
+現状，デュプリケータでコピーする場合には，全く同じメーカかつシリーズのSDカードでコピーするしかない．
+(管理領域の容量が同程度のSDカードを検証する予定)</p>
+<h2 id="コピーしたsdカードの設定">コピーしたSDカードの設定</h2>
+<p>下記の3つ(場合によっては2つ)を変更する．</p>
+<h3 id="hostnameの設定">hostnameの設定</h3>
+<p>ホスト名を用いてsshで遠隔操作する．
+そのため，turtlebot3ごとにホスト名を変更する必要がある．
+ホスト名は，機体に貼ってあるシールと同じ(ただし，文字は小文字)とする．
+例えば，<code>TB01</code>というシールが貼られていれば，ホスト名は<code>tb01</code>となる．</p>
+<p>通常，ubuntuでは<code>/etc</code>ディレクトリ内のファイルを変更すればホスト名を変更可能である．
+しかし，これはDesktop版の有効であり，Server版では再起動後に設定前の内容に戻ってしまう．
+Server版では，下記のファイルを編集することでホスト名を変更できる．</p>
+<pre tabindex="0"><code>$ sudo vim /boot/firmware/user-data
+</code></pre><p>上記ファイルを編集後，再起動すると設定が反映される．</p>
+<h3 id="ros_domain_idの設定">ROS_DOMAIN_IDの設定</h3>
+<p><code>.bashrc</code>に記述されている<code>ROS_DOMAIN_ID</code>の数字を変更する．
+数字は機体に貼ってある数字(ただし，一桁の数字の場合には0を付けない)とする．</p>
+<h3 id="無線lanの設定">無線LANの設定</h3>
+<p>実験室には2機の無線Lanルーターが設置されている．</p>
+<p><code>access-points</code>にあるSSID名を必要に応じて編集する．
+パスワードは共通であるため編集の必要はない．</p>
+<pre tabindex="0"><code>$ sudo vim /etc/netplan/network.yaml
+</code></pre><h2 id="バッテリー管理">バッテリー管理</h2>
+<h3 id="バッテリーの基本情報">バッテリーの基本情報</h3>
+<p>Turtlebot3では<a href="https://e-shop.robotis.co.jp/product.php?id=169">こちらのlipoバッテリー</a>が搭載されている．
+バッテリーからは2つの端子が利用可能であり，充電時にはバランス端子(白い端子)を用いる．</p>
+<p>バッテリーは3つのセルで構成されている．
+目安となる電圧仕様は下記の通りである．</p>
+<ul>
+<li>最高電圧：4.2 [V/cell]</li>
+<li>標準電圧：3.7 [V/cell]</li>
+<li>最低電圧：3.2 [V/cell]</li>
+</ul>
+<p>Turtlebot3を使用する期間に入ったら満充電して保管する．
+満充電後，必ず機体からパワー端子接続を外す．</p>
+<h3 id="バッテリーに関しての注意事項">バッテリーに関しての注意事項</h3>
+<p>Turtlebot3の使用中にバッテリー低下が原因でピープ音を発するが，電圧が標準電圧近くまで低下しているためである．
+ただちに使用を停止してバッテリーを充電する必要がある．
+最低電圧を下回るまで使用した場合には，付随する充電器で充電することが不可能(故障)となる．
+低電圧の状態で再充電すると発火等の危険があるため，一般的な充電器では充電できないように設計されている．</p>
+<p>バッテリーを長期的(一ヶ月以上)に使用しない場合には，3.7 ~ 3.8 [V/cell]とし，自己自然放電を防ぐために必ず機体からパワー端子を外す．
+また，講義で長期間使用しない場合には，上記の電圧に調整してリポセーフティバッグにて保管する．</p>
+<h3 id="バッテリーの寿命">バッテリーの寿命</h3>
+<p>バッテリーが消耗したり，過充電や過放電するとバッテリーが劣化する．
+また，一般的なlipoバッテリーの充電回数は500~1000回とされている．
+劣化するとバッテリー膨らみ，本来の性能を発揮できなくなる．
+バッテリーが一定以上膨らむと発火の恐れがあるため，教員に連絡すること．</p>
+<h3 id="低電圧バッテリーの復旧">低電圧バッテリーの復旧</h3>
+<p>一定以下の電圧となったバッテリーは，用意している充電器で充電ができない．
+このような問題が発生した場合には教員に連絡すること．</p>
+<h4 id="heading"></h4>
+<p>ピープ音が鳴る電圧をチェック</p>
+
+	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+      </div>
+      <div class="col-6 col-sm-4 text-end text-xs-center order-sm-3">
+        
+      </div>
+      <div class="td-footer__copyright-etc col-12 col-sm-4 text-center py-2 order-sm-2">
+        <span>&copy; 2024 中部大学理工学部AIロボティクス学科 All Rights Reserved</span>
+        
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <script src="/ai-robot/js/main.min.f144e2c5ca4a17d62d06a21473c0b37ce1b36a5f7b700fea1760dc6d55f33bf1.js" integrity="sha256-8UTixcpKF9YtBqIUc8CzfOGzal97cA/qF2DcbVXzO/E=" crossorigin="anonymous"></script>
+<script defer src="/ai-robot/js/click-to-copy.min.f724d3de49218995223b7316aa2e53e2b34bf42026bf399ebb21bb02212402d1.js" integrity="sha256-9yTT3kkhiZUiO3MWqi5T4rNL9CAmvzmeuyG7AiEkAtE=" crossorigin="anonymous"></script>
+<script src='/ai-robot/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

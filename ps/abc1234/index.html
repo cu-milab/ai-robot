@@ -1,0 +1,918 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="ja" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.120.2">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/ai-robot/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/ai-robot/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-192x192.png" sizes="192x192">
+
+<title>トピック通信の理解 | 中部大学AIロボティクス学科</title>
+<meta name="description" content="ROS2におけるトピック通信について学びます．">
+<meta property="og:title" content="トピック通信の理解" />
+<meta property="og:description" content="ROS2におけるトピック通信について学びます．" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/abc1234/" /><meta property="article:section" content="robotics" />
+
+<meta property="og:site_name" content="Goldydocs2" />
+
+<meta itemprop="name" content="トピック通信の理解">
+<meta itemprop="description" content="ROS2におけるトピック通信について学びます．">
+
+<meta itemprop="wordCount" content="1300">
+<meta itemprop="keywords" content="トピック通信,インストール," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="トピック通信の理解"/>
+<meta name="twitter:description" content="ROS2におけるトピック通信について学びます．"/>
+
+
+
+
+<link rel="preload" href="/ai-robot/scss/main.min.62ea14fa9166ac179c866e06e1ad3975aebe925c9a1168b02db611ca55de8c87.css" as="style">
+<link href="/ai-robot/scss/main.min.62ea14fa9166ac179c866e06e1ad3975aebe925c9a1168b02db611ca55de8c87.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+  crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VD6HCF8XZQ"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-VD6HCF8XZQ');
+}
+</script>
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar navbar-dark js-navbar-scroll">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/ai-robot/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">中部大学AIロボティクス学科</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="/ai-robot/robotics/"><span>ロボティクス演習</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/project/"><span>プロジェクト演習</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/ros/"><span>ロボットオペレーティングシステム</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/laboratory/"><span>ロボティクスラボ</span></a>
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-ai-robotrobotics-li">
+  <a href="/ai-robot/robotics/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-ai-robotrobotics"><span class="">ロボティクス演習</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpswe1emyp-li">
+  <a href="/ai-robot/ps/we1emyp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpswe1emyp"><span class="">ROS2のインストール</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-ai-robotpsabc1234-li">
+  <a href="/ai-robot/ps/abc1234/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsabc1234"><span class="td-sidebar-nav-active-item">トピック通信の理解</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps587etb0-li">
+  <a href="/ai-robot/ps/587etb0/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps587etb0"><span class="">ワークスペースとパッケージの作成</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpstbaet4s-li">
+  <a href="/ai-robot/ps/tbaet4s/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpstbaet4s"><span class="">トピック通信の実装</span></a>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            
+<div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+<a id="print" href="https://cu-milab.github.io/ai-robot/robotics/_print/"><i class="fa-solid fa-print fa-fw"></i> セクション全体を印刷</a>
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#目的">目的</a></li>
+    <li><a href="#ros2のコマンドライン">ROS2のコマンドライン</a></li>
+    <li><a href="#ノードの起動と確認">ノードの起動と確認</a></li>
+    <li><a href="#トピック通信">トピック通信</a>
+      <ul>
+        <li><a href="#トピックの確認">トピックの確認</a></li>
+        <li><a href="#トピックの購読">トピックの購読</a></li>
+        <li><a href="#メッセージの確認">メッセージの確認</a></li>
+        <li><a href="#トピックの配信">トピックの配信</a></li>
+      </ul>
+    </li>
+    <li><a href="#rqtによる可視化">rqtによる可視化</a></li>
+    <li><a href="#課題">課題</a></li>
+  </ul>
+</nav>
+      </div>
+    
+            <div class="taxonomy taxonomy-terms-cloud taxo-tags">
+      <h5 class="taxonomy-title">Tag Cloud</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/launch/" data-taxonomy-term="launch"><span class="taxonomy-label">launch</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/stage/" data-taxonomy-term="stage"><span class="taxonomy-label">stage</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/turtlebot3/" data-taxonomy-term="turtlebot3"><span class="taxonomy-label">Turtlebot3</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1/" data-taxonomy-term="%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1"><span class="taxonomy-label">トピック通信</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3/" data-taxonomy-term="%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"><span class="taxonomy-label">ナビゲーション</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86/" data-taxonomy-term="%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86"><span class="taxonomy-label">画像処理</span><span class="taxonomy-count">3</span></a></li>
+        </ul>
+    </div>
+  <div class="taxonomy taxonomy-terms-cloud taxo-categories">
+      <h5 class="taxonomy-title">Categories</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92"><span class="taxonomy-label">プロジェクト演習</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0"><span class="taxonomy-label">ロボットオペレーティングシステム</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C"><span class="taxonomy-label">ロボティクスラボ</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92"><span class="taxonomy-label">ロボティクス演習</span><span class="taxonomy-count">5</span></a></li>
+        </ul>
+    </div>
+  
+	
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="https://cu-milab.github.io/ai-robot/robotics/">ロボティクス演習</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    トピック通信の理解</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>トピック通信の理解</h1>
+	<div class="lead">ROS2におけるトピック通信について学びます．</div>
+	<header class="article-meta">
+		<div class="taxonomy taxonomy-terms-article taxo-tags">
+  <h5 class="taxonomy-title">Tags:</h5>
+  <ul class="taxonomy-terms">
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1/" data-taxonomy-term="%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1"><span class="taxonomy-label">トピック通信</span></a></li>
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span></a></li>
+    </ul>
+</div>
+<div class="taxonomy taxonomy-terms-article taxo-categories">
+  <h5 class="taxonomy-title">Categories:</h5>
+  <ul class="taxonomy-terms">
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92"><span class="taxonomy-label">ロボティクス演習</span></a></li>
+    </ul>
+</div>
+
+  </header>
+	<h2 id="目的">目的</h2>
+<p>ROS2のシステムで利用されているトピック通信について学びます．
+講義の前半では座学形式でトピック通信の仕組みについて理解し，
+後半ではコマンドラインツールと簡易シミュレータturtlesimを用いて，演習を通してノードやトピックの概念，通信方法を理解します．</p>
+<h2 id="ros2のコマンドライン">ROS2のコマンドライン</h2>
+<p>Ubuntuでは，ターミナルに文字列を入力して操作することが基本となります．
+ターミナルに入力する文字列のことをコマンドラインと呼びます．
+まずはROS2のコマンドラインを確認するために，下記のコマンドラインをターミナルで実行してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">usage: ros2 [-h] [--use-python-default-buffering]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    Call `ros2 &lt;command&gt; -h` for more detailed usage. ...
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">ros2 is an extensible command-line tool for ROS 2.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">options:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -h, --help    show this help message and exit
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --use-python-default-buffering
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                Do not force line buffering in stdout and instead use
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                the python default buffering, which might be affected
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                by PYTHONUNBUFFERED/-u and depends on whatever stdout
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                is interactive or not
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Commands:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  action     Various action related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  bag        Various rosbag related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  component  Various component related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  daemon     Various daemon related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  doctor     Check ROS setup and other potential issues
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  interface  Show information about ROS interfaces
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  launch     Run a launch file
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  lifecycle  Various lifecycle related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  multicast  Various multicast related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  node       Various node related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  param      Various param related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  pkg        Various package related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  run        Run a package specific executable
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  security   Various security related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  service    Various service related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  topic      Various topic related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  wtf        Use `wtf` as alias to `doctor`
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Call `ros2 &lt;command&gt; -h` for more detailed usage.
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>ROS2のコマンドラインは，<code>ROS2</code>という単語にサブコマンドを加えることで，様々なコマンドラインを実行することができるようになっています．
+また，上記のようにオプションとして<code>-h</code>を加えることで，コマンドの仕様を確認することができますので，必要に応じて確認しましょう．</p>
+<h2 id="ノードの起動と確認">ノードの起動と確認</h2>
+<p>まずはノードを起動します．
+ノードを起動するために，先ほど調べたサブコマンドの中の<code>run</code>を使用します．
+<code>run</code>の使用を確認しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run -h
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">usage: ros2 run [-h] [--prefix PREFIX] package_name executable_name ...
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Run a package specific executable
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">positional arguments:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  package_name     Name of the ROS package
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  executable_name  Name of the executable
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  argv             Pass arbitrary arguments to the executable
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">options:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -h, --help       show this help message and exit
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --prefix PREFIX  Prefix command, which should go before the executable. Command must be wrapped in quotes if it contains spaces (e.g. --prefix &#39;gdb -ex run
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                   --args&#39;).
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>ノードを起動するためには，<code>ros2 run</code>の後に<code>package_name</code>と<code>executable_name</code>を入力すれば良いことがわかります．
+今回は<code>package_name</code>に<code>turtlesim</code>，<code>executable_name</code>に<code>turtlesim_node</code>とし，
+簡易シミュレータであるturtlesimを起動します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtlesim_node
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記のコマンドを実行すると簡易シミュレータTurtlesimが起動します．</p>
+<p><img src="turtlesim.png#center" alt="シミュレータ画像が表示されます"></p>
+
+
+<div class="alert alert-primary" role="alert">
+
+
+    Turtlesimを実行したターミナルはコマンドラインを受け付けない状態になっています．
+終了する場合には，<code>Ctrl</code>キーと<code>c</code>キーを同時に入力してください．
+
+</div>
+
+<p>次に起動したノードの情報を確認しましょう．
+ノードの情報を確認するために，まずはサブコマンド<code>node</code>の仕様を確認します．
+新しいターミナルを起動して下記のコマンドを実行してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node -h
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">usage: ros2 node [-h] Call `ros2 node &lt;command&gt; -h` for more detailed usage. ...
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Various node related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">options:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -h, --help            show this help message and exit
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Commands:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  info  Output information about a node
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  list  Output a list of available nodes
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Call `ros2 node &lt;command&gt; -h` for more detailed usage.
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>ros2 node</code>では，<code>info</code>と<code>list</code>が用意されていることがわかります．
+まずは<code>list</code>により，アクティブなノードの一覧を表示しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span>ros2 node list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記の結果から<code>run</code>コマンドにより起動した<code>/turtlesim</code>が起動していることがわかります．
+次に<code>info</code>コマンドによりノードの詳細な情報を調べてみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node info /turtlesim 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Subscribers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /parameter_events: rcl_interfaces/msg/ParameterEvent
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtle1/cmd_vel: geometry_msgs/msg/Twist
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Publishers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /parameter_events: rcl_interfaces/msg/ParameterEvent
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /rosout: rcl_interfaces/msg/Log
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtle1/color_sensor: turtlesim/msg/Color
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtle1/pose: turtlesim/msg/Pose
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Service Servers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /clear: std_srvs/srv/Empty
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /kill: turtlesim/srv/Kill
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /reset: std_srvs/srv/Empty
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /spawn: turtlesim/srv/Spawn
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtle1/set_pen: turtlesim/srv/SetPen
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtle1/teleport_absolute: turtlesim/srv/TeleportAbsolute
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtle1/teleport_relative: turtlesim/srv/TeleportRelative
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtlesim/describe_parameters: rcl_interfaces/srv/DescribeParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtlesim/get_parameter_types: rcl_interfaces/srv/GetParameterTypes
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtlesim/get_parameters: rcl_interfaces/srv/GetParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtlesim/list_parameters: rcl_interfaces/srv/ListParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtlesim/set_parameters: rcl_interfaces/srv/SetParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtlesim/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Service Clients:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Action Servers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtle1/rotate_absolute: turtlesim/action/RotateAbsolute
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Action Clients:
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>info</code>コマンドにより指定したノードが購読するトピック，配信するトピック，
+サービス通信とアクション通信のサーバ及びクライアントの一覧を出力することができます．
+/turtlesimノードは，2つのトピックを購読し，4つのトピックを配信していることがわかります．
+トピック名の後(:の後)にはメッセージの型も表示されます．
+<code>info</code>は便利なコマンドですので使えるようになりましょう．</p>
+<h2 id="トピック通信">トピック通信</h2>
+<p>ここまでは<code>ros2 node</code>に関連したコマンドを学びました．
+次は<code>ros2 topic</code>に関連したコマンドを学びます．</p>
+<h3 id="トピックの確認">トピックの確認</h3>
+<p>/turtlesimノード単体ではトピック通信ができないため，もう1つノードを起動します．
+新しいターミナルを起動し，下記のノードを実行しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtle_teleop_key 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Reading from keyboard
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">---------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Use arrow keys to move the turtle.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Use G|B|V|C|D|E|R|T keys to rotate to absolute orientations. &#39;F&#39; to cancel a rotation.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">&#39;Q&#39; to quit.
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記のノードを実行することでキーボードによりロボット(亀)を操作できます．
+キーボードの各キーに対応してロボットを動かします．</p>
+
+
+<div class="alert alert-warning" role="alert">
+
+
+    /turtle_teleop_keyを起動したターミナルがアクティブになった状態でしか操作できないので注意してください．
+
+</div>
+
+<p>新たにノードを起動したので，起動しているノードは2つになっているはずです．
+先ほどの方法で確認しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/teleop_turtle
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>次にトピックに関連したコマンドを学びます．
+まずは<code>ros2 topic</code>のヘルプを見てみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic -h
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">usage: ros2 topic [-h] [--include-hidden-topics]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                  Call `ros2 topic &lt;command&gt; -h` for more detailed usage. ...
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Various topic related sub-commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">options:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -h, --help            show this help message and exit
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --include-hidden-topics
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        Consider hidden topics as well
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Commands:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  bw     Display bandwidth used by topic
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  delay  Display delay of topic from timestamp in header
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  echo   Output messages from a topic
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  find   Output a list of available topics of a given type
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  hz     Print the average publishing rate to screen
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  info   Print information about a topic
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  list   Output a list of available topics
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  pub    Publish a message to a topic
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  type   Print a topic&#39;s type
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>ros2 topic</code>のサブコマンドは9つあります．
+ここではトピック通信を理解するために最低限のサブコマンドしか学びませんが，他にも重要なサブコマンドが多いです．
+使えるようになるとトピック通信をより深く理解できますので，講義で扱わないサブコマンドも習得しましょう．</p>
+<p>9つあるサブコマンドの中から，まずは<code>list</code>を用いてアクティブなトピックの一覧を取得しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/parameter_events
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/rosout
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/cmd_vel
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/color_sensor
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/pose
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記の出力から5つのトピックが配信，購読されていることがわかります．
+ここでは，5つあるトピックの中から<code>/turtle1/cmd_vel</code>に焦点を当てて話を進めます．</p>
+<h3 id="トピックの購読">トピックの購読</h3>
+<p>サブコマンド<code>echo</code>を用いてターミナルで指定した<code>/turtle1/cmd_vel</code>を購読しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic <span style="color:#204a87">echo</span> /turtle1/cmd_vel
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">linear:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  x: 2.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  y: 0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  z: 0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">angular:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  x: 0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  y: 0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  z: 0.0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>コマンドを実行しただけでは何も出力されないことから，通常は通信が発生していないことがわかります．
+このままではターミナルでトピックを購読できないので，先ほど起動したロボットをキーボードで操作するノードを用いてロボットを動かしましょう．
+ロボットを操作すると，ターミナルで購読したトピックの情報が出力されます．</p>
+<p><img src="topic_echo.png" alt="ターミナルでトピックを購読している様子"></p>
+<p>ロボットのlinear及びangularのx，y，zが出力されました．
+linearは並進速度，angularは角速度を表します．
+このことから，キーボードでロボットを操作するノード<code>turtle_teleop_key</code>からトピック<code>/turtle1/cmd_vel</code>が配信され，そのトピックを<code>turtlesim_node</code>が受け取りロボットが動いていることがわかります．
+どのキーがロボットのどの動きに対応しているか確認しましょう．</p>
+<p>ubuntuにて上記のような画面のスクリーンショットを得る方法は幾つかあります．
+ここでは<code>gnome-screenshot</code>を用いた方法を紹介します．
+まずは<code>gnome-screenshot</code>をインストールしましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install gnome-screenshot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>インストール後，下記のコマンドで画面のスクリーンショットを得ることができます．
+スクリーンショットはホームディレクトリにあるPicturesディレクトリに保存されます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> gnome-screenshot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>画面の一部分のみを保存したい場合には，下記のコマンドを実行します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> gnome-screenshot -a
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記のコマンドを実行するとカーソルが十字になります．
+この状態で画像として保存した領域をドラッグすると，選択した領域のみが画像として保存されます．</p>
+<h3 id="メッセージの確認">メッセージの確認</h3>
+<p>ノード間で通信するためには，お互いが同じメッセージ型で配信，購読しなければなりません．
+メッセージの型名からどのようなデータをやり取りするかを調べましょう．
+まずは，サブコマンド<code>type</code>を用いてトピック<code>/turtle1/cmd_vel</code>と対応するメッセージの型を確認します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic <span style="color:#204a87">type</span> /turtle1/cmd_vel 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">geometry_msgs/msg/Twist
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>トピック<code>/turtle1/cmd_vel</code>は<code>geometry_msgs/msg/Twist</code>というメッセージ型を使用することがわかりました．
+次に<code>geometry_msgs/msg/Twist</code>というメッセージ型が，どのようなデータを通信するかを確認するために，<code>interface</code>コマンドの<code>show</code>を用いて調べます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 interface show geometry_msgs/msg/Twist
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> This expresses velocity in free space broken into its linear and angular parts.
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Vector3  linear
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	float64 x
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	float64 y
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	float64 z
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Vector3  angular
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	float64 x
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	float64 y
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	float64 z
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>少しわかりにくいですが，メッセージ型<code>geometry_msgs/msg/Twist</code>は，入れ子の形で<code>Vector3</code>というメッセージのlinear及びangularで構成されていることがわかります．
+<code>Vector3</code>は，それぞれが64ビットのfloat型の変数を3つ持っていることがわかります．
+念のため，先ほどと同じ方法でメッセージ型<code>Vector3</code>を調べてみます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 interface show geometry_msgs/msg/Vector3
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> This represents a vector in free space.
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902">#</span> This is semantically different than a point.
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> A vector is always anchored at the origin.
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> When a transform is applied to a vector, only the rotational component is applied.
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">float64 x
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float64 y
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float64 z
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>先ほど調べた通り，64ビットのfloat型の変数を3つで構成されていることが確認できました．</p>
+<h3 id="トピックの配信">トピックの配信</h3>
+<p>最後にターミナルからトピックを配信する方法を学びます．
+配信には，<code>topic</code>コマンドのサブコマンドである<code>pub</code>を使用します．
+<code>pub</code>は使い方が少し複雑ですのでヘルプを確認しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic pub -h
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">usage: ros2 topic pub [-h] [-r N] [-p N] [-1 | -t TIMES] [-w WAIT_MATCHING_SUBSCRIPTIONS]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                      [--keep-alive N] [-n NODE_NAME]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                      [--qos-profile {unknown,system_default,sensor_data,services_default,parameters,parameter_events,action_status_default}]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                      [--qos-depth N] [--qos-history {system_default,keep_last,keep_all,unknown}]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                      [--qos-reliability {system_default,reliable,best_effort,unknown}]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                      [--qos-durability {system_default,transient_local,volatile,unknown}]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                      [--spin-time SPIN_TIME] [-s]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                      topic_name message_type [values]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Publish a message to a topic
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">positional arguments:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  topic_name            Name of the ROS topic to publish to (e.g. &#39;/chatter&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  message_type          Type of the ROS message (e.g. &#39;std_msgs/String&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  values                Values to fill the message with in YAML format (e.g. &#39;data: Hello World&#39;),
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        otherwise the message will be published with default values
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">options:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -h, --help            show this help message and exit
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -r N, --rate N        Publishing rate in Hz (default: 1)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -p N, --print N       Only print every N-th published message (default: 1)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -1, --once            Publish one message and exit
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -t TIMES, --times TIMES
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        Publish this number of times and then exit
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -w WAIT_MATCHING_SUBSCRIPTIONS, --wait-matching-subscriptions WAIT_MATCHING_SUBSCRIPTIONS
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        Wait until finding the specified number of matching subscriptions.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        Defaults to 1 when using &#34;-1&#34;/&#34;--once&#34;/&#34;--times&#34;, otherwise defaults to 0.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --keep-alive N        Keep publishing node alive for N seconds after the last msg (default: 0.1)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -n NODE_NAME, --node-name NODE_NAME
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        Name of the created publishing node
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --qos-profile {unknown,system_default,sensor_data,services_default,parameters,parameter_events,action_status_default}
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        Quality of service preset profile to publish)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --qos-depth N         Queue size setting to publish with (overrides depth value of --qos-profile
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        option)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --qos-history {system_default,keep_last,keep_all,unknown}
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        History of samples setting to publish with (overrides history value of
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        --qos-profile option, default: keep_last)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --qos-reliability {system_default,reliable,best_effort,unknown}
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        Quality of service reliability setting to publish with (overrides
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        reliability value of --qos-profile option, default: reliable)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --qos-durability {system_default,transient_local,volatile,unknown}
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        Quality of service durability setting to publish with (overrides
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        durability value of --qos-profile option, default: transient_local)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --spin-time SPIN_TIME
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        Spin time in seconds to wait for discovery (only applies when not using an
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        already running daemon)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -s, --use-sim-time    Enable ROS simulation time
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>オプションが多いので使い方が難しいように見えますが，使用するためには<code>positional arguments</code>に記載されている<code>topic_name</code>と<code>message_type</code>，<code>values</code>が必要であることがわかります．
+例えば，Turtlesimのロボットを動かすためには，<code>topic_name</code>には<code>/turtle1/cmd_vel</code>，
+<code>message_type</code>には<code>geometry_msgs/msg/Twist</code>，<code>values</code>には並進速度と角速度である<code>Vector3</code>で表される<code>linear</code>と<code>angular</code>を与えます．
+<code>values</code>はYAMLと呼ばれるデータ形式で記述します．
+実際に下記のコマンドでターミナルから配信してみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic pub /turtle1/cmd_vel geometry_msgs/msg/Twist <span style="color:#4e9a06">&#34;{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 2.0}}&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記のコマンドを実行するとターミナルから1度だけトピックを配信され，ロボットがそのトピックを購読して前進します．
+連続でトピックを配信する際には，オプション<code>-r</code>を使用しましょう．
+例えば1秒間に1回の頻度でトピックを配信するには，<code>-r 1</code>を加えて実行します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic pub -r <span style="color:#0000cf;font-weight:bold">1</span> /turtle1/cmd_vel geometry_msgs/msg/Twist <span style="color:#4e9a06">&#34;{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.0}}&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="rqtによる可視化">rqtによる可視化</h2>
+<p>コマンドラインを実行してノードやトピックの情報を獲得しました．
+扱うノードやトピックの数が少ないため，それぞれの関係を整理できていると思います．
+しかし，実際にロボットを動かす場合には，数十のノードやトピックを扱うこともあり，このような場合には，それぞれの関係を把握することが難しくなります．
+そこで，ノードやトピックの関係性をグラフにより表現することができるrqt_graphという便利なツールが存在します．</p>
+<p>roscore以外を全て終了させ，各端末で下記を実行しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span>  ros2 run turtlesim turtlesim_node
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span>  ros2 run turtlesim turtle_teleop_key
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span>  rqt_graph
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>楕円はノード，四角はトピック，矢印はトピックの配信と購読の関係を表しています．
+上記の例では，ノード/teleop_turtleからノード/turtlesimにトピック/turtle1/cmd_velを配信していることがわかります．
+このようにノードやトピックの関係性をグラフにより表すことで，それぞれの関係を容易に把握することができます．
+非常に便利なツールですので，是非とも有効活用してください．</p>
+<p><img src="rqt.png" alt="rqtによるノードとトピックの可視化"></p>
+<h2 id="課題">課題</h2>
+<ol>
+<li>ノードとトピック，メッセージについて説明しなさい．</li>
+<li>topicのサブコマンドであるbwとhzについて調べ，説明しなさい．</li>
+<li>topicのサブコマンドであるbwとhzにより通信量と周期を調べなさい．</li>
+</ol>
+
+	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+      </div>
+      <div class="col-6 col-sm-4 text-end text-xs-center order-sm-3">
+        
+      </div>
+      <div class="td-footer__copyright-etc col-12 col-sm-4 text-center py-2 order-sm-2">
+        <span>&copy; 2024 中部大学理工学部AIロボティクス学科 All Rights Reserved</span>
+        
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <script src="/ai-robot/js/main.min.f144e2c5ca4a17d62d06a21473c0b37ce1b36a5f7b700fea1760dc6d55f33bf1.js" integrity="sha256-8UTixcpKF9YtBqIUc8CzfOGzal97cA/qF2DcbVXzO/E=" crossorigin="anonymous"></script>
+<script defer src="/ai-robot/js/click-to-copy.min.f724d3de49218995223b7316aa2e53e2b34bf42026bf399ebb21bb02212402d1.js" integrity="sha256-9yTT3kkhiZUiO3MWqi5T4rNL9CAmvzmeuyG7AiEkAtE=" crossorigin="anonymous"></script>
+<script src='/ai-robot/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

@@ -1,0 +1,510 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="ja" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.120.2">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/ai-robot/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/ai-robot/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-192x192.png" sizes="192x192">
+
+<title>特定画像認識 | 中部大学AIロボティクス学科</title>
+<meta name="description" content="find_object_2dパッケージを使用し，画像から所望の物体を検出します．">
+<meta property="og:title" content="特定画像認識" />
+<meta property="og:description" content="find_object_2dパッケージを使用し，画像から所望の物体を検出します．" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/jhg2r34/" /><meta property="article:section" content="ros" />
+
+<meta property="og:site_name" content="Goldydocs2" />
+
+<meta itemprop="name" content="特定画像認識">
+<meta itemprop="description" content="find_object_2dパッケージを使用し，画像から所望の物体を検出します．">
+
+<meta itemprop="wordCount" content="366">
+<meta itemprop="keywords" content="インストール,画像処理," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="特定画像認識"/>
+<meta name="twitter:description" content="find_object_2dパッケージを使用し，画像から所望の物体を検出します．"/>
+
+
+
+
+<link rel="preload" href="/ai-robot/scss/main.min.62ea14fa9166ac179c866e06e1ad3975aebe925c9a1168b02db611ca55de8c87.css" as="style">
+<link href="/ai-robot/scss/main.min.62ea14fa9166ac179c866e06e1ad3975aebe925c9a1168b02db611ca55de8c87.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+  crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VD6HCF8XZQ"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-VD6HCF8XZQ');
+}
+</script>
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar navbar-dark js-navbar-scroll">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/ai-robot/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">中部大学AIロボティクス学科</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/robotics/"><span>ロボティクス演習</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/project/"><span>プロジェクト演習</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/ai-robot/ros/"><span>ロボットオペレーティングシステム</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/laboratory/"><span>ロボティクスラボ</span></a>
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-ai-robotros-li">
+  <a href="/ai-robot/ros/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-ai-robotros"><span class="">ロボットオペレーティングシステム</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsneagc43-li">
+  <a href="/ai-robot/ps/neagc43/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsneagc43"><span class="">シミュレータstageのセットアップ</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsa22gy2p-li">
+  <a href="/ai-robot/ps/a22gy2p/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsa22gy2p"><span class="">launchによる複数のノードの起動</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps8wr5qh7-li">
+  <a href="/ai-robot/ps/8wr5qh7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps8wr5qh7"><span class="">トピック通信の復習</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsyege236-li">
+  <a href="/ai-robot/ps/yege236/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsyege236"><span class="">ROS2による画像処理</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsa2g5oo6-li">
+  <a href="/ai-robot/ps/a2g5oo6/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsa2g5oo6"><span class="">マーカー認識</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-ai-robotpsjhg2r34-li">
+  <a href="/ai-robot/ps/jhg2r34/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsjhg2r34"><span class="td-sidebar-nav-active-item">特定画像認識</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps893w2au-li">
+  <a href="/ai-robot/ps/893w2au/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps893w2au"><span class="">地図の作成とナビゲーション</span></a>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            
+<div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+<a id="print" href="https://cu-milab.github.io/ai-robot/ros/_print/"><i class="fa-solid fa-print fa-fw"></i> セクション全体を印刷</a>
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#目的">目的</a></li>
+    <li><a href="#find_object_2dを用いた物体認識">find_object_2dを用いた物体認識</a>
+      <ul>
+        <li><a href="#インストール">インストール</a></li>
+        <li><a href="#実行">実行</a></li>
+      </ul>
+    </li>
+    <li><a href="#ノードとトピックの確認">ノードとトピックの確認</a></li>
+    <li><a href="#guiを使わない方法">GUIを使わない方法</a></li>
+  </ul>
+</nav>
+      </div>
+    
+            <div class="taxonomy taxonomy-terms-cloud taxo-tags">
+      <h5 class="taxonomy-title">Tag Cloud</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/launch/" data-taxonomy-term="launch"><span class="taxonomy-label">launch</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/stage/" data-taxonomy-term="stage"><span class="taxonomy-label">stage</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/turtlebot3/" data-taxonomy-term="turtlebot3"><span class="taxonomy-label">Turtlebot3</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1/" data-taxonomy-term="%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1"><span class="taxonomy-label">トピック通信</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3/" data-taxonomy-term="%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"><span class="taxonomy-label">ナビゲーション</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86/" data-taxonomy-term="%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86"><span class="taxonomy-label">画像処理</span><span class="taxonomy-count">3</span></a></li>
+        </ul>
+    </div>
+  <div class="taxonomy taxonomy-terms-cloud taxo-categories">
+      <h5 class="taxonomy-title">Categories</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92"><span class="taxonomy-label">プロジェクト演習</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0"><span class="taxonomy-label">ロボットオペレーティングシステム</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C"><span class="taxonomy-label">ロボティクスラボ</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92"><span class="taxonomy-label">ロボティクス演習</span><span class="taxonomy-count">5</span></a></li>
+        </ul>
+    </div>
+  
+	
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="https://cu-milab.github.io/ai-robot/ros/">ロボットオペレーティングシステム</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    特定画像認識</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>特定画像認識</h1>
+	<div class="lead">find_object_2dパッケージを使用し，画像から所望の物体を検出します．</div>
+	<header class="article-meta">
+		<div class="taxonomy taxonomy-terms-article taxo-tags">
+  <h5 class="taxonomy-title">Tags:</h5>
+  <ul class="taxonomy-terms">
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span></a></li>
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86/" data-taxonomy-term="%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86"><span class="taxonomy-label">画像処理</span></a></li>
+    </ul>
+</div>
+<div class="taxonomy taxonomy-terms-article taxo-categories">
+  <h5 class="taxonomy-title">Categories:</h5>
+  <ul class="taxonomy-terms">
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0"><span class="taxonomy-label">ロボットオペレーティングシステム</span></a></li>
+    </ul>
+</div>
+
+  </header>
+	<h2 id="目的">目的</h2>
+<p>前回の講義で扱ったARマーカー認識は，簡単かつ高精度にARマーカーを検出，さらには位置及び姿勢を認識できる便利なパッケージです．
+しかしながら，物体にARマーカーを貼ることができない場合には利用することができません．
+このような場合には，一般環境下で撮影した画像から認識したい物体を見つけるという処理が必要です．
+今回はfind_object_2dパッケージを使用し，画像から所望の物体を検出します．</p>
+<h2 id="find_object_2dを用いた物体認識">find_object_2dを用いた物体認識</h2>
+<p>find_object_2dパッケージでは，カメラで撮影した画像(入力画像)から予め用意した画像(テンプレート画像)を見つけることができる便利なパッケージです．
+検出アルゴリズムは，入力画像及びテンプレート画像から注目画素周辺の領域に多くの濃淡情報を持つ特徴点(キーポイント)を検出し，特徴点周辺の領域から濃淡情報を数十から数百次元のベクトルとして数値化した記述子を抽出します．
+そして，2枚の画像から計算した記述子の類似度を求めることでキーポイントを対応づけます．
+これにより，入力画像中のどこに，どのぐらいの大きさでテンプレート画像が存在するかを認識できます．
+また，特長として画像の回転やスケール変化に不変，照明変化等にも頑健です．</p>
+<p><a href="https://www.cs.ubc.ca/~lowe/keypoints/">SIFT</a>に代表されるような特徴点の検出や記述の方法はSURF，FAST，BRIEF等があります．
+ここでは詳細なアルゴリズムの説明は省略します，気になる方は論文や解説記事を参考にしてください．
+find_object_2dパッケージでは画像処理ライブラリであるopencvに実装されているアルゴリズムを利用しています．</p>
+<h3 id="インストール">インストール</h3>
+<p>find_object_2dパッケージをインストールします．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-find-object-2d
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="実行">実行</h3>
+<p>find_object_2dを実行する前にROS2でカメラを使えるようにします．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run usb_cam usb_cam_node_exe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>次に，find_object_2dパッケージのノードを起動します．
+こちらのノードでは画像データを/imageという名前で購読する必要があるため，ノードを起動する際にトピック名を変更します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run find_object_2d find_object_2d image:<span style="color:#ce5c00;font-weight:bold">=</span>/image_raw
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記のコマンドを実行すると下記のようなウィンドウが起動します．
+<img src="findobejct1.png#center" alt="実行結果1"></p>
+<p>画面左がテンプレート画像(初期の状態では空です)，右がカメラから取得した画像です．
+画像中の黄色い点はキーポイントを表します．
+テクスチャ(模様)の情報が多いトランプの絵柄から多くのキーポイントが検出できていることが確認できます．</p>
+<p>画像中からクローバの13のカードを検出するためにテンプレートを登録します．
+画面左の<code>Objects</code>と書かれた領域で右クリックすると，メニューが表示されます．
+今回は画像に写ったトランプをテンプレートとするため，<code>Add object from scene...</code>を選択します．</p>
+<p><img src="findobejct2.png#center" alt="実行結果2"></p>
+<p>テンプレートを登録する小さなウィンドウが表示されます．
+登録したいものが写った状態で<code>Take picture</code>をクリックしてください．</p>
+<p><img src="findobejct3.png#center" alt="実行結果3"></p>
+<p>映像が停止して，<code>Take picture</code>をクリックした瞬間の画像が表示されます．
+テンプレートとして登録した領域をドラッグし，<code>Next</code>をクリックしましょう．</p>
+<p><img src="findobejct4.png#center" alt="実行結果4"></p>
+<p>ドラッグした領域が表示されます．
+ドラッグした領域に複数のキーポイントが含まれているか確認してください．
+キーポイントの数が多ければ多いほど，安定した検出ができるようになります．
+問題なければ<code>End</code>をクリックします．</p>
+<p><img src="findobejct6.png#center" alt="実行結果6">
+画面左に登録したテンプレートが表示され，画面右の映像からテンプレート画像を検出します．
+下記の画像の場合，<code>12</code>は物体のID，括弧内の<code>100</code>はキーポイントの数，
+<code>68</code>はマッチングしたキーポイント数，<code>109</code>マッチングしなかったキーポイント数を表しています．
+マッチングしたキーポイント数が多いほど正確に検出できるため，画面右の検出枠が安定します．</p>
+<p><img src="findobejct7.png#center" alt="実行結果7"></p>
+<p>初期の状態では，SIFTと呼ばれる特徴点検出，特徴量記述子を用いて画像を認識するように設定されています．
+SIFTは，画像の回転やスケール(大きさ)，明るさの変化に対応できるため，トランプの位置を変えても安定した検出されます．</p>
+<p><img src="findobejct8.png#center" alt="実行結果8"></p>
+<p>また，一部分が隠れても幾つかのキーポイントが検出されれば，画像を認識することが可能です．
+ただし，マッチングしたキーポイントの位置関係から位置と大きさを推定するため，
+マッチングしたキーポイントの数が少ないと認識結果が不安定となります．</p>
+<p><img src="findobejct9.png#center" alt="実行結果9"></p>
+<h2 id="ノードとトピックの確認">ノードとトピックの確認</h2>
+<p>コマンドラインツールを利用してノードやトピック等の情報を確認しましょう．
+まずはノードを確認します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/find_object_2d
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/usb_cam
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>カメラから画像を取得するノードが<code>/usb_cam</code>，画像認識を行うノードが<code>/find_object_2d</code>となります．
+ノード名が分かったのでノードの情報を確認します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node info /find_object_2d 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/find_object_2d
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Subscribers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /image_raw: sensor_msgs/msg/Image
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /parameter_events: rcl_interfaces/msg/ParameterEvent
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Publishers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /info: find_object_2d/msg/DetectionInfo
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /objects: std_msgs/msg/Float32MultiArray
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /objectsStamped: find_object_2d/msg/ObjectsStamped
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /parameter_events: rcl_interfaces/msg/ParameterEvent
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /rosout: rcl_interfaces/msg/Log
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /tf: tf2_msgs/msg/TFMessage
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Service Servers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /find_object_2d/describe_parameters: rcl_interfaces/srv/DescribeParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /find_object_2d/get_parameter_types: rcl_interfaces/srv/GetParameterTypes
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /find_object_2d/get_parameters: rcl_interfaces/srv/GetParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /find_object_2d/list_parameters: rcl_interfaces/srv/ListParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /find_object_2d/set_parameters: rcl_interfaces/srv/SetParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /find_object_2d/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Service Clients:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Action Servers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Action Clients:
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>/find_object_2d</code>はカメラから取得した画像トピック<code>/image_raw:</code>を購読し，
+複数のトピックを配信していることがわかります．
+認識結果は<code>/objects</code>という名前のトピックで配信されています．
+トピック<code>/objects</code>のメッセージ型を調べてみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 topic info /objects
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Type: std_msgs/msg/Float32MultiArray
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Publisher count: 1
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Subscription count: 0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>このメッセージ型が配信する情報を調べます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 interface show std_msgs/msg/Float32MultiArray 
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> This was originally provided as an example message.
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> It is deprecated as of Foxy
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> It is recommended to create your own semantically meaningful message.
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> However <span style="color:#204a87;font-weight:bold">if</span> you would like to <span style="color:#204a87;font-weight:bold">continue</span> using this please use the equivalent in example_msgs.
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902">#</span> Please look at the MultiArrayLayout message definition <span style="color:#204a87;font-weight:bold">for</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> documentation on all multiarrays.
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">MultiArrayLayout  layout        # specification of data layout
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	#
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	#
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	#
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	#
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	#
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	MultiArrayDimension[] dim #
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		string label   #
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		uint32 size    #
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		uint32 stride  #
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	uint32 data_offset        #
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float32[]         data          # array of data
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>少し分かりにくいですが，認識結果は<code>data</code>に入ります．
+最後にトピックをコマンドラインツールで購読します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic <span style="color:#204a87">echo</span> /objects
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">layout:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  dim: []
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  data_offset: 0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">data:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 13.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 121.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 176.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 0.8610056638717651
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- -0.05650526285171509
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 0.0008222997421398759
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 0.0028126586694270372
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 0.46643751859664917
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- -0.0007393158739432693
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 106.66329956054688
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 129.73094177246094
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 1.0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>テンプレート画像を認識すると上記のようにトピックが確認できます．
+dataの中は順番に，物体のID，認識物体の横方向の大きさ(画素数)，縦方向の大きさ，3x3のホモグラフィー行列となります．
+ホモグラフィー行列は平面を射影変換するための行列です．
+ホモグラフィー行列により認識した物体(認識した物体の矩形)の変形度合いを表すことができます．</p>
+<p>コマンドラインツールで調べた情報を利用して，作成したシステムに組み込むことができます．</p>
+<h2 id="guiを使わない方法">GUIを使わない方法</h2>
+<p>上記の方法で特定の画像を認識することが可能ですが，GUI操作を伴うとシステムに組み込むことが難しくなります．
+find_object_2dでは，パラメータを設定することでGUIを使わずに動作させることができます．
+GUI操作によるテンプレートの登録ができないため，事前に登録した状態のセッション情報をGUIで保存しておき，実行に引数でセッション情報を与えます．
+具体的には，<code>session_path</code>というパラメータにセッションファイル(今回はcard.bin)，<code>gui</code>というパラメータに<code>false</code>を与えます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run find_object_2d find_object_2d image:<span style="color:#ce5c00;font-weight:bold">=</span>image_raw  --ros-args -p session_path:<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;/home/yuu/card.bin&#34;</span> --ros-args -p gui:<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87">false</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ウィンドウにより認識結果を確認することができないため分かりにくいですが，先ほどと同様に<code>topic echo</code>により認識結果を確認することができます．</p>
+
+	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+      </div>
+      <div class="col-6 col-sm-4 text-end text-xs-center order-sm-3">
+        
+      </div>
+      <div class="td-footer__copyright-etc col-12 col-sm-4 text-center py-2 order-sm-2">
+        <span>&copy; 2024 中部大学理工学部AIロボティクス学科 All Rights Reserved</span>
+        
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <script src="/ai-robot/js/main.min.f144e2c5ca4a17d62d06a21473c0b37ce1b36a5f7b700fea1760dc6d55f33bf1.js" integrity="sha256-8UTixcpKF9YtBqIUc8CzfOGzal97cA/qF2DcbVXzO/E=" crossorigin="anonymous"></script>
+<script defer src="/ai-robot/js/click-to-copy.min.f724d3de49218995223b7316aa2e53e2b34bf42026bf399ebb21bb02212402d1.js" integrity="sha256-9yTT3kkhiZUiO3MWqi5T4rNL9CAmvzmeuyG7AiEkAtE=" crossorigin="anonymous"></script>
+<script src='/ai-robot/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

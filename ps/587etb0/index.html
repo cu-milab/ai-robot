@@ -1,0 +1,767 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="ja" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.120.2">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/ai-robot/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/ai-robot/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/ai-robot/favicons/android-192x192.png" sizes="192x192">
+
+<title>ワークスペースとパッケージの作成 | 中部大学AIロボティクス学科</title>
+<meta name="description" content="colconを用いたワークスペース及びパッケージの作り方，Python言語によるプログラミングする方法学びます．">
+<meta property="og:title" content="ワークスペースとパッケージの作成" />
+<meta property="og:description" content="colconを用いたワークスペース及びパッケージの作り方，Python言語によるプログラミングする方法学びます．" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/587etb0/" /><meta property="article:section" content="robotics" />
+
+<meta property="og:site_name" content="Goldydocs2" />
+
+<meta itemprop="name" content="ワークスペースとパッケージの作成">
+<meta itemprop="description" content="colconを用いたワークスペース及びパッケージの作り方，Python言語によるプログラミングする方法学びます．">
+
+<meta itemprop="wordCount" content="709">
+<meta itemprop="keywords" content="インストール,Python," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ワークスペースとパッケージの作成"/>
+<meta name="twitter:description" content="colconを用いたワークスペース及びパッケージの作り方，Python言語によるプログラミングする方法学びます．"/>
+
+
+
+
+<link rel="preload" href="/ai-robot/scss/main.min.62ea14fa9166ac179c866e06e1ad3975aebe925c9a1168b02db611ca55de8c87.css" as="style">
+<link href="/ai-robot/scss/main.min.62ea14fa9166ac179c866e06e1ad3975aebe925c9a1168b02db611ca55de8c87.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+  crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VD6HCF8XZQ"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-VD6HCF8XZQ');
+}
+</script>
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar navbar-dark js-navbar-scroll">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/ai-robot/"><span class="navbar-brand__logo navbar-logo"></span><span class="navbar-brand__name">中部大学AIロボティクス学科</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="/ai-robot/robotics/"><span>ロボティクス演習</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/project/"><span>プロジェクト演習</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/ros/"><span>ロボットオペレーティングシステム</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ai-robot/laboratory/"><span>ロボティクスラボ</span></a>
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-ai-robotrobotics-li">
+  <a href="/ai-robot/robotics/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-ai-robotrobotics"><span class="">ロボティクス演習</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpswe1emyp-li">
+  <a href="/ai-robot/ps/we1emyp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpswe1emyp"><span class="">ROS2のインストール</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsabc1234-li">
+  <a href="/ai-robot/ps/abc1234/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsabc1234"><span class="">トピック通信の理解</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-ai-robotps587etb0-li">
+  <a href="/ai-robot/ps/587etb0/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-ai-robotps587etb0"><span class="td-sidebar-nav-active-item">ワークスペースとパッケージの作成</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpstbaet4s-li">
+  <a href="/ai-robot/ps/tbaet4s/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpstbaet4s"><span class="">トピック通信の実装</span></a>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            
+<div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+<a id="print" href="https://cu-milab.github.io/ai-robot/robotics/_print/"><i class="fa-solid fa-print fa-fw"></i> セクション全体を印刷</a>
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#目的">目的</a></li>
+    <li><a href="#前準備">前準備</a></li>
+    <li><a href="#ワークスペースとパッケージの作成">ワークスペースとパッケージの作成</a>
+      <ul>
+        <li><a href="#ワークスペースの作成">ワークスペースの作成</a></li>
+        <li><a href="#パッケージの作成">パッケージの作成</a></li>
+      </ul>
+    </li>
+    <li><a href="#colconを用いたビルド">colconを用いたビルド</a></li>
+    <li><a href="#ノードの起動">ノードの起動</a>
+      <ul>
+        <li><a href="#環境変数の設定">環境変数の設定</a></li>
+        <li><a href="#実行">実行</a></li>
+      </ul>
+    </li>
+    <li><a href="#ソースコードの変更">ソースコードの変更</a></li>
+  </ul>
+</nav>
+      </div>
+    
+            <div class="taxonomy taxonomy-terms-cloud taxo-tags">
+      <h5 class="taxonomy-title">Tag Cloud</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/launch/" data-taxonomy-term="launch"><span class="taxonomy-label">launch</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/stage/" data-taxonomy-term="stage"><span class="taxonomy-label">stage</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/turtlebot3/" data-taxonomy-term="turtlebot3"><span class="taxonomy-label">Turtlebot3</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1/" data-taxonomy-term="%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1"><span class="taxonomy-label">トピック通信</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3/" data-taxonomy-term="%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"><span class="taxonomy-label">ナビゲーション</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86/" data-taxonomy-term="%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86"><span class="taxonomy-label">画像処理</span><span class="taxonomy-count">3</span></a></li>
+        </ul>
+    </div>
+  <div class="taxonomy taxonomy-terms-cloud taxo-categories">
+      <h5 class="taxonomy-title">Categories</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92"><span class="taxonomy-label">プロジェクト演習</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0"><span class="taxonomy-label">ロボットオペレーティングシステム</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C"><span class="taxonomy-label">ロボティクスラボ</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92"><span class="taxonomy-label">ロボティクス演習</span><span class="taxonomy-count">5</span></a></li>
+        </ul>
+    </div>
+  
+	
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="https://cu-milab.github.io/ai-robot/robotics/">ロボティクス演習</a></li>
+  <li class="breadcrumb-item active" aria-current="page">
+    ワークスペースとパッケージの作成</li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>ワークスペースとパッケージの作成</h1>
+	<div class="lead">colconを用いたワークスペース及びパッケージの作り方，Python言語によるプログラミングする方法学びます．</div>
+	<header class="article-meta">
+		<div class="taxonomy taxonomy-terms-article taxo-tags">
+  <h5 class="taxonomy-title">Tags:</h5>
+  <ul class="taxonomy-terms">
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span></a></li>
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span></a></li>
+    </ul>
+</div>
+<div class="taxonomy taxonomy-terms-article taxo-categories">
+  <h5 class="taxonomy-title">Categories:</h5>
+  <ul class="taxonomy-terms">
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92"><span class="taxonomy-label">ロボティクス演習</span></a></li>
+    </ul>
+</div>
+
+  </header>
+	<h2 id="目的">目的</h2>
+<p>ROS2におけるワークスペース及びパッケージの概念を理解し，演習を通してワークスペースの作成から自作ノードを起動する方法までを学びます．
+講義の前半では，座学形式でワークスペースやパッケージ，ビルドツールcolconについて学び，
+後半は下記の演習を通して実践的に身につけます．</p>
+<h2 id="前準備">前準備</h2>
+<p>ROS2がリリースした当初は，amentというビルドシステムによりビルドしていました．
+amentはROS2のパッケージのみビルドできるシステムでしたが，ROS2 Bouncyより新たに登場したcolconと呼ばれるビルドツールによりROS1とROS2の両方をビルドできるようになりました．
+内部ではROS2パッケージをamentによりビルドしています．
+colconはROS2パッケージに含まれていないため，下記のコマンドによりインストールしましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install python3-colcon-common-extensions
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ワークスペースとパッケージの作成">ワークスペースとパッケージの作成</h2>
+<h3 id="ワークスペースの作成">ワークスペースの作成</h3>
+<p>まずは作業用のディレクトリとなるワークスペースとパッケージを保存するsrcディレクトリを作成します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> mkdir practice_ws
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> practice_ws
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> mkdir src
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">pwd</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/home/[user_name]/practice_ws
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記のコマンドの <code>pwd</code>はカレントディレクトリまでの絶対パスを表示するコマンドです．
+出力結果の <code>[user_name]</code>には，各自が作成したアカウントの名前が入ります．
+今後の作業では，頻繁にディレクトリの作成と移動を繰り返すため，
+カレントディレクトリまでの絶対パスが把握しにくくなります．
+そのような際には，<code>pwd</code> コマンドでカレントディレクトリまでの絶対パスを確認してください．</p>
+<p>まだパッケージを作成していませんが，この状態でもビルドできます．
+下記のコマンドによりビルドしましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon build
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Summary: 0 packages finished [0.29s]
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+<div class="alert alert-warning" role="alert">
+
+
+    上記のコマンドはワークスペース(今回はpractice_wsディレクトリ)で実行します．
+異なるディレクトリでビルドするとディレクトリ構造を崩れる原因となるので注意してください．
+
+</div>
+
+<p>ビルドするとワークスペースに下記の3つのディレクトリが生成されます．</p>
+<ul>
+<li>build : ビルド時に作成した中間ファイルが保存されます．</li>
+<li>install : ビルドにより生成したパッケージがインストール(保存)されます．</li>
+<li>log : ビルド時のログが出力されます．</li>
+</ul>
+<h3 id="パッケージの作成">パッケージの作成</h3>
+<p>次にパッケージを作成します．
+パッケージは，ワークスペースの <code>src</code> ディレクトリ内に作成します．
+<code>cd</code>コマンドで<code>src</code>ディレクトリに移動します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> src
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>パッケージの作成には<code>pkg create</code>コマンドを使用します．
+ヘルプを確認してみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 pkg create -h
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">usage: ros2 pkg create [-h] [--package-format {2,3}]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                       [--description DESCRIPTION] [--license LICENSE]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                       [--destination-directory DESTINATION_DIRECTORY]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                       [--build-type {cmake,ament_cmake,ament_python}]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                       [--dependencies DEPENDENCIES [DEPENDENCIES ...]]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                       [--maintainer-email MAINTAINER_EMAIL]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                       [--maintainer-name MAINTAINER_NAME]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                       [--node-name NODE_NAME] [--library-name LIBRARY_NAME]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                       package_name
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Create a new ROS 2 package
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">positional arguments:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  package_name          The package name
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">options:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  -h, --help            show this help message and exit
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --package-format {2,3}, --package_format {2,3}
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        The package.xml format.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --description DESCRIPTION
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        The description given in the package.xml
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --license LICENSE     The license attached to this package; this can be an
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        arbitrary string, but a LICENSE file will only be
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        generated if it is one of the supported licenses (pass
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        &#39;?&#39; to get a list)
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --destination-directory DESTINATION_DIRECTORY
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        Directory where to create the package directory
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --build-type {cmake,ament_cmake,ament_python}
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        The build type to process the package with
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --dependencies DEPENDENCIES [DEPENDENCIES ...]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        list of dependencies
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --maintainer-email MAINTAINER_EMAIL
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        email address of the maintainer of this package
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --maintainer-name MAINTAINER_NAME
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        name of the maintainer of this package
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --node-name NODE_NAME
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        name of the empty executable
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  --library-name LIBRARY_NAME
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                        name of the empty library
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>オプションが多いですが，最低でも<code>package_name</code>が必要であることがわかります．
+今回は<code>package_name</code>を<code>practice</code>とします．</p>
+<p>上記のコマンドには便利なオプションが用意されています．
+Python言語でプログラミングする場合には，<code>--build-type ament_python</code>というオプションを加えましょう．
+このオプションを加えることで<code>setup.py</code>ファイルが生成され，このファイルでエントリーポイント(プログラム実行時の起点の関数)を記述することができます．
+また，このファイルを用いて<code>setuptools</code>により指定したパッケージをインストールすることができるため，自作したパッケージを配布する際に便利です．</p>
+
+
+<div class="alert alert-primary" role="alert">
+
+
+    C言語やC++言語でプログラミングする際には， <code>--build-type</code> のオプションに <code>ament_cmake</code> を与えます．
+
+</div>
+
+<p>また，<code>--node-name [node_name]</code>というオプションも加えましょう．
+[node_name]で指定した名前のpythonファイルが生成されます．
+それでは，下記のコマンドでパッケージを作成します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 pkg create --build-type ament_python --node-name practice_node practice 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">going to create a new package
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">package name: practice
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">destination directory: /home/yuu/practice_ws/src
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">package format: 3
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">version: 0.0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">description: TODO: Package description
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">maintainer: [&#39;yuu &lt;yuu@todo.todo&gt;&#39;]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">licenses: [&#39;TODO: License declaration&#39;]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">build type: ament_python
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">dependencies: []
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">node_name: practice_node
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating folder ./practice
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating ./practice/package.xml
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating source folder
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating folder ./practice/practice
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating ./practice/setup.py
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating ./practice/setup.cfg
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating folder ./practice/resource
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating ./practice/resource/practice
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating ./practice/practice/__init__.py
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating folder ./practice/test
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating ./practice/test/test_copyright.py
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating ./practice/test/test_flake8.py
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating ./practice/test/test_pep257.py
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">creating ./practice/practice/practice_node.py
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">[WARNING]: Unknown license &#39;TODO: License declaration&#39;.  This has been set in the package.xml, but no LICENSE file has been created.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">It is recommended to use one of the ament license identitifers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Apache-2.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">BSL-1.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">BSD-2.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">BSD-2-Clause
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">BSD-3-Clause
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">GPL-3.0-only
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">LGPL-3.0-only
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">MIT-0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+<div class="alert alert-primary" role="alert">
+
+
+    パッケージを作成した際にライセンスに関する警告が出力されます．
+<code>--license</code>オプションでライセンスの種類を指定すると警告が発生せず，LICENSEファイルが自動的に作成されます．
+今回は作成したパッケージを配布しないため，ライセンスについては取り扱いません．
+
+</div>
+
+<p>作成したパッケージのディレクトリに移動し，<code>ls</code>コマンドでどのようなディレクトリやファイルが生成されたか確認します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> practice
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> ls 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">package.xml  practice  resource  setup.cfg  setup.py  test
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>幾つかのファイルやディレクトリが作成されたことを確認できます．
+今回は<code>--node-name</code>オプションを使用してパッケージを作成したため，pythonファイルが自動的に作成されます．
+パッケージと同じ名前の<code>practice</code>ディレクトリの中に指定したファイル名<code>practice_node.py</code>で作成されます．</p>
+
+
+<div class="alert alert-primary" role="alert">
+
+
+    pythonファイル以外にもパッケージについて説明する<code>package.xml</code>やパッケージの情報やインストール方法を記述する<code>setup.py</code>などのファイルが生成されます．
+特に，<code>setup.py</code>は，プログラム実行時の起点となるエントリーポイントを定義する重要なファイルです．
+
+</div>
+
+<p><code>practice_node.py</code>をエディタで開いてみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> practice
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> vim practice_node.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>初期の状態では，ROSの機能を使用するコードは記述されておらず，
+print関数で文字列を出力するのみとなっています．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">():</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;Hi from practice.&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">__name__</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;__main__&#39;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="colconを用いたビルド">colconを用いたビルド</h2>
+<p>まずはこの状態でビルドして実行しましょう．
+ビルドするためには，ワークスペースのルートディレクトリ(最上位のディレクトリ)に移動する必要があります．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ../../../
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>移動したらビルドツールcolconを用いてビルドします．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="background-color:#dfdfdf"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon build
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Starting &gt;&gt;&gt; practice
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">--- stderr: practice                   
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  warnings.warn(
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">---
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Finished &lt;&lt;&lt; practice [0.43s]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Summary: 1 package finished [0.73s]
+</span></span></span><span style="display:flex; background-color:#dfdfdf"><span><span style="color:#000;font-style:italic">  1 package had stderr output: practice
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+<div class="alert alert-primary" role="alert">
+
+
+    使用しているsetuptoolsのバージョンが58.3よりも新しい場合には警告が表示されます．
+Pythonのパッケージ管理ツールがsetup.pyを用いてインストールすることが非推奨となったことが原因です．
+setuptoolsをダウングレードすれば警告が表示されなくなりますが，このままでも大きな問題は発生しません．
+あまり好ましい状態ではありませんが，ダウングレードによる問題が発生する可能性もあるためこのまま進めます．
+
+</div>
+
+<p>無事にビルドが完了すると，buildとinstall，logディレクトリが生成されます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span>ls
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">build  install  log  src
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>buildはビルド中に生成されるテンポラリファイル，installは実行時に使用するファイル，logはビルド時の出力を記録したファイルが保存されます．</p>
+<h2 id="ノードの起動">ノードの起動</h2>
+<h3 id="環境変数の設定">環境変数の設定</h3>
+<p>作成したノードを起動する前に，作成したパッケージがどこにあるかをコンピュータに認識させる必要があります．
+そのため，sourceコマンドを用いて環境変数を設定します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">source</span> install/local_setup.bash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記のコマンドにより環境変数<code>$COLCON_PREFIX_PATH</code>にビルド時に生成したインストールファイルのパスが設定されます．
+試しに<code>echo</code>コマンドで確認しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">echo</span> <span style="color:#000">$COLCON_PREFIX_PATH</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/home/yuu/practice_ws/install
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記のような出力が表示されない場合には環境変数を正しく設定できてません．
+何かしらの処理を間違えた，スキップしているので見直しましょう．
+なお，新しいターミナルを開いた場合には，環境変数は初期化されます．
+ターミナルを開くたびに上記の設定を行ってください．</p>
+
+
+<div class="alert alert-primary" role="alert">
+
+
+    <p>ROS2をインストールした際，ホームディレクトリに存在する<code>.bashrc</code>に下記を追加しました．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">source /opt/ros/humble/setup.bash
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>この設定をアンダーレイと呼びます．
+これによりROS2のシステムを利用することが可能となります．</p>
+<p>これに対して，先ほどのように自作したワークスペースを認識させる操作をオーバーレイと呼びます．
+同じ名前のパッケージが存在する場合にはオーバレイのパッケージが優先されます．
+普段はアンダーレイ，オーバーレイを意識する必要はありません．</p>
+
+
+</div>
+
+<p>ROS2をインストールした際に作成されるsetup.bashを読み込み，ROS2の</p>
+<h3 id="実行">実行</h3>
+<p>それでは実行しましょう．
+前回と同様の方法で実行可能です．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run practice practice_node
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Hi from practice.
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>ここまで正しい手順で操作できていると<code>Hi from practice.</code>が出力されます．</p>
+<h2 id="ソースコードの変更">ソースコードの変更</h2>
+<p>少しだけソースコードを変更しましょう．
+エディタでソースファイルを開きます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> vim src/practice/practice/practice_node.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2行目の後に下記のコードを追加します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>    <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;Hello ROS2.&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>先ほどの方法でビルドしても良いですが，幾つか便利なオプションが存在するので使ってみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon build --packages-select practice --symlink-install
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Starting &gt;&gt;&gt; practice
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">--- stderr: practice                   
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  warnings.warn(
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">---
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Finished &lt;&lt;&lt; practice [0.42s]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">Summary: 1 package finished [0.71s]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  1 package had stderr output: practice
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>オプション<code>--packages-select [package_name]</code>は，指定したパッケージのみをビルドする方法です．
+ワークスペースの規模が大きくなるとビルドに時間を要します．
+特定のパッケージのみビルドしたい場合に利用しましょう．
+もう1つのオプション<code>--symlink-install</code>は，installディレクトリにファイルをコピーする代わりにシンボリックリンク(ショートカット)を作成します．
+これにより，プログラムを変更しても再ビルドが必要なくなります．
+作業の効率が高くなり，生産性が向上しますのでぜひ使用しましょう．</p>
+<p>改変したプログラムを実行すると下記のような出力が得られます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run practice practice_node
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Hi from practice.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Hello ROS2.
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+      </div>
+      <div class="col-6 col-sm-4 text-end text-xs-center order-sm-3">
+        
+      </div>
+      <div class="td-footer__copyright-etc col-12 col-sm-4 text-center py-2 order-sm-2">
+        <span>&copy; 2024 中部大学理工学部AIロボティクス学科 All Rights Reserved</span>
+        
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <script src="/ai-robot/js/main.min.f144e2c5ca4a17d62d06a21473c0b37ce1b36a5f7b700fea1760dc6d55f33bf1.js" integrity="sha256-8UTixcpKF9YtBqIUc8CzfOGzal97cA/qF2DcbVXzO/E=" crossorigin="anonymous"></script>
+<script defer src="/ai-robot/js/click-to-copy.min.f724d3de49218995223b7316aa2e53e2b34bf42026bf399ebb21bb02212402d1.js" integrity="sha256-9yTT3kkhiZUiO3MWqi5T4rNL9CAmvzmeuyG7AiEkAtE=" crossorigin="anonymous"></script>
+<script src='/ai-robot/js/tabpane-persist.js'></script>
+
+  </body>
+</html>
