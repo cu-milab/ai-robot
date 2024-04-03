@@ -45,7 +45,7 @@ SDカードにubuntuをインストール turtlebotに搭載されているRaspb
 https://www.raspberrypi.com/software/
 Raspberry Pi Imagerを起動． OSを選択 =&gt; Other gerneral-purpose OS =&gt; Ubuntu =&gt; Ubuntu Server 22.04.3 LTS(64bit) ストレージの選択 =&gt; SDカード カスタマイズ =&gt; 設定を編集する =&gt; 一般 ホスト名：tb01(数字はシールと同じ) ユーザー名：ros パスワード：ros WiFi (/etc/netplan/50-cloud-init.yamlで後から変更可能) SSID：robolabB1 (適宜変更) パスワード：roboticslab wifiを使う国：JP ロケール設定をする タイムゾーン：Asia/Tokyo キーボードレイアウト：jp カスタマイズ =&gt; 設定を編集する =&gt; サービス SSHを有効にする パスワード認証を使う 書き込み 設定変更 ubuntu自動更新の無効化 /etc/apt/apt.conf.d/20auto-upgradesを開き，下記のように編集 APT::Periodic::Update-Package-Lists &#34;0&#34;; APT::Periodic::Unattended-Upgrade &#34;0&#34;; ネットワーク接続関係 初期設定では，ネットワークに接続するまで待機するため無効化する． $ systemctl mask systemd-networkd-wait-online.service サスペンドとスリープの無効化 $ sudo systemctl mask sleep.">
 <meta itemprop="dateModified" content="2024-03-26T13:13:22+09:00" />
-<meta itemprop="wordCount" content="302">
+<meta itemprop="wordCount" content="336">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="メモ"/>
 <meta name="twitter:description" content="tb3管理表 https://docs.google.com/spreadsheets/d/1Dsn0B4qgr0d_l07FCjJ3_7MTArnQmQWde6SJHWU4wHE/edit#gid=0
@@ -368,14 +368,58 @@ ubuntu起動後は，下記のファイルを編集して再起動すること�
             dhcp4: true
             optional: true
 </code></pre><h2 id="sdカードのコピー">SDカードのコピー</h2>
-<p><a href="https://www.amazon.co.jp/U-Reach-Japan-SD312N-microSD-SD%E3%82%AB%E3%83%BC%E3%83%89%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%80%81%E6%B6%88%E5%8E%BB%E3%80%81%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88%E3%81%8C%E5%8F%AF%E8%83%BD%E3%80%82%E5%A4%89%E6%8F%9B%E3%82%A2%E3%83%80%E3%83%97%E3%82%BF%E3%81%AA%E3%81%97%E3%81%A7microSD%E3%82%AB%E3%83%BC%E3%83%89%E3%82%92%E7%9B%B4%E6%8E%A5%E6%8C%BF%E5%85%A5%E5%8F%AF%E8%83%BD%E3%80%82%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC%E9%A7%86%E5%8B%95%E5%AF%BE%E5%BF%9C/dp/B07P8YFDLG/ref=sr_1_10?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&amp;crid=3B1NAM5SRVSUZ&amp;dib=eyJ2IjoiMSJ9.6pwkRZ8FMHKEhkGm-SiBG2G2fHLsCAHmayZWD9qYsTXBi21C9JwbCa10wcJL9EoEnRT8QZQKG4btFlzOOo-3JDvucpx8x2Cvzk4A9mQo39sToLA_MRAjHnp0y2HUj96WaZP2V0KEXSOKGcC3SF3IcMdQThqupd2N6OeDWm60kbfClVmt84oJNw7dFhXLkxIR64vMT2Hfhjc_nug7DgNCdUTnap1r7jQkeKp8Gfm2XLgIGxeTvYpP3a7Zopb77STOVUqqDqMppsWUuQVJUliaW5FbL7nTHU1M5nAZilC3p0g.1BQgUj_Vzi4iWpmqnM7laLL5kNc6pZadbOCExj0yjuA&amp;dib_tag=se&amp;keywords=%E3%83%87%E3%83%A5%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%BF%E3%83%BC+sd&amp;qid=1709359193&amp;sprefix=%E3%83%87%E3%83%A5%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%BF%E3%83%BC+s%2Caps%2C161&amp;sr=8-10">デュプリケータ</a>でSDカードをコピー可能．
+<p><a href="https://www.amazon.co.jp/U-Reach-Japan-SD312N-microSD-SD%E3%82%AB%E3%83%BC%E3%83%89%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC%E3%80%81%E6%B6%88%E5%8E%BB%E3%80%81%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88%E3%81%8C%E5%8F%AF%E8%83%BD%E3%80%82%E5%A4%89%E6%8F%9B%E3%82%A2%E3%83%80%E3%83%97%E3%82%BF%E3%81%AA%E3%81%97%E3%81%A7microSD%E3%82%AB%E3%83%BC%E3%83%89%E3%82%92%E7%9B%B4%E6%8E%A5%E6%8C%BF%E5%85%A5%E5%8F%AF%E8%83%BD%E3%80%82%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC%E9%A7%86%E5%8B%95%E5%AF%BE%E5%BF%9C/dp/B07P8YFDLG/ref=sr_1_10?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&amp;crid=3B1NAM5SRVSUZ&amp;dib=eyJ2IjoiMSJ9.6pwkRZ8FMHKEhkGm-SiBG2G2fHLsCAHmayZWD9qYsTXBi21C9JwbCa10wcJL9EoEnRT8QZQKG4btFlzOOo-3JDvucpx8x2Cvzk4A9mQo39sToLA_MRAjHnp0y2HUj96WaZP2V0KEXSOKGcC3SF3IcMdQThqupd2N6OeDWm60kbfClVmt84oJNw7dFhXLkxIR64vMT2Hfhjc_nug7DgNCdUTnap1r7jQkeKp8Gfm2XLgIGxeTvYpP3a7Zopb77STOVUqqDqMppsWUuQVJUliaW5FbL7nTHU1M5nAZilC3p0g.1BQgUj_Vzi4iWpmqnM7laLL5kNc6pZadbOCExj0yjuA&amp;dib_tag=se&amp;keywords=%E3%83%87%E3%83%A5%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%BF%E3%83%BC+sd&amp;qid=1709359193&amp;sprefix=%E3%83%87%E3%83%A5%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%BF%E3%83%BC+s%2Caps%2C161&amp;sr=8-10">デュプリケータ</a>でMicro SDXCカード(以降，SDカード)をコピー可能．
 ただし，コピー元よりもコピー先の容量が小さい場合には，コピー時に警告が発生する．
 その状況で警告を無視して強制的にコピーできるが，ubuntuが起動せずにbusyboxが起動する．
 busyboxでfsckコマンドで修復を試みるが失敗する．</p>
 <p>同じ容量のSDカードを購入しても，メーカーやシリーズによって微妙に容量が異なる．
 SDカード内に管理領域を確保しているが，この管理領域の容量(全体の3%程度)がメーカーやシリーズに異なるためである．
-現状，デュプリケータでコピーする場合には，全く同じメーカかつシリーズのSDカードでコピーするしかない．
-(管理領域の容量が同程度のSDカードを検証する予定)</p>
+Turtlebot3を購入した際に付属したSDカードは，Samsung社のEVO Plus32GBであるが，現在は購入ができない状態である．
+代替品の候補を探すため幾つかのSDカード(容量は公称32GB)を購入して容量を確認した．</p>
+<table>
+<thead>
+<tr>
+<th>メーカー</th>
+<th>品名 or シリーズ</th>
+<th>使用可能な容量[MB]</th>
+<th>Amazonの商品URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Samsung</td>
+<td>EVO Plus</td>
+<td>30,528</td>
+<td><a href="https://www.amazon.co.jp/10%E5%AF%BE%E5%BF%9C%E3%80%91Samsung-microSD%E3%82%AB%E3%83%BC%E3%83%8932GB-Nintendo-MB-MC32GA-ECO/dp/B06XSV23T1/ref=sr_1_3?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&amp;crid=3VRGJVXE6G2TE&amp;dib=eyJ2IjoiMSJ9.arBTx-9K9Naez5en53NNaVxY-zsFNXWHXUYmMo1qZIIMaDM12o37sS1SlpRNnD5Gt_heU35rqJqtgSPwoxR9xpqhl0hy48is5Nt1ui3czvn_NM48Eexc68VROABb4pGuLI5JCRhj26eu8XGbsntVtKlCJYmBEJs6WoIkUchx8uZYkRlUCgjXeNnrdwPYEeuJ0x2u31hZevqY774TRpgvuJnyf-MD8qJdeP8XUJzRJWkddIBsdEp9TlK9hkVayE_gZZaFXpXHILDrZmaNL6_KmvUnqf0GUX2RT0GuLKYlP2A.Z93V6HJ1SarEGTLG4JlcmrDBNMYcpMSGLdPixG64GlM&amp;dib_tag=se&amp;keywords=microsd%E3%82%AB%E3%83%BC%E3%83%89+%E3%82%B5%E3%83%A0%E3%82%B9%E3%83%B3+evo%2B+32gb&amp;qid=1712052270&amp;sprefix=microsd%E3%82%AB%E3%83%BC%E3%83%89+%E3%82%B5%E3%83%A0%E3%82%B9%E3%83%B3+evo+32gb%2Caps%2C144&amp;sr=8-3">URL</a></td>
+</tr>
+<tr>
+<td>Gigastone</td>
+<td>GS-2IN1C1032G-R</td>
+<td>29,819</td>
+<td><a href="https://www.amazon.co.jp/Gigastone-%E3%83%9E%E3%82%A4%E3%82%AF%E3%83%ADSD%E3%82%AB%E3%83%BC%E3%83%89-SD%E3%82%A2%E3%83%80%E3%83%97%E3%82%BF%E4%BB%98%E3%81%8D-%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%AB%E3%83%A1%E3%83%A9-%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%84%E3%82%AB%E3%83%A1%E3%83%A9/dp/B00VQOEZQY/ref=sr_1_10?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&amp;crid=1TATXLJ18VE38&amp;dib=eyJ2IjoiMSJ9.z2NB5HbrmlWGyO0QPogLBXsU--EvxOaJeJNxNMtdHBy14Qp09Qlfr0-KSBoCGB5tqJRSoUTvV-Hn307iZXEKwCkf2GzcuKjfmeGvb8FvgP0S1T1bBl-hWlPQw7Oy5gnvQZ-jPKB9Uke9KosT3r7U37SMgVap3o2qTKmVLsaWeDb1zMVqzSSonqz4sjbo7CEC-EpLmvW6BOpNxY_SSfG7mFF0lNowmWjIZQNj9WwpD5LzldmrMioduLaKCLB1Ylor38N4kYq41-BdOyGXrP9BdEs9rKDp-98CcYTecPOUevA.cKt6k3DwyGJoETUUUIba5Q1DHkCa9O2YOXqwHcpJVC8&amp;dib_tag=se&amp;keywords=gigastone%2B%E3%83%9E%E3%82%A4%E3%82%AF%E3%83%ADsd%E3%82%AB%E3%83%BC%E3%83%89%2B32gb&amp;qid=1712052660&amp;sprefix=gigastone%2B%E3%83%9E%E3%82%A4%E3%82%AF%E3%83%ADsd%E3%82%AB%E3%83%BC%E3%83%89%2B32%2Bgb%2Caps%2C177&amp;sr=8-10&amp;th=1">URL</a></td>
+</tr>
+<tr>
+<td>Transcend</td>
+<td>TS32GUSD350V-E</td>
+<td>29,824</td>
+<td><a href="https://www.amazon.co.jp/gp/product/B095SGLNT8/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&amp;th=1">URL</a></td>
+</tr>
+<tr>
+<td>KIOXIA</td>
+<td>KLMEA032G</td>
+<td>29,544</td>
+<td><a href="https://www.amazon.co.jp/gp/product/B08PTNWQ6P/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&amp;psc=1">URL</a></td>
+</tr>
+<tr>
+<td>Samsung</td>
+<td>PRO Endurance</td>
+<td>30,560</td>
+<td><a href="https://www.amazon.co.jp/gp/product/B09ZKTXPGW/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&amp;th=1">URL</a></td>
+</tr>
+</tbody>
+</table>
+<p>Turtlebot3に付随してきたSamsung社のEVO PlusでUbuntu等の環境を作成し，コピー元として使用し，同じシリーズのSDカードを全てクローンする．
+予備のSDカードとしては，上記表のうちSamsung社のPRO Enduranceのみ使用可能であったので，本シリーズのSDカードを採用する．</p>
 <h2 id="コピーしたsdカードの設定">コピーしたSDカードの設定</h2>
 <p>下記の3つ(場合によっては2つ)を変更する．</p>
 <h3 id="hostnameの設定">hostnameの設定</h3>

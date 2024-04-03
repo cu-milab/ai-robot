@@ -1402,49 +1402,58 @@ imgmsg_to_cv2の第2引数で変換する画像フォーマットを指定でき
 <div class="td-content" style="page-break-before: always">
     
 	<h1 id="pg-f071e5611687db94853fda487cac507b">5 - マーカー認識</h1>
-    
+    <div class="lead">ArUcoを用いてマーカーを認識します．</div>
 	<!---
 aruco-ros2
 https://aruco-ros2.readthedocs.io/en/latest/installation.html
 --->
 <h2 id="目的">目的</h2>
+<p>ロボットが外界の環境を感知するためには，センシング技術が必要不可欠です．
+しかしながら，刻々と変化する環境を観測したセンサから得られる情報は膨大ですので，
+意味のある情報を解析することは簡単ではありません．
+今回はARマーカー(QRコードと似ている2次元バーコード)を認識するためのライブラリとしてArUcoを試します．
+このライブラリを利用することで，マーカーが付与された物体の位置・姿勢を簡単に推定することができるようになります．</p>
 <h2 id="インストール手順">インストール手順</h2>
+<p>幾つかのパッケージが必要となりますのでインストールしましょう．
+また，<a href="./../yege236/">前回の講義</a>にてUSBカメラ(ノートPCに搭載されたカメラを含む)を使用するためのパッケージをインストールしました．
+今回も使用するので，インストールできてい人は忘れずに入れてください．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-usb-cam
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-image-transport ros-humble-image-transport-plugins
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-v4l2-camera
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-image-transport ros-humble-image-transport-plugins
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-camera-calibration
-</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">sudo apt install ros-humble-aruco
-</span></span></span></code></pre></td></tr></table>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-aruco
+</span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>前回の講義と同様に，ROS2でカメラから画像トピックを得るためにv4l2_cameraを使用します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 run v4l2_camera v4l2_camera_node
-</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run v4l2_camera v4l2_camera_node
+</span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>画像トピックが配信されているかを確認しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 run rqt_image_view rqt_image_view
-</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run rqt_image_view rqt_image_view
+</span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="配信トピックの確認">配信トピックの確認</h2>
+</div><p>上記のコマンドを実行後，左上のトピック選択欄から画像トピックを選びます．
+選べる画像トピックは下記の通りです．</p>
+<h2 id="配信トピックの確認">配信トピックの確認</h2>
 <ul>
-<li>/image_raw</li>
+<li>/image_raw：未圧縮画像</li>
 <li>/image_raw/compressed</li>
+<li>/image_raw/compressedDepth</li>
 <li>/image_raw/theora</li>
 </ul>
 <p>下記の通信量を確認</p>
