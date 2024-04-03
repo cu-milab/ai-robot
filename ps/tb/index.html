@@ -35,7 +35,7 @@ Raspberry Pi Imagerを起動． OSを選択 =&gt; Other gerneral-purpose OS =&gt
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/tb/" /><meta property="article:section" content="" />
 
-<meta property="article:modified_time" content="2024-03-26T13:13:22+09:00" /><meta property="og:site_name" content="Goldydocs2" />
+<meta property="article:modified_time" content="2024-04-03T17:47:34+09:00" /><meta property="og:site_name" content="Goldydocs2" />
 
 <meta itemprop="name" content="メモ">
 <meta itemprop="description" content="tb3管理表 https://docs.google.com/spreadsheets/d/1Dsn0B4qgr0d_l07FCjJ3_7MTArnQmQWde6SJHWU4wHE/edit#gid=0
@@ -44,8 +44,8 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
 SDカードにubuntuをインストール turtlebotに搭載されているRaspberry Piのバージョンは，4 Model B． 下記よりRaspberry Pi Imagerをダウンロードし，Ubuntuをインストール
 https://www.raspberrypi.com/software/
 Raspberry Pi Imagerを起動． OSを選択 =&gt; Other gerneral-purpose OS =&gt; Ubuntu =&gt; Ubuntu Server 22.04.3 LTS(64bit) ストレージの選択 =&gt; SDカード カスタマイズ =&gt; 設定を編集する =&gt; 一般 ホスト名：tb01(数字はシールと同じ) ユーザー名：ros パスワード：ros WiFi (/etc/netplan/50-cloud-init.yamlで後から変更可能) SSID：robolabB1 (適宜変更) パスワード：roboticslab wifiを使う国：JP ロケール設定をする タイムゾーン：Asia/Tokyo キーボードレイアウト：jp カスタマイズ =&gt; 設定を編集する =&gt; サービス SSHを有効にする パスワード認証を使う 書き込み 設定変更 ubuntu自動更新の無効化 /etc/apt/apt.conf.d/20auto-upgradesを開き，下記のように編集 APT::Periodic::Update-Package-Lists &#34;0&#34;; APT::Periodic::Unattended-Upgrade &#34;0&#34;; ネットワーク接続関係 初期設定では，ネットワークに接続するまで待機するため無効化する． $ systemctl mask systemd-networkd-wait-online.service サスペンドとスリープの無効化 $ sudo systemctl mask sleep.">
-<meta itemprop="dateModified" content="2024-03-26T13:13:22+09:00" />
-<meta itemprop="wordCount" content="336">
+<meta itemprop="dateModified" content="2024-04-03T17:47:34+09:00" />
+<meta itemprop="wordCount" content="339">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="メモ"/>
 <meta name="twitter:description" content="tb3管理表 https://docs.google.com/spreadsheets/d/1Dsn0B4qgr0d_l07FCjJ3_7MTArnQmQWde6SJHWU4wHE/edit#gid=0
@@ -418,8 +418,9 @@ Turtlebot3を購入した際に付属したSDカードは，Samsung社のEVO Plu
 </tr>
 </tbody>
 </table>
-<p>Turtlebot3に付随してきたSamsung社のEVO PlusでUbuntu等の環境を作成し，コピー元として使用し，同じシリーズのSDカードを全てクローンする．
-予備のSDカードとしては，上記表のうちSamsung社のPRO Enduranceのみ使用可能であったので，本シリーズのSDカードを採用する．</p>
+<p>Turtlebot3に付随してきたSamsung社のEVO PlusでUbuntu等の環境を作成し，これをコピー元として同シリーズのSDカードを全てクローンする．
+予備のSDカードとしては，上記表のうちSamsung社のPRO Enduranceのみ使用可能であったので，本シリーズのSDカードを採用する．
+ただし，Samsung社のPRO EnduranceからEVO Plusへは正常にクローンできないので注意が必要．</p>
 <h2 id="コピーしたsdカードの設定">コピーしたSDカードの設定</h2>
 <p>下記の3つ(場合によっては2つ)を変更する．</p>
 <h3 id="hostnameの設定">hostnameの設定</h3>
