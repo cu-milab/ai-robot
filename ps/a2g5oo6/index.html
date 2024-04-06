@@ -30,7 +30,7 @@
 <meta itemprop="name" content="マーカー認識">
 <meta itemprop="description" content="ArUcoを用いてマーカーを認識します．">
 
-<meta itemprop="wordCount" content="308">
+<meta itemprop="wordCount" content="378">
 <meta itemprop="keywords" content="インストール,画像処理," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="マーカー認識"/>
 <meta name="twitter:description" content="ArUcoを用いてマーカーを認識します．"/>
@@ -132,9 +132,8 @@ if (!doNotTrack) {
   <ul>
     <li><a href="#目的">目的</a></li>
     <li><a href="#インストール手順">インストール手順</a></li>
-    <li><a href="#配信トピックの確認">配信トピックの確認</a></li>
-    <li><a href="#キャリブレーション">キャリブレーション</a></li>
-    <li><a href="#準備">準備</a></li>
+    <li><a href="#カメラキャリブレーション">カメラキャリブレーション</a></li>
+    <li><a href="#arucoを使用するための準備">ArUcoを使用するための準備</a></li>
     <li><a href="#マーカー生成">マーカー生成</a></li>
     <li><a href="#マーカー認識">マーカー認識</a></li>
   </ul>
@@ -224,7 +223,7 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-aruco
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>前回の講義と同様に，ROS2でカメラから画像トピックを得るためにv4l2_cameraを使用します．</p>
+</div><p>前回の講義と同様に，ROS2でカメラから画像トピックを得るために<code>v4l2_camera</code>を使用します．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -243,31 +242,77 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>上記のコマンドを実行後，左上のトピック選択欄から画像トピックを選びます．
-選べる画像トピックは下記の通りです．</p>
-<h2 id="配信トピックの確認">配信トピックの確認</h2>
-<ul>
-<li>/image_raw：未圧縮画像</li>
-<li>/image_raw/compressed</li>
-<li>/image_raw/compressedDepth</li>
-<li>/image_raw/theora</li>
-</ul>
-<p>下記の通信量を確認</p>
-<ul>
-<li>/image_raw</li>
-<li>/image_raw/compressed</li>
-<li>/image_raw/theora</li>
-</ul>
-<h2 id="キャリブレーション">キャリブレーション</h2>
-<p><a href="./CalibrationBoard.pdf">こちらのキャリブレーションシート</a>を印刷．</p>
+画像トピックとして選択可能な<code>/image_raw</code>は未圧縮画像，
+<code>/image_raw/compressed</code>と<code>/image_raw/theora</code>は圧縮された画像です．
+圧縮された画像トピックが2つありますが，この2つは圧縮方式が異なります．
+画像は多くのデータ量によって表現されるため，画像を通信しようとすると膨大なデータ通信量となります．
+ある環境下で<code>topic bw</code>と<code>topic hz</code>コマンドを用いてデータ通信量とフレームレートを測定すると下記のような結果が得られました．</p>
+<table>
+<thead>
+<tr>
+<th>トピック名</th>
+<th>通信量 [MB/s]</th>
+<th>フレームレート[fps]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/image_raw</td>
+<td>19.7</td>
+<td>21.2</td>
+</tr>
+<tr>
+<td>/image_raw/compressed</td>
+<td>1.92</td>
+<td>23.1</td>
+</tr>
+<tr>
+<td>/image_raw/theora</td>
+<td>0.0108</td>
+<td>23.2</td>
+</tr>
+</tbody>
+</table>
+<p>圧縮したい画像トピックを通信しようとすると，1秒間で19.7[MB]ものデータ通信量が発生します．
+ネットワークによってはリアルタイムでの送受信が難しくなりますので，
+環境によっては圧縮した画像トピックを使用することをお勧めします．
+(今回はローカルマシン内の処理に留まるため，圧縮していない画像トピックを使用します．)</p>
+<h2 id="カメラキャリブレーション">カメラキャリブレーション</h2>
+<p>実世界とカメラモデルを対応づけるために，カメラのパラメータを求めるカメラキャリブレーション(カメラ校正)という作業が必要です．
+カメラキャリブレーションの詳しい説明や方法については省略します．
+ROS2では，カメラキャリブレーションを行うcamera_calibrationというパッケージが用意されています．こちらのパッケージを使用してカメラキャリブレーションを行いましょう．</p>
+<p>キャリブレーションを行う前に，キャリブレーションシートを用意します．
+<a href="./CalibrationBoard.pdf">こちらのキャリブレーションシート</a>をA4サイズで印刷し，剛体の板に貼ります．
+本講義では高い精度を求めないので下敷き等でも構いませんが，精度が必要となる場合には力を加えると変形するような素材は避けた方が良いです．</p>
+<p>カメラキャリブレーションを行うためのノードを立ち上げます．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 run camera_calibration cameracalibrator --size 8x6 --square 0.0245 --ros-args --remap image:=/image_raw
-</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run camera_calibration cameracalibrator --size 8x6 --square 0.0245 --ros-args --remap image:<span style="color:#ce5c00;font-weight:bold">=</span>/image_raw
+</span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>引数の<code>–-size</code>は白黒のマス目が交わる点の数(横x縦)，<code>-–square</code>はマス目の長さ[m]です．
+こちらのノードは<code>/image</code>というトピック名で画像を購読するため，<code>v4l2_camera</code>が配信する画像データのトピック名を変更する必要があります．</p>
+<p>正常に起動できた場合には，カメラから取得できた画像が表示されます．
+用意したキャリブレーションシートを撮影しましょう．
+シート全体を撮影すると，白黒のマス目が交わる交点に色付きの円が表示されます．
+この状態の画像が保存され，実空間のシートの交点の位置と，その交点に対応する画像座標を用いてカメラキャリブレーションを行います．
+精度の良いカメラキャリブレーションを行うためには，シートの位置や姿勢を変えた時の実空間と画像の対応点が多く必要です．
+シートを左右に動かすとXのバーが赤色から緑色になります．
+同様に，シートを上下に動かすとYのバーが緑色に，シートを前後に動かすとSizeのバーが緑色に，シートを傾けるとSkewのバーが緑色になります．
+下記の動画は，カメラキャリブレーションを行った例です．
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/2P2cfSgdi_Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
+<p>全ての項目が緑色もしくは緑色になると、CALIBRATEというボタンが淡い緑色になりますのでクリックしてください．
+暫くするとカメラキャリブレーションが完了します．
+SAVEボタンが緑色になりますのでクリックすると<code>/tmp/calibrationdata.tar.gz</code>に圧縮したファイルが保存されます．
+ホームディレクトリに<code>calibrationdata</code>というディレクトリを作成し，そのディレクトリに展開します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
@@ -281,22 +326,23 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> tar xzvf calibrationdata.tar.gz
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>カメラキャリブレーション時に使用した画像，及びカメラキャリブレーションによって作成したファイル(<code>ost.txt</code>と<code>ost.yaml</code>)が展開されます．
+カメラキャリブレーションによって作成したファイルを<code>cat</code>コマンドで中身を確認すると，幾つかのパラメータが記述されています．
+詳しい説明は省略しますが，このパラメータを用いて画像の座標と実空間の3次元座標の対応を求めることができます．</p>
+<p>起動中の<code>v4l2_camera_node</code>を終了し，改めて起動し直します．
+カメラキャリブレーションによって得られたパラメータを用いてカメラから画像トピックを得るためには下記のコマンドを実行します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> mkdir ~/.ros/camera_info
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> cp ~/calibrationdata/ost.yaml ~/.ros/camera_info/default_cam.yaml
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run v4l2_camera v4l2_camera_node --ros-args --param camera_info_url:<span style="color:#ce5c00;font-weight:bold">=</span>file:///home/yuu/calibrationdata/ost.yaml
 </span></span></code></pre></td></tr></table>
 </div>
-</div>
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/2P2cfSgdi_Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-<h2 id="準備">準備</h2>
+</div><p><code>camera_info_url</code>には，先ほど展開した<code>ost.yaml</code>ファイルの絶対パスを指定してください．
+(上記のコマンドをコピー&amp;ペーストするだけでは正しく実行できないので注意してください．)</p>
+<h2 id="arucoを使用するための準備">ArUcoを使用するための準備</h2>
+<p>ArUcoを使用するために下記をインストールしてください．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -309,7 +355,8 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> pip install opencv-contrib-python<span style="color:#ce5c00;font-weight:bold">==</span>4.5.5.64
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>次にArUcoパッケージをクローンしてビルドします．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
@@ -326,6 +373,8 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="マーカー生成">マーカー生成</h2>
+<p>認識したいマーカーを生成します．
+ヘルプからどのようなマーカーを生成できるか確認しましょう．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -368,7 +417,9 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                 (default: DICT_5X5_250)
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p><code>--id</code>はインデックス番号，<code>--size</code>は大きさ(画素)，<code>--dictionary</code>はマーカーの種類を表します．
+下記はインデックス番号<code>0</code>，一辺が<code>200</code>画素，マーカーの種類として<code>DICT_4X4_100</code>を指定してマーカーを生成するコマンドの実行例です．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
@@ -376,7 +427,12 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run ros2_aruco aruco_generate_marker --id <span style="color:#0000cf;font-weight:bold">0</span> --size <span style="color:#0000cf;font-weight:bold">200</span> --dictionary DICT_4X4_100
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="マーカー認識">マーカー認識</h2>
+</div><p>実行すると<code>png</code>形式で出力された画像ファイルが生成されます．
+生成された画像ファイルをプリンタで印刷します．
+講義では<a href="./marker.pdf">こちらの9つのマーカーを並べた用紙</a>を配布します．</p>
+<h2 id="マーカー認識">マーカー認識</h2>
+<p>マーカー認識を行う前に，どのようなマーカーを認識するかの設定が必要です．
+下記のファイルをエディタで開きましょう．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -385,7 +441,11 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> vim ~/colcon_ws/src/ros2_aruco/ros2_aruco/config/ruco_parameters.yaml
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>パラメータ等を編集します．
+<code>marker_size</code>は印刷したマーカーの一辺のサイズ(単位は[m]です)，
+<code>aruco_dictionary_id</code>はマーカーの種類(マーカー生成時に指定したものと同じ物を使用)，
+<code>image_topic</code>には画像トピックを指定します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
@@ -403,7 +463,19 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 </span></span><span style="display:flex;"><span>    camera_info_topic: /camera_info
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>これで準備が整いました．
+先ほど起動したカメラから画像トピックを得るノードを終了してしまった場合には，下記のコマンドを改めて実行してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run v4l2_camera v4l2_camera_node --ros-args --param camera_info_url:<span style="color:#ce5c00;font-weight:bold">=</span>file:///home/yuu/calibrationdata/ost.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>camera_info_url</code>には，先ほど展開した<code>ost.yaml</code>ファイルの絶対パスを指定してください．</p>
+<p>先ほどダウンロードしたパッケージに含まれているマーカーを認識するノードを起動します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
@@ -411,7 +483,9 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch ros2_aruco aruco_recognition.launch.py
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>次に静的にフレームを配信するコマンドを実行します．
+カメラを原点としたフレームを作成し，ワールド座標系を表す<code>map</code>と繋ぎます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
@@ -419,15 +493,8 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run tf2_ros static_transform_publisher --x <span style="color:#0000cf;font-weight:bold">0</span> --y <span style="color:#0000cf;font-weight:bold">0</span> --z <span style="color:#0000cf;font-weight:bold">0</span> --roll <span style="color:#0000cf;font-weight:bold">0</span> --pitch <span style="color:#0000cf;font-weight:bold">0</span> --yaw <span style="color:#0000cf;font-weight:bold">0</span> --frame-id map  --child-frame-id usb_cam
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 run ros2_aruco aruco_node  image_topic:=/image_raw  camera_info_topic:=/camera_info  camera_frame:=&#39;usb_cam&#39;
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>最後にデータ可視化ツール<code>rviz2</code>を実行します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
@@ -435,7 +502,12 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> rviz2
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><a href="./marker.pdf">こちらの9つのマーカーを並べた用紙</a>を認識する．</p>
+</div><p>rviz2を実行するとウィンドウが起動します．
+ウィンドウの左下にある<code>Add</code>ボタンを左クリックし，可視化したいデータを選択します．
+<code>PoseArray</code>を選択して<code>OK</code>をクリックすると，<code>Displays</code>に<code>PoseArray</code>の項目が追加されます．
+<code>PoseArray</code>をダブルクリックしてパラメータを設定します．
+空欄になっている<code>Topic</code>をクリックして<code>aruco_poses</code>を選びます．
+印刷したARマーカをカメラで撮影するとマーカーの3次元位置・姿勢が描画されます．</p>
 <p><img src="marker_detection1.png#center" alt="マーカーを認識した例1">
 <img src="marker_detection2.png#center" alt="マーカーを認識した例2"></p>
 
