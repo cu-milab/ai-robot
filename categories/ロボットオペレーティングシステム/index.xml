@@ -2137,8 +2137,11 @@ ros2 service call -r 1 /map_server/load_map nav2_msgs/srv/LoadMap &#34;{map_url:
         
         <![CDATA[<img src="https://cu-milab.github.io/ai-robot/ros/featured-background_hu3877b6ebb0c6b7b0523327afd19eefed_378959_640x0_resize_q75_catmullrom.jpg" width="640" height="427"/>]]>
         
-        &lt;h2 id=&#34;ロボットオペレーティングシステム&#34;&gt;ロボットオペレーティングシステム&lt;/h2&gt;
-&lt;p&gt;a&lt;/p&gt;
+        &lt;h2 id=&#34;ロボットオペレーティングシステムの趣旨&#34;&gt;ロボットオペレーティングシステムの趣旨&lt;/h2&gt;
+&lt;p&gt;本講義ではROS2の通信システムを徹底的に学ぶと共に，
+オープンソースソフトウェアにより構成されるロボットの要素技術をROS2でインテグレーションする術を身につけます．
+なお，本演習では「ロボティクス演習」及び「プロジェクト演習A」と連動しています．
+講義の進捗具合によっては，演習及び講義の内容を入れ替えることがあります．&lt;/p&gt;
 &lt;h2 id=&#34;実習環境&#34;&gt;実習環境&lt;/h2&gt;
 &lt;p&gt;下記の環境で実習することを前提とします．&lt;/p&gt;
 &lt;ul&gt;
