@@ -30,7 +30,7 @@
 <meta itemprop="name" content="地図の作成とナビゲーション">
 <meta itemprop="description" content="シミュレータを用いてナビゲーションを体験します．">
 
-<meta itemprop="wordCount" content="460">
+<meta itemprop="wordCount" content="491">
 <meta itemprop="keywords" content="stage,ナビゲーション," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="地図の作成とナビゲーション"/>
 <meta name="twitter:description" content="シミュレータを用いてナビゲーションを体験します．"/>
@@ -245,7 +245,8 @@ githubからリポジトリをクローンしましょう．</p>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> git clone https://github.com/SteveMacenski/slam_toolbox.git
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>デフォルトのままでは正常に起動しないので，設定ファイルを編集します．</p>
+</div><p>デフォルトのままでは正常に起動しないので，設定ファイルを編集します．
+(多くのシミュレータでは，設定ファイルを編集しないでも動作することが多いです．)</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -447,7 +448,7 @@ githubからリポジトリをクローンしましょう．</p>
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run teleop_twist_keyboard  teleop_twist_keyboard
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run teleop_twist_keyboard teleop_twist_keyboard
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>下記は地図を作成した例です．</p>
@@ -467,8 +468,13 @@ githubからリポジトリをクローンしましょう．</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>上記のコマンドを実行すると，<code>map.yaml</code>と<code>map.pgm</code>というファイルが作成されます．
-<code>map.yaml</code>はパラメータ，<code>map.pgm</code>は画像形式で保存した地図です．</p>
+<code>map.yaml</code>はパラメータ，<code>map.pgm</code>は画像形式で保存した地図です．
+ここまでの作業が完了したら起動しているターミナルを全て閉じましょう．</p>
 <h2 id="ナビゲーション">ナビゲーション</h2>
+<p>作成した地図を用いてナビゲーションを行います．
+stageシミュレータの仕様上，パラメータファイルを編集しなければ動きません．
+アンダーレイ(<code>/opt/ros/</code>以下にあるROS2のコアシステム)の編集は避けたいですが，下記以外の方法では手間がかかるので必要最低限の編集に留めます．
+パラメータファイルをコピーしてエディタで開きます．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -481,7 +487,8 @@ githubからリポジトリをクローンしましょう．</p>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo vim nav2_params_stage.yaml
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>211行目を下記のように編集してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">211
 </span></code></pre></td>
@@ -489,7 +496,8 @@ githubからリポジトリをクローンしましょう．</p>
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>          topic: /base_scan
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>上記の編集が完了したら，stageシミュレーターを起動します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
@@ -497,7 +505,12 @@ githubからリポジトリをクローンしましょう．</p>
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> launch stage_ros2 stage.launch.py world:<span style="color:#ce5c00;font-weight:bold">=</span>cave
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>次にナビゲーションに必要なノードを起動します．
+下記を実行する際に，シミュレーターの使用の有無を表す<code>use_sim_time</code>を<code>True</code>に，
+先ほど作成した地図の絶対パスを<code>map</code>で与えます．
+(下記をそのまま実行しても正常に起動できません，適宜必要な箇所を変更してください．)
+また，<code>params_file</code>にて先ほど編集したパラメータファイルを絶対パスで与えます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
@@ -505,15 +518,18 @@ githubからリポジトリをクローンしましょう．</p>
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch nav2_bringup bringup_launch.py  use_sim_time:<span style="color:#ce5c00;font-weight:bold">=</span>True  map:<span style="color:#ce5c00;font-weight:bold">=</span>/home/yuu/stage_ws/src/stage_ros2/map/map.yaml params_file:<span style="color:#ce5c00;font-weight:bold">=</span>/opt/ros/humble/share/nav2_bringup/params/nav2_params_stage.yaml
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>stageシミュレータはtfによる座標系を扱っていないため，このままではナビゲーションを実行できません．
+<code>static_transform_publisher</code>により，フレーム<code>odom</code>とワールド座標系を表す<code>map</code>を繋ぎます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run tf2_ros static_transform_publisher --x <span style="color:#0000cf;font-weight:bold">0</span> --y <span style="color:#0000cf;font-weight:bold">0</span> --z <span style="color:#0000cf;font-weight:bold">0</span> --roll <span style="color:#0000cf;font-weight:bold">0</span> --pitch <span style="color:#0000cf;font-weight:bold">0</span> --yaw <span style="color:#0000cf;font-weight:bold">0</span> --frame-id map  --child-frame-id odom
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run tf2_ros static_transform_publisher --x <span style="color:#0000cf;font-weight:bold">0</span> --y <span style="color:#0000cf;font-weight:bold">0</span> --z <span style="color:#0000cf;font-weight:bold">0</span> --roll <span style="color:#0000cf;font-weight:bold">0</span> --pitch <span style="color:#0000cf;font-weight:bold">0</span> --yaw <span style="color:#0000cf;font-weight:bold">0</span> --frame-id map --child-frame-id odom
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>ここまでの作業が完了したらデータ可視化ツール<code>rviz2</code>を起動してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
@@ -521,8 +537,13 @@ githubからリポジトリをクローンしましょう．</p>
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch stage_ros2 rviz.launch.py config:<span style="color:#ce5c00;font-weight:bold">=</span>cave
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>mapの可視化設定後
-そうでないとrvizでmapを取れない．</p>
+</div><p><code>rviz2</code>の起動後，<code>Displays</code>の左下にある<code>Add</code>ボタンをクリックし，可視化したい項目のメニューを表示します．
+項目の中から<code>Map</code>を選び<code>OK</code>をクリックしてください．
+<code>Displays</code>に<code>Map</code>が追加されるのでダブルクリックし，<code>Topic</code>にて<code>/map</code>を入力します．
+作成した地図を表示する設定が完了しました(まだ地図は表示されません)．
+下記のコマンドを実行して地図を読み込みます．
+<code>map_url</code>にて地図の絶対パスを与えます．
+(下記をそのまま実行しても正常に起動できません，適宜必要な箇所を変更してください．)</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -531,15 +552,23 @@ githubからリポジトリをクローンしましょう．</p>
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 service call /map_server/load_map nav2_msgs/srv/LoadMap <span style="color:#4e9a06">&#34;{map_url: /home/yuu/stage_ws/src/stage_ros2/map/map.yaml}&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><!-- 
+</div><p>上記を実行すると<code>rviz2</code>にて作成した地図が表示されます．
+(表示されない場合には何かミスをしています．地図作成後の内容をやり直してください．)</p>
+<!-- 
 何度も送り続けても良いが通信が無駄．
 ros2 service call -r 1 /map_server/load_map nav2_msgs/srv/LoadMap "{map_url: /home/yuu/stage_ws/src/stage_ros2/map/map.yaml}"
 -->
+<p>これでナビゲーションを行う準備が整いました．
+<code>rviz2</code>から目的地を与えてみましょう．
+<code>rviz2</code>の画面上部に<code>2D Goal Pose</code>というボタンがあります．
+このボタンにより目標位置・姿勢を設定することができます．
+目標とする位置でクリックし，そのままドラッグすると矢印が回転するので姿勢を設定できます．</p>
+<p>下記の動画はナビゲーションの例です．
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/i-YRPRpA7oQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
-
+</p>
 
 	
 </div>
