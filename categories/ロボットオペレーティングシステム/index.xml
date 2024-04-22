@@ -263,15 +263,6 @@ stage用のパッケージが用意されている訳ではないため，汎用
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;表示のように，&lt;code&gt;i&lt;/code&gt;で前進，&lt;code&gt;k&lt;/code&gt;で後退，&lt;code&gt;j&lt;/code&gt;と&lt;code&gt;l&lt;/code&gt;でそれぞれ左，右回転となります．&lt;/p&gt;
 
-
-&lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;
-
-
-    リマップする時の追加オプション&lt;code&gt;--ros-args --remap cmd_vel:=[topic_name]&lt;/code&gt;，topic_nameは自由に
-
-&lt;/div&gt;
-
-
       </description>
     </item>
     

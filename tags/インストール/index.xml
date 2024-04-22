@@ -550,15 +550,6 @@ stage用のパッケージが用意されている訳ではないため，汎用
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;表示のように，&lt;code&gt;i&lt;/code&gt;で前進，&lt;code&gt;k&lt;/code&gt;で後退，&lt;code&gt;j&lt;/code&gt;と&lt;code&gt;l&lt;/code&gt;でそれぞれ左，右回転となります．&lt;/p&gt;
 
-
-&lt;div class=&#34;alert alert-primary&#34; role=&#34;alert&#34;&gt;
-
-
-    リマップする時の追加オプション&lt;code&gt;--ros-args --remap cmd_vel:=[topic_name]&lt;/code&gt;，topic_nameは自由に
-
-&lt;/div&gt;
-
-
       </description>
     </item>
     
@@ -1003,7 +994,7 @@ return文の中に起動するノードについて記述します．&lt;/p&gt;
         &lt;h2 id=&#34;目的&#34;&gt;目的&lt;/h2&gt;
 &lt;p&gt;ROS2のシステムで利用されているトピック通信について学びます．
 講義の前半では座学形式でトピック通信の仕組みについて理解し，
-後半ではコマンドラインツールと簡易シミュレータturtlesimを用いて，演習を通してノードやトピックの概念，通信方法を理解します．&lt;/p&gt;
+後半ではコマンドラインツールと簡易シミュレータturtlesimを用いた演習により，ノードやトピックの概念，通信方法を理解します．&lt;/p&gt;
 &lt;h2 id=&#34;ros2のコマンドライン&#34;&gt;ROS2のコマンドライン&lt;/h2&gt;
 &lt;p&gt;Ubuntuでは，ターミナルに文字列を入力して操作することが基本となります．
 ターミナルに入力する文字列のことをコマンドラインと呼びます．
