@@ -1887,6 +1887,81 @@ rclpyはROS2のpythonモジュールですので，ROS2の機能を使う場合�
     </item>
     
     <item>
+      <title>Robotics: 複数の端末を用いた分散処理</title>
+      <link>https://cu-milab.github.io/ai-robot/ps/qa9ag5no/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cu-milab.github.io/ai-robot/ps/qa9ag5no/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;目的&#34;&gt;目的&lt;/h2&gt;
+&lt;p&gt;ROS2では簡単に複数の端末間で分散処理ができるように設計されています．
+本演習では，複数の端末で処理する方法について学びます．&lt;/p&gt;
+&lt;h2 id=&#34;仮想マシンを使用している場合の設定&#34;&gt;仮想マシンを使用している場合の設定&lt;/h2&gt;
+&lt;p&gt;VirtualBoxやVMwareなどの仮想マシンを使用している人は，ネットワークの接続設定を行ってから演習に取り組んでください．
+デフォルトでは，ネットワークの接続方式が&lt;code&gt;NAT接続&lt;/code&gt;となっていますが，&lt;code&gt;ブリッジ接続(ブリッジネットワーク)&lt;/code&gt;に変更する必要があります．
+また，設定変更を反映するために再起動してください．&lt;/p&gt;
+&lt;h2 id=&#34;ネットワークの設定&#34;&gt;ネットワークの設定&lt;/h2&gt;
+&lt;p&gt;ROS2では，同一ネットワーク内のノードを検出してデータ通信が容易にできる仕組みとなっています．
+同一ネットワークとは，各端末が同じルーターに接続された状態を表します．
+限定したグループ内だけでデータ通信したい場合には，異なるドメインIDを割り当てる必要があります．
+なお，ドメインIDで設定する値の範囲は&lt;code&gt;0~65532&lt;/code&gt;となります．
+例えば，2人でグループを作成した場合，2人だけが使用するドメインIDを設定することで2端末間だけでデータ通信ができるようになります．
+下記は環境変数である&lt;code&gt;ROS_DOMAIN_ID&lt;/code&gt;に&lt;code&gt;1&lt;/code&gt;という値を設定する場合の例です．&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902&#34;&gt;$&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ROS_DOMAIN_ID&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;実際に割り当てるドメインIDの値については講義中に指示します．
+上記のコマンドを実行したターミナルのみ設定が有効です．
+ターミナルを起動する度に上記のコマンドを実行することが手間な場合には，
+ホームディレクトリに存在する&lt;code&gt;.bashrc&lt;/code&gt;に書き込むことで起動した際に自動的に環境変数が設定されます．&lt;/p&gt;
+&lt;h2 id=&#34;確認&#34;&gt;確認&lt;/h2&gt;
+&lt;p&gt;2人でペアを作り，同じドメインIDに設定した時の挙動を確認します．
+1人はシミュレータturtlesimを起動します．&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902&#34;&gt;$&lt;/span&gt; ros2 run turtlesim turtlesim_node
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;もう1人はキーボードでロボットを操作するノードを起動します．&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902&#34;&gt;$&lt;/span&gt; ros2 run turtlesim turtle_teleop_key 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;node list&lt;/code&gt;コマンドを用いてお互いが起動したノードが表示されることを確認しましょう．
+そして，キーボードを用いてシミュレータ上のロボットを遠隔操作できることを確認してください．&lt;/p&gt;
+&lt;h2 id=&#34;複数端末間でデータ通信を行わない設定&#34;&gt;複数端末間でデータ通信を行わない設定&lt;/h2&gt;
+&lt;p&gt;他の端末とのデータ通信を行わないことを明示的に設定することも可能です．
+環境変数&lt;code&gt;ROS_LOCALHOST_ONLY&lt;/code&gt;を&lt;code&gt;1&lt;/code&gt;に設定します．
+これによりローカルホスト(自身の端末のみ)に限定できます．&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902&#34;&gt;$&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ROS_LOCALHOST_ONLY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902&#34;&gt;$&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;source&lt;/span&gt; ~/.bashrc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
       <title>Robotics: ロボティクス演習</title>
       <link>https://cu-milab.github.io/ai-robot/robotics/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

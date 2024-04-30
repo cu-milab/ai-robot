@@ -148,6 +148,14 @@ if (!doNotTrack) {
 
     
   
+    
+    
+	
+<li>5: <a href="#pg-c88940aa0ba198690c51f542a09c55a6">複数の端末を用いた分散処理</a></li>
+
+
+    
+  
 
     </ul>
 
@@ -2064,6 +2072,85 @@ rclpyはROS2のpythonモジュールですので，ROS2の機能を使う場合�
 <li>ロボットが直進する際に，スムーズに加速，減速するような加減速制御を行いなさい．</li>
 </ol>
 
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-c88940aa0ba198690c51f542a09c55a6">5 - 複数の端末を用いた分散処理</h1>
+    <div class="lead">端末間のデータ通信について学びます．</div>
+	<h2 id="目的">目的</h2>
+<p>ROS2では簡単に複数の端末間で分散処理ができるように設計されています．
+本演習では，複数の端末で処理する方法について学びます．</p>
+<h2 id="仮想マシンを使用している場合の設定">仮想マシンを使用している場合の設定</h2>
+<p>VirtualBoxやVMwareなどの仮想マシンを使用している人は，ネットワークの接続設定を行ってから演習に取り組んでください．
+デフォルトでは，ネットワークの接続方式が<code>NAT接続</code>となっていますが，<code>ブリッジ接続(ブリッジネットワーク)</code>に変更する必要があります．
+また，設定変更を反映するために再起動してください．</p>
+<h2 id="ネットワークの設定">ネットワークの設定</h2>
+<p>ROS2では，同一ネットワーク内のノードを検出してデータ通信が容易にできる仕組みとなっています．
+同一ネットワークとは，各端末が同じルーターに接続された状態を表します．
+限定したグループ内だけでデータ通信したい場合には，異なるドメインIDを割り当てる必要があります．
+なお，ドメインIDで設定する値の範囲は<code>0~65532</code>となります．
+例えば，2人でグループを作成した場合，2人だけが使用するドメインIDを設定することで2端末間だけでデータ通信ができるようになります．
+下記は環境変数である<code>ROS_DOMAIN_ID</code>に<code>1</code>という値を設定する場合の例です．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">export</span> <span style="color:#000">ROS_DOMAIN_ID</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>実際に割り当てるドメインIDの値については講義中に指示します．
+上記のコマンドを実行したターミナルのみ設定が有効です．
+ターミナルを起動する度に上記のコマンドを実行することが手間な場合には，
+ホームディレクトリに存在する<code>.bashrc</code>に書き込むことで起動した際に自動的に環境変数が設定されます．</p>
+<h2 id="確認">確認</h2>
+<p>2人でペアを作り，同じドメインIDに設定した時の挙動を確認します．
+1人はシミュレータturtlesimを起動します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtlesim_node
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>もう1人はキーボードでロボットを操作するノードを起動します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtle_teleop_key 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>node list</code>コマンドを用いてお互いが起動したノードが表示されることを確認しましょう．
+そして，キーボードを用いてシミュレータ上のロボットを遠隔操作できることを確認してください．</p>
+<h2 id="複数端末間でデータ通信を行わない設定">複数端末間でデータ通信を行わない設定</h2>
+<p>他の端末とのデータ通信を行わないことを明示的に設定することも可能です．
+環境変数<code>ROS_LOCALHOST_ONLY</code>を<code>1</code>に設定します．
+これによりローカルホスト(自身の端末のみ)に限定できます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">export</span> <span style="color:#204a87">export</span> <span style="color:#000">ROS_LOCALHOST_ONLY</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">1</span> &gt;&gt; ~/.bashrc
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">source</span> ~/.bashrc
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </div>
 
 

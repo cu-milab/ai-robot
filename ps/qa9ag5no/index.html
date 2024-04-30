@@ -4,8 +4,6 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.120.2">
-<link rel="alternate" type="text/html" href="https://cu-milab.github.io/ai-robot/robotics/_print/">
-<link rel="alternate" type="application/rss&#43;xml" href="https://cu-milab.github.io/ai-robot/robotics/index.xml">
 <meta name="robots" content="index, follow">
 
 
@@ -20,18 +18,22 @@
 <link rel="icon" type="image/png" href="/ai-robot/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/ai-robot/favicons/android-192x192.png" sizes="192x192">
 
-<title>ロボティクス演習 | 中部大学AIロボティクス学科</title>
-<meta name="description" content="A Docsy example sites">
-<meta property="og:title" content="ロボティクス演習" />
-<meta property="og:description" content="A Docsy example sites" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://cu-milab.github.io/ai-robot/robotics/" /><meta property="og:image" content="https://cu-milab.github.io/ai-robot/robotics/featured-background.jpg"/><meta property="og:site_name" content="Goldydocs2" />
+<title>複数の端末を用いた分散処理 | 中部大学AIロボティクス学科</title>
+<meta name="description" content="端末間のデータ通信について学びます．">
+<meta property="og:title" content="複数の端末を用いた分散処理" />
+<meta property="og:description" content="端末間のデータ通信について学びます．" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/qa9ag5no/" /><meta property="article:section" content="robotics" />
 
-<meta itemprop="name" content="ロボティクス演習">
-<meta itemprop="description" content="A Docsy example sites"><meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://cu-milab.github.io/ai-robot/robotics/featured-background.jpg"/>
-<meta name="twitter:title" content="ロボティクス演習"/>
-<meta name="twitter:description" content="A Docsy example sites"/>
+<meta property="og:site_name" content="Goldydocs2" />
+
+<meta itemprop="name" content="複数の端末を用いた分散処理">
+<meta itemprop="description" content="端末間のデータ通信について学びます．">
+
+<meta itemprop="wordCount" content="56">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="複数の端末を用いた分散処理"/>
+<meta name="twitter:description" content="端末間のデータ通信について学びます．"/>
 
 
 
@@ -54,7 +56,7 @@ if (!doNotTrack) {
 }
 </script>
   </head>
-  <body class="td-section">
+  <body class="td-page">
     <header>
       <nav class="td-navbar navbar-dark js-navbar-scroll">
 <div class="container-fluid flex-column flex-md-row">
@@ -94,7 +96,7 @@ if (!doNotTrack) {
   <nav class="collapse td-sidebar-nav" id="td-section-nav">
     <ul class="td-sidebar-nav__section pe-md-3 ul-0">
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-ai-robotrobotics-li">
-  <a href="/ai-robot/robotics/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__section tree-root" id="m-ai-robotrobotics"><span class="td-sidebar-nav-active-item">ロボティクス演習</span></a>
+  <a href="/ai-robot/robotics/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-ai-robotrobotics"><span class="">ロボティクス演習</span></a>
   <ul class="ul-1">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpswe1emyp-li">
   <a href="/ai-robot/ps/we1emyp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpswe1emyp"><span class="">ROS2のインストール</span></a>
@@ -104,8 +106,8 @@ if (!doNotTrack) {
   <a href="/ai-robot/ps/587etb0/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps587etb0"><span class="">ワークスペースとパッケージの作成</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpstbaet4s-li">
   <a href="/ai-robot/ps/tbaet4s/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpstbaet4s"><span class="">トピック通信の実装</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsqa9ag5no-li">
-  <a href="/ai-robot/ps/qa9ag5no/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsqa9ag5no"><span class="">複数の端末を用いた分散処理</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-ai-robotpsqa9ag5no-li">
+  <a href="/ai-robot/ps/qa9ag5no/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsqa9ag5no"><span class="td-sidebar-nav-active-item">複数の端末を用いた分散処理</span></a>
 </li>
   </ul>
 </li>
@@ -124,8 +126,11 @@ if (!doNotTrack) {
             <div class="td-toc">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#ロボティクス演習の趣旨">ロボティクス演習の趣旨</a></li>
-    <li><a href="#実習環境">実習環境</a></li>
+    <li><a href="#目的">目的</a></li>
+    <li><a href="#仮想マシンを使用している場合の設定">仮想マシンを使用している場合の設定</a></li>
+    <li><a href="#ネットワークの設定">ネットワークの設定</a></li>
+    <li><a href="#確認">確認</a></li>
+    <li><a href="#複数端末間でデータ通信を行わない設定">複数端末間でデータ通信を行わない設定</a></li>
   </ul>
 </nav>
       </div>
@@ -159,16 +164,18 @@ if (!doNotTrack) {
             
   
 
-            <nav aria-label="breadcrumb" class="td-breadcrumbs td-breadcrumbs__single">
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
   <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="https://cu-milab.github.io/ai-robot/robotics/">ロボティクス演習</a></li>
   <li class="breadcrumb-item active" aria-current="page">
-    ロボティクス演習</li>
+    複数の端末を用いた分散処理</li>
   </ol>
 </nav>
             
 <div class="td-content">
-	<h1>ロボティクス演習</h1>
-  
+	<h1>複数の端末を用いた分散処理</h1>
+	<div class="lead">端末間のデータ通信について学びます．</div>
 	<header class="article-meta">
 		<div class="taxonomy taxonomy-terms-article taxo-categories">
   <h5 class="taxonomy-title">Categories:</h5>
@@ -178,77 +185,72 @@ if (!doNotTrack) {
 </div>
 
   </header>
-	<h2 id="ロボティクス演習の趣旨">ロボティクス演習の趣旨</h2>
-<p>本演習では，ROS2によりシステムを構築する際に必要となる仕組み及び通信方法の理解，及びプログラミングによる実装方法までを学びます．
-ロボティクス演習ではシミュレータを用いて，後半のプロジェクト演習では実機であるTurtlebot3を主体として実践的に学びます．
-なお，本演習では「ロボットオペレーティングシステム」の講義と連動しています．
-講義の進捗具合によっては，演習及び講義の内容を入れ替えることがあります．</p>
-<h2 id="実習環境">実習環境</h2>
-<p>下記の環境で実習することを前提とします．</p>
-<ul>
-<li>Ubuntu
-<ul>
-<li>Ubuntu22.04 (デュアルブート環境)</li>
-<li>VM環境下で構築されたUbuntu22.04</li>
-</ul>
-</li>
-<li>ROS2 Humble</li>
-</ul>
+	<h2 id="目的">目的</h2>
+<p>ROS2では簡単に複数の端末間で分散処理ができるように設計されています．
+本演習では，複数の端末で処理する方法について学びます．</p>
+<h2 id="仮想マシンを使用している場合の設定">仮想マシンを使用している場合の設定</h2>
+<p>VirtualBoxやVMwareなどの仮想マシンを使用している人は，ネットワークの接続設定を行ってから演習に取り組んでください．
+デフォルトでは，ネットワークの接続方式が<code>NAT接続</code>となっていますが，<code>ブリッジ接続(ブリッジネットワーク)</code>に変更する必要があります．
+また，設定変更を反映するために再起動してください．</p>
+<h2 id="ネットワークの設定">ネットワークの設定</h2>
+<p>ROS2では，同一ネットワーク内のノードを検出してデータ通信が容易にできる仕組みとなっています．
+同一ネットワークとは，各端末が同じルーターに接続された状態を表します．
+限定したグループ内だけでデータ通信したい場合には，異なるドメインIDを割り当てる必要があります．
+なお，ドメインIDで設定する値の範囲は<code>0~65532</code>となります．
+例えば，2人でグループを作成した場合，2人だけが使用するドメインIDを設定することで2端末間だけでデータ通信ができるようになります．
+下記は環境変数である<code>ROS_DOMAIN_ID</code>に<code>1</code>という値を設定する場合の例です．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">export</span> <span style="color:#000">ROS_DOMAIN_ID</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>実際に割り当てるドメインIDの値については講義中に指示します．
+上記のコマンドを実行したターミナルのみ設定が有効です．
+ターミナルを起動する度に上記のコマンドを実行することが手間な場合には，
+ホームディレクトリに存在する<code>.bashrc</code>に書き込むことで起動した際に自動的に環境変数が設定されます．</p>
+<h2 id="確認">確認</h2>
+<p>2人でペアを作り，同じドメインIDに設定した時の挙動を確認します．
+1人はシミュレータturtlesimを起動します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtlesim_node
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>もう1人はキーボードでロボットを操作するノードを起動します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtle_teleop_key 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>node list</code>コマンドを用いてお互いが起動したノードが表示されることを確認しましょう．
+そして，キーボードを用いてシミュレータ上のロボットを遠隔操作できることを確認してください．</p>
+<h2 id="複数端末間でデータ通信を行わない設定">複数端末間でデータ通信を行わない設定</h2>
+<p>他の端末とのデータ通信を行わないことを明示的に設定することも可能です．
+環境変数<code>ROS_LOCALHOST_ONLY</code>を<code>1</code>に設定します．
+これによりローカルホスト(自身の端末のみ)に限定できます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">export</span> <span style="color:#204a87">export</span> <span style="color:#000">ROS_LOCALHOST_ONLY</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">1</span> &gt;&gt; ~/.bashrc
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">source</span> ~/.bashrc
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+	
+</div>
 
-  <div class="section-index">
-    
-    
-    
-    
-    
-    
-    
-    
-    <hr class="panel-line">
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/we1emyp/">ROS2のインストール</a>
-                </h5>
-                <p>各自のノートPCにROS2をインストールします．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/abc1234/">トピック通信の理解</a>
-                </h5>
-                <p>ROS2におけるトピック通信について学びます．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/587etb0/">ワークスペースとパッケージの作成</a>
-                </h5>
-                <p>colconを用いたワークスペース及びパッケージの作り方，Python言語によるプログラミングする方法学びます．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/tbaet4s/">トピック通信の実装</a>
-                </h5>
-                <p>Python言語を用いてトピック通信を実装する方法について学びます．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/qa9ag5no/">複数の端末を用いた分散処理</a>
-                </h5>
-                <p>端末間のデータ通信について学びます．</p>
-            </div>
-        
-    
-</div>
-</div>
 
           </main>
         </div>
