@@ -1431,7 +1431,7 @@ imgmsg_to_cv2の第2引数で変換する画像フォーマットを指定でき
 これにより，ロボットのローレベルな制御が可能となります．&lt;/p&gt;
 &lt;h2 id=&#34;プログラミングによる配信と購読&#34;&gt;プログラミングによる配信と購読&lt;/h2&gt;
 &lt;h3 id=&#34;パッケージの作成&#34;&gt;パッケージの作成&lt;/h3&gt;
-&lt;p&gt;前回の講義で作成したワークスペース &lt;code&gt;practice&lt;/code&gt; の中に新たに &lt;code&gt;turtlesim_practice&lt;/code&gt; パッケージを作成します．
+&lt;p&gt;前回の講義で作成したワークスペース &lt;code&gt;practice_ws&lt;/code&gt; の中に新たに &lt;code&gt;turtlesim_practice&lt;/code&gt; パッケージを作成します．
 パッケージ作成時に与えるノードの名前は &lt;code&gt; turtlesim_practice_node&lt;/code&gt; とします．
 パッケージの作成方法が分からない人は&lt;a href=&#34;./../..//ps/587etb0/&#34;&gt;前回の講義資料&lt;/a&gt;を参考にしてください．&lt;/p&gt;
 &lt;h3 id=&#34;プログラミング&#34;&gt;プログラミング&lt;/h3&gt;
