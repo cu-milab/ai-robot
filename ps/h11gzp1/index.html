@@ -4,8 +4,6 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.120.2">
-<link rel="alternate" type="text/html" href="https://cu-milab.github.io/ai-robot/ros/_print/">
-<link rel="alternate" type="application/rss&#43;xml" href="https://cu-milab.github.io/ai-robot/ros/index.xml">
 <meta name="robots" content="index, follow">
 
 
@@ -20,18 +18,22 @@
 <link rel="icon" type="image/png" href="/ai-robot/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/ai-robot/favicons/android-192x192.png" sizes="192x192">
 
-<title>ロボットオペレーティングシステム | 中部大学AIロボティクス学科</title>
-<meta name="description" content="A Docsy example sites">
-<meta property="og:title" content="ロボットオペレーティングシステム" />
-<meta property="og:description" content="A Docsy example sites" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://cu-milab.github.io/ai-robot/ros/" /><meta property="og:image" content="https://cu-milab.github.io/ai-robot/ros/featured-background.jpg"/><meta property="og:site_name" content="Goldydocs2" />
+<title>ノードやトピックのリマップ | 中部大学AIロボティクス学科</title>
+<meta name="description" content="コマンドラインでノードやトピックの名前を変更する方法を学びます．">
+<meta property="og:title" content="ノードやトピックのリマップ" />
+<meta property="og:description" content="コマンドラインでノードやトピックの名前を変更する方法を学びます．" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/h11gzp1/" /><meta property="article:section" content="ros" />
 
-<meta itemprop="name" content="ロボットオペレーティングシステム">
-<meta itemprop="description" content="A Docsy example sites"><meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://cu-milab.github.io/ai-robot/ros/featured-background.jpg"/>
-<meta name="twitter:title" content="ロボットオペレーティングシステム"/>
-<meta name="twitter:description" content="A Docsy example sites"/>
+<meta property="og:site_name" content="Goldydocs2" />
+
+<meta itemprop="name" content="ノードやトピックのリマップ">
+<meta itemprop="description" content="コマンドラインでノードやトピックの名前を変更する方法を学びます．">
+
+<meta itemprop="wordCount" content="74">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ノードやトピックのリマップ"/>
+<meta name="twitter:description" content="コマンドラインでノードやトピックの名前を変更する方法を学びます．"/>
 
 
 
@@ -54,7 +56,7 @@ if (!doNotTrack) {
 }
 </script>
   </head>
-  <body class="td-section">
+  <body class="td-page">
     <header>
       <nav class="td-navbar navbar-dark js-navbar-scroll">
 <div class="container-fluid flex-column flex-md-row">
@@ -94,12 +96,12 @@ if (!doNotTrack) {
   <nav class="collapse td-sidebar-nav" id="td-section-nav">
     <ul class="td-sidebar-nav__section pe-md-3 ul-0">
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-ai-robotros-li">
-  <a href="/ai-robot/ros/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__section tree-root" id="m-ai-robotros"><span class="td-sidebar-nav-active-item">ロボットオペレーティングシステム</span></a>
+  <a href="/ai-robot/ros/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-ai-robotros"><span class="">ロボットオペレーティングシステム</span></a>
   <ul class="ul-1">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsneagc43-li">
   <a href="/ai-robot/ps/neagc43/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsneagc43"><span class="">シミュレータstageのセットアップ</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsh11gzp1-li">
-  <a href="/ai-robot/ps/h11gzp1/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsh11gzp1"><span class="">ノードやトピックのリマップ</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-ai-robotpsh11gzp1-li">
+  <a href="/ai-robot/ps/h11gzp1/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsh11gzp1"><span class="td-sidebar-nav-active-item">ノードやトピックのリマップ</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsa22gy2p-li">
   <a href="/ai-robot/ps/a22gy2p/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsa22gy2p"><span class="">launchによる複数のノードの起動</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps8wr5qh7-li">
@@ -130,8 +132,9 @@ if (!doNotTrack) {
             <div class="td-toc">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#ロボットオペレーティングシステムの趣旨">ロボットオペレーティングシステムの趣旨</a></li>
-    <li><a href="#実習環境">実習環境</a></li>
+    <li><a href="#目的">目的</a></li>
+    <li><a href="#ノードの名前を変更">ノードの名前を変更</a></li>
+    <li><a href="#トピックの名前を変更">トピックの名前を変更</a></li>
   </ul>
 </nav>
       </div>
@@ -165,16 +168,18 @@ if (!doNotTrack) {
             
   
 
-            <nav aria-label="breadcrumb" class="td-breadcrumbs td-breadcrumbs__single">
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
   <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="https://cu-milab.github.io/ai-robot/ros/">ロボットオペレーティングシステム</a></li>
   <li class="breadcrumb-item active" aria-current="page">
-    ロボットオペレーティングシステム</li>
+    ノードやトピックのリマップ</li>
   </ol>
 </nav>
             
 <div class="td-content">
-	<h1>ロボットオペレーティングシステム</h1>
-  
+	<h1>ノードやトピックのリマップ</h1>
+	<div class="lead">コマンドラインでノードやトピックの名前を変更する方法を学びます．</div>
 	<header class="article-meta">
 		<div class="taxonomy taxonomy-terms-article taxo-categories">
   <h5 class="taxonomy-title">Categories:</h5>
@@ -184,101 +189,70 @@ if (!doNotTrack) {
 </div>
 
   </header>
-	<h2 id="ロボットオペレーティングシステムの趣旨">ロボットオペレーティングシステムの趣旨</h2>
-<p>本講義ではROS2の通信システムを徹底的に学ぶと共に，
-オープンソースソフトウェアにより構成されるロボットの要素技術をROS2でインテグレーションする術を身につけます．
-なお，本演習では「ロボティクス演習」及び「プロジェクト演習A」と連動しています．
-講義の進捗具合によっては，演習及び講義の内容を入れ替えることがあります．</p>
-<h2 id="実習環境">実習環境</h2>
-<p>下記の環境で実習することを前提とします．</p>
-<ul>
-<li>Ubuntu
-<ul>
-<li>Ubuntu22.04 (デュアルブート環境)</li>
-<li>VM環境下で構築されたUbuntu22.04</li>
-</ul>
-</li>
-<li>ROS2 Humble</li>
-</ul>
+	<h2 id="目的">目的</h2>
+<p>アプリケーション開発を進めるとノードやトピック等名前が衝突(複数が同一の名前)するケースがあります．
+このような問題を回避するための方法として，名前を変更するリマップと呼ばれる操作が有効です．
+今回はコマンドラインによりノードを起動する際にリマップする方法について学びます．
+より詳細なリマップの方法については<a href="https://design.ros2.org/articles/ros_command_line_arguments.html#name-remapping-rules">こちらのドキュメント</a>をご参照ください．</p>
+<h2 id="ノードの名前を変更">ノードの名前を変更</h2>
+<p>2つのターミナルを起動し，それぞれで下記のコマンドラインにより簡易シミュレータである<code>turtlesim</code>を起動してみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtlesim_node
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下記のコマンドラインにより起動したノードを確認してみてください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">WARNING: Be aware that are nodes in the graph that share an exact name, this can have unintended side effects.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>全く同じ名前のノードが起動している場合，意図しない問題が発生する可能性があるという警告が表示されます．
+ノードと同様に，トピックも同じ名前で配信されます．
+同一のノードを複数起動したい場合には困った状況になります．
+これを防ぐためには，プログラムを書き換えて実行すれば解決できますが非効率的です．</p>
+<p>この問題を解決するために，ノードの名前を変更してノードを起動するリマップと呼ばれる操作があります．
+上記で起動したノードの1つを終了し，下記のコマンドラインで<code>turtlesim</code>を起動してみましょう．
+引数に<code>--ros-args --remap __node:=[node_name]</code>を与えることで，任意のノードの名前(下記はmy_turtle)にリマップできます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtlesim_node --ros-args --remap __node:<span style="color:#ce5c00;font-weight:bold">=</span>turtlesim2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>先ほどと同様に起動しているノードを確認します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim2
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>ノードの名前が変わっていることが確認できました．</p>
+<h2 id="トピックの名前を変更">トピックの名前を変更</h2>
 
-  <div class="section-index">
-    
-    
-    
-    
-    
-    
-    
-    
-    <hr class="panel-line">
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/neagc43/">シミュレータstageのセットアップ</a>
-                </h5>
-                <p>シミュレータstageを使用するための準備と動作を確認します．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/h11gzp1/">ノードやトピックのリマップ</a>
-                </h5>
-                <p>コマンドラインでノードやトピックの名前を変更する方法を学びます．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/a22gy2p/">launchによる複数のノードの起動</a>
-                </h5>
-                <p>launchによる複数のノードを同時に起動する方法について学びます．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/8wr5qh7/">トピック通信の復習</a>
-                </h5>
-                <p>シミュレータstageを用いてトピック通信について復習します．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/yege236/">ROS2による画像処理</a>
-                </h5>
-                <p>画像処理プログラミングの方法について学びます．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/a2g5oo6/">マーカー認識</a>
-                </h5>
-                <p>ArUcoを用いてマーカーを認識します．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/jhg2r34/">特定画像認識</a>
-                </h5>
-                <p>find_object_2dパッケージを使用し，画像から所望の物体を検出します．</p>
-            </div>
-        
-            
-            <div class="entry">
-                <h5>
-                    <a href="/ai-robot/ps/893w2au/">地図の作成とナビゲーション</a>
-                </h5>
-                <p>シミュレータを用いてナビゲーションを体験します．</p>
-            </div>
-        
-    
+	
 </div>
-</div>
+
 
           </main>
         </div>

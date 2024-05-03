@@ -127,7 +127,7 @@ if (!doNotTrack) {
     
     
 	
-<li>2: <a href="#pg-ba1c77ca3b2710180c8916e01eba4c8c">launchによる複数のノードの起動</a></li>
+<li>2: <a href="#pg-1b01ef9a7533a77bbaa48a5a931fc935">ノードやトピックのリマップ</a></li>
 
 
     
@@ -135,7 +135,7 @@ if (!doNotTrack) {
     
     
 	
-<li>3: <a href="#pg-85620f9fb4184c7fe50afded4a5ca832">トピック通信の復習</a></li>
+<li>3: <a href="#pg-ba1c77ca3b2710180c8916e01eba4c8c">launchによる複数のノードの起動</a></li>
 
 
     
@@ -143,7 +143,7 @@ if (!doNotTrack) {
     
     
 	
-<li>4: <a href="#pg-721faad6d6103da98e922542a3460de3">ROS2による画像処理</a></li>
+<li>4: <a href="#pg-85620f9fb4184c7fe50afded4a5ca832">トピック通信の復習</a></li>
 
 
     
@@ -151,7 +151,7 @@ if (!doNotTrack) {
     
     
 	
-<li>5: <a href="#pg-f071e5611687db94853fda487cac507b">マーカー認識</a></li>
+<li>5: <a href="#pg-721faad6d6103da98e922542a3460de3">ROS2による画像処理</a></li>
 
 
     
@@ -159,7 +159,7 @@ if (!doNotTrack) {
     
     
 	
-<li>6: <a href="#pg-08648d05ef1b47cb3da507ea2e5dfc46">特定画像認識</a></li>
+<li>6: <a href="#pg-f071e5611687db94853fda487cac507b">マーカー認識</a></li>
 
 
     
@@ -167,7 +167,15 @@ if (!doNotTrack) {
     
     
 	
-<li>7: <a href="#pg-c475031965877bd27795ae69007f2644">地図の作成とナビゲーション</a></li>
+<li>7: <a href="#pg-08648d05ef1b47cb3da507ea2e5dfc46">特定画像認識</a></li>
+
+
+    
+  
+    
+    
+	
+<li>8: <a href="#pg-c475031965877bd27795ae69007f2644">地図の作成とナビゲーション</a></li>
 
 
     
@@ -470,7 +478,84 @@ stage用のパッケージが用意されている訳ではないため，汎用
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-ba1c77ca3b2710180c8916e01eba4c8c">2 - launchによる複数のノードの起動</h1>
+	<h1 id="pg-1b01ef9a7533a77bbaa48a5a931fc935">2 - ノードやトピックのリマップ</h1>
+    <div class="lead">コマンドラインでノードやトピックの名前を変更する方法を学びます．</div>
+	<h2 id="目的">目的</h2>
+<p>アプリケーション開発を進めるとノードやトピック等名前が衝突(複数が同一の名前)するケースがあります．
+このような問題を回避するための方法として，名前を変更するリマップと呼ばれる操作が有効です．
+今回はコマンドラインによりノードを起動する際にリマップする方法について学びます．
+より詳細なリマップの方法については<a href="https://design.ros2.org/articles/ros_command_line_arguments.html#name-remapping-rules">こちらのドキュメント</a>をご参照ください．</p>
+<h2 id="ノードの名前を変更">ノードの名前を変更</h2>
+<p>2つのターミナルを起動し，それぞれで下記のコマンドラインにより簡易シミュレータである<code>turtlesim</code>を起動してみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtlesim_node
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下記のコマンドラインにより起動したノードを確認してみてください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">WARNING: Be aware that are nodes in the graph that share an exact name, this can have unintended side effects.
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>全く同じ名前のノードが起動している場合，意図しない問題が発生する可能性があるという警告が表示されます．
+ノードと同様に，トピックも同じ名前で配信されます．
+同一のノードを複数起動したい場合には困った状況になります．
+これを防ぐためには，プログラムを書き換えて実行すれば解決できますが非効率的です．</p>
+<p>この問題を解決するために，ノードの名前を変更してノードを起動するリマップと呼ばれる操作があります．
+上記で起動したノードの1つを終了し，下記のコマンドラインで<code>turtlesim</code>を起動してみましょう．
+引数に<code>--ros-args --remap __node:=[node_name]</code>を与えることで，任意のノードの名前(下記はmy_turtle)にリマップできます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtlesim_node --ros-args --remap __node:<span style="color:#ce5c00;font-weight:bold">=</span>turtlesim2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>先ほどと同様に起動しているノードを確認します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim2
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>ノードの名前が変わっていることが確認できました．</p>
+<h2 id="トピックの名前を変更">トピックの名前を変更</h2>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-ba1c77ca3b2710180c8916e01eba4c8c">3 - launchによる複数のノードの起動</h1>
     <div class="lead">launchによる複数のノードを同時に起動する方法について学びます．</div>
 	<h2 id="目的">目的</h2>
 <p><code>ros2 run</code>によりノードを起動できますが，幾つものノードを立ち上げる際には手間となります．
@@ -894,7 +979,7 @@ return文の中に起動するノードについて記述します．</p>
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-85620f9fb4184c7fe50afded4a5ca832">3 - トピック通信の復習</h1>
+	<h1 id="pg-85620f9fb4184c7fe50afded4a5ca832">4 - トピック通信の復習</h1>
     <div class="lead">シミュレータstageを用いてトピック通信について復習します．</div>
 	<h2 id="目的">目的</h2>
 <p>ロボティクス演習にてロボットシミュレータturtlesimを用いてトピック通信について学びました．
@@ -943,7 +1028,7 @@ stageのセットアップが終わっていない人は<a href="./../../ps/neag
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-721faad6d6103da98e922542a3460de3">4 - ROS2による画像処理</h1>
+	<h1 id="pg-721faad6d6103da98e922542a3460de3">5 - ROS2による画像処理</h1>
     <div class="lead">画像処理プログラミングの方法について学びます．</div>
 	<h2 id="目的">目的</h2>
 <p>ロボットの自律移動に必要な外界の情報を獲得するために様々なセンサが搭載されています．
@@ -1386,7 +1471,7 @@ imgmsg_to_cv2の第2引数で変換する画像フォーマットを指定でき
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-f071e5611687db94853fda487cac507b">5 - マーカー認識</h1>
+	<h1 id="pg-f071e5611687db94853fda487cac507b">6 - マーカー認識</h1>
     <div class="lead">ArUcoを用いてマーカーを認識します．</div>
 	<!---
 aruco-ros2
@@ -1716,7 +1801,7 @@ SAVEボタンが緑色になりますのでクリックすると<code>/tmp/calib
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-08648d05ef1b47cb3da507ea2e5dfc46">6 - 特定画像認識</h1>
+	<h1 id="pg-08648d05ef1b47cb3da507ea2e5dfc46">7 - 特定画像認識</h1>
     <div class="lead">find_object_2dパッケージを使用し，画像から所望の物体を検出します．</div>
 	<h2 id="目的">目的</h2>
 <p>前回の講義で扱ったARマーカー認識は，簡単かつ高精度にARマーカーを検出，さらには位置及び姿勢を認識できる便利なパッケージです．
@@ -2008,7 +2093,7 @@ GUI操作によるテンプレートの登録ができないため，事前に�
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-c475031965877bd27795ae69007f2644">7 - 地図の作成とナビゲーション</h1>
+	<h1 id="pg-c475031965877bd27795ae69007f2644">8 - 地図の作成とナビゲーション</h1>
     <div class="lead">シミュレータを用いてナビゲーションを体験します．</div>
 	<h2 id="目的">目的</h2>
 <p>自律移動ロボットが要求される技術の一つに指定した位置へ移動するナビゲーション機能あります．
