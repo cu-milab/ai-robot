@@ -127,7 +127,7 @@ if (!doNotTrack) {
     
     
 	
-<li>2: <a href="#pg-1b01ef9a7533a77bbaa48a5a931fc935">ノードやトピックのリマップ</a></li>
+<li>2: <a href="#pg-1b01ef9a7533a77bbaa48a5a931fc935">ノードやトピックのリマップと名前空間</a></li>
 
 
     
@@ -478,14 +478,15 @@ stage用のパッケージが用意されている訳ではないため，汎用
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-1b01ef9a7533a77bbaa48a5a931fc935">2 - ノードやトピックのリマップ</h1>
+	<h1 id="pg-1b01ef9a7533a77bbaa48a5a931fc935">2 - ノードやトピックのリマップと名前空間</h1>
     <div class="lead">コマンドラインでノードやトピックの名前を変更する方法を学びます．</div>
 	<h2 id="目的">目的</h2>
 <p>アプリケーション開発を進めるとノードやトピック等名前が衝突(複数が同一の名前)するケースがあります．
 このような問題を回避するための方法として，名前を変更するリマップと呼ばれる操作が有効です．
+また，名前空間を利用することでトピック名に任意の文字列を加えることができます．
 今回はコマンドラインによりノードを起動する際にリマップする方法について学びます．
 より詳細なリマップの方法については<a href="https://design.ros2.org/articles/ros_command_line_arguments.html#name-remapping-rules">こちらのドキュメント</a>をご参照ください．</p>
-<h2 id="ノードの名前を変更">ノードの名前を変更</h2>
+<h2 id="ノード名の変更">ノード名の変更</h2>
 <p>2つのターミナルを起動し，それぞれで下記のコマンドラインにより簡易シミュレータである<code>turtlesim</code>を起動してみましょう．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -511,9 +512,26 @@ stage用のパッケージが用意されている訳ではないため，汎用
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>全く同じ名前のノードが起動している場合，意図しない問題が発生する可能性があるという警告が表示されます．
-ノードと同様に，トピックも同じ名前で配信されます．
-同一のノードを複数起動したい場合には困った状況になります．
-これを防ぐためには，プログラムを書き換えて実行すれば解決できますが非効率的です．</p>
+ノードと同様に，トピックも同じ名前で配信されるため，一方のノードから配信されたトピックを購読できない問題が発声します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 topic list 
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/parameter_events
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/rosout
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/cmd_vel
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/color_sensor
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/pose
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>これを防ぐためには，プログラムを書き換えて実行すれば解決できますが非効率的です．</p>
 <p>この問題を解決するために，ノードの名前を変更してノードを起動するリマップと呼ばれる操作があります．
 上記で起動したノードの1つを終了し，下記のコマンドラインで<code>turtlesim</code>を起動してみましょう．
 引数に<code>--ros-args --remap __node:=[node_name]</code>を与えることで，任意のノードの名前(下記はmy_turtle)にリマップできます．</p>
@@ -538,8 +556,193 @@ stage用のパッケージが用意されている訳ではないため，汎用
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim2
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>ノードの名前が変わっていることが確認できました．</p>
-<h2 id="トピックの名前を変更">トピックの名前を変更</h2>
+</div><p>ノードの名前が変わっていることが確認できました．
+複数の同じノードを起動したい場合には，上記のリマップで対応することができますが，同一のトピックが配信，購読される問題は解決できません．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/parameter_events
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/rosout
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/cmd_vel
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/color_sensor
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/pose
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="名前空間の利用">名前空間の利用</h2>
+<p>上記の問題を解決する方法の1つとして名前空間(name space)を利用する方法があります．
+名前空間を利用すると，ノードやトピックの名前に<code>/</code>と任意の文字列が付与されます．
+名前空間を用いてノードを起動する場合には，コマンドラインでノードを起動する際に<code>__ns:</code>で任意の文字列を与えます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtlesim_node __ns:<span style="color:#ce5c00;font-weight:bold">=</span>/turtle2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>/turtle2</code>という名前空間を加えてノードを起動することができました．
+名前空間を与えた際のノードとトピックの名前を確認してみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node list
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle2/turtlesim
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtlesim
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>/turtle2</code>という名前空間を与えることで，もとのノードの名前の前に<code>/turtle2</code>という文字列が追加されました．
+リマップではノードの名前を任意の文字列に変更することができましたが，
+名前空間を利用する方法では，元の名前に任意の文字列を加えることノードを起動することができました．
+次にトピックを確認しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/parameter_events
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/rosout
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/cmd_vel
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/color_sensor
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/pose
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle2/turtle1/cmd_vel
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle2/turtle1/color_sensor
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle2/turtle1/pose
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>もとのトピック名の前に<code>/turtle2</code>という文字列が追加されました．
+リマップでは別々のトピックとして区別できませんでしたが，
+名前空間を利用することで別々のトピックとして扱うことができます．</p>
+<h2 id="購読するトピック名の変更">購読するトピック名の変更</h2>
+<p>既存のパッケージに含まれているノードを起動する際には，やり取りするトピック名が決められています．
+ソースコードをダウンロードして，やり取りするトピック名を変更することもできますが手間がかかります．
+このような場合には，ノードを立ち上げる際に配信するトピック名を変更する方法が便利です．</p>
+<p>簡易シミュレータturtlesimを起動してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run turtlesim turtlesim_node 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>次にキーボード操作によりロボットを動かすノードを立ち上げます．
+<code>turtlesim</code>上のロボットを操作するノードが用意されていますが，今回は汎用的なノードを使用することにします．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run teleop_twist_keyboard teleop_twist_keyboard
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記のノードではキーボードによりロボットを操作することができません．
+シミュレータ<code>turtlesim</code>が購読するトピックと<code>teleop_twist_keyboard</code>が配信するトピックが一致しないためです．
+やり取りしているトピックを確認してみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/cmd_vel
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/parameter_events
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/rosout
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/cmd_vel
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/color_sensor
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/turtle1/pose
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>teleop_twist_keyboard</code>はトピック<code>/cmd_vel</code>を配信していますが，
+<code>turtlesim</code>は<code>/turtle1/cmd_vel</code>を購読しようとするためトピック名が一致していません．
+このような場合には，ノードを起動する際にトピック名を変更して配信しましょう．
+<code>teleop_twist_keyboard</code>を終了して下記を実行してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 run teleop_twist_keyboard teleop_twist_keyboard cmd_vel:=turtle1/cmd_vel
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記のコマンドラインは，<code>teleop_twist_keyboard</code>起動する際にトピック<code>cmd_vel</code>を<code>turtle1/cmd_vel</code>(<code>/turtle1/cmd_vel</code>ではないことに注意してください)に変更してノードを起動します．
+先ほどは操作できなかったロボットをキーボードで操作することが可能です．
+確認のため，<code>teleop_twist_keyboard</code>が配信するトピックを確認しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node info /teleop_twist_keyboard 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/teleop_twist_keyboard
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Subscribers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Publishers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /parameter_events: rcl_interfaces/msg/ParameterEvent
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /rosout: rcl_interfaces/msg/Log
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /turtle1/cmd_vel: geometry_msgs/msg/Twist
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Service Servers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /teleop_twist_keyboard/describe_parameters: rcl_interfaces/srv/DescribeParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /teleop_twist_keyboard/get_parameter_types: rcl_interfaces/srv/GetParameterTypes
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /teleop_twist_keyboard/get_parameters: rcl_interfaces/srv/GetParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /teleop_twist_keyboard/list_parameters: rcl_interfaces/srv/ListParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /teleop_twist_keyboard/set_parameters: rcl_interfaces/srv/SetParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /teleop_twist_keyboard/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Service Clients:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Action Servers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Action Clients:
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Publishers</code>を見ると<code>/cmd_vel</code>ではなく<code>/turtle1/cmd_vel</code>が配信されています．
+オープンソースソフトウェアを利用する際には，トピック名を適切に設定しなければ動かないことが多いです．
+そのような場合には，こちらの方法を採用すると任意のトピック名で配信できるため便利です．</p>
 
 </div>
 
