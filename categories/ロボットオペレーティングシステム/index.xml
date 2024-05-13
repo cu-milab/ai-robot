@@ -992,11 +992,11 @@ stageのセットアップが終わっていない人は&lt;a href=&#34;./../../
 &lt;/div&gt;&lt;p&gt;&lt;img src=&#34;stage.png#center&#34; alt=&#34;シミュレータ画像&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;課題&#34;&gt;課題&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;cave.worldファイルを用いてシミュレータstageを起動しなさい&lt;/li&gt;
+&lt;li&gt;cave.worldファイルを用いてシミュレータstageを起動しなさい．&lt;/li&gt;
 &lt;li&gt;購読可能なトピックを調べなさい．また，メッセージファイルにはどのような情報が記述されているか調べなさい．&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;teleop_twist_keyboard&lt;/code&gt;パッケージの&lt;code&gt;teleop_twist_keyboard&lt;/code&gt;ノードを用いてロボットを操作しなさい．&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;rostopic pub&lt;/code&gt;コマンドを使用して，ロボットを動かしなさい．&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;willow-four-erratics.world&lt;/code&gt;ファイルを用いてシミュレータstageを起動し，立ち上がるノード名及び配信，購読しているトピックの一覧を取得しなさい．&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;willow-four-erratics-multisensor.world&lt;/code&gt;ファイルを用いてシミュレータstageを起動し，立ち上がるノード名及び配信，購読しているトピックの一覧を取得しなさい．&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;rostopic pub&lt;/code&gt;コマンドを使用して，0番目のロボットを動かしなさい．&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;teleop_twist_keyboard&lt;/code&gt;パッケージの&lt;code&gt;teleop_twist_keyboard&lt;/code&gt;を用いて0番目のロボットを操作しなさい．&lt;/li&gt;
 &lt;li&gt;0番目のロボットに円運動をさせるプログラムを作りなさい．&lt;/li&gt;
