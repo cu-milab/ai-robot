@@ -751,7 +751,7 @@ stageのセットアップが終わっていない人は&lt;a href=&#34;./../../
 &lt;li&gt;&lt;code&gt;rostopic pub&lt;/code&gt;コマンドを使用して，0番目のロボットを動かしなさい．&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;teleop_twist_keyboard&lt;/code&gt;パッケージの&lt;code&gt;teleop_twist_keyboard&lt;/code&gt;を用いて0番目のロボットを操作しなさい．&lt;/li&gt;
 &lt;li&gt;0番目のロボットに円運動をさせるプログラムを作りなさい．&lt;/li&gt;
-&lt;li&gt;作成したプログラムを実行し，データ可視化ツールrvizで軌跡を可視化しなさい．軌跡の可視化にはOdometryを使用することとする．&lt;/li&gt;
+&lt;li&gt;cave.worldファイルをシミュレータstageで作成したプログラムが実行できるように変更しなさい．また，データ可視化ツールrvizのOdometryを用いて軌跡を可視化しなさい．&lt;/li&gt;
 &lt;li&gt;シミュレータstage，作成したプログラム，rvizを起動するlaunchファイルを作成しなさい．&lt;/li&gt;
 &lt;/ol&gt;
 
