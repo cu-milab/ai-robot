@@ -102,6 +102,8 @@ if (!doNotTrack) {
   <a href="/ai-robot/ps/uwfa8i5/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsuwfa8i5"><span class="">Turtlebot3の動作確認</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsc8x5n64-li">
   <a href="/ai-robot/ps/c8x5n64/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsc8x5n64"><span class="">Turtlebot3の制御</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps711ga6p2-li">
+  <a href="/ai-robot/ps/711ga6p2/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps711ga6p2"><span class="">LiDARを用いた障害物検知</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotps13yonaq-li">
   <a href="/ai-robot/ps/13yonaq/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps13yonaq"><span class="">最終課題</span></a>
 </li>
@@ -132,9 +134,10 @@ if (!doNotTrack) {
       <h5 class="taxonomy-title">Tag Cloud</h5>
       <ul class="taxonomy-terms">
         <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/launch/" data-taxonomy-term="launch"><span class="taxonomy-label">launch</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/lidar/" data-taxonomy-term="lidar"><span class="taxonomy-label">LiDAR</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/stage/" data-taxonomy-term="stage"><span class="taxonomy-label">stage</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/turtlebot3/" data-taxonomy-term="turtlebot3"><span class="taxonomy-label">Turtlebot3</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/turtlebot3/" data-taxonomy-term="turtlebot3"><span class="taxonomy-label">Turtlebot3</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span><span class="taxonomy-count">8</span></a></li>
         <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1/" data-taxonomy-term="%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1"><span class="taxonomy-label">トピック通信</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3/" data-taxonomy-term="%E3%83%8A%E3%83%93%E3%82%B2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3"><span class="taxonomy-label">ナビゲーション</span><span class="taxonomy-count">1</span></a></li>
@@ -144,7 +147,7 @@ if (!doNotTrack) {
   <div class="taxonomy taxonomy-terms-cloud taxo-categories">
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
-        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92"><span class="taxonomy-label">プロジェクト演習</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%BC%94%E7%BF%92"><span class="taxonomy-label">プロジェクト演習</span><span class="taxonomy-count">6</span></a></li>
         <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%83%E3%83%88%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0"><span class="taxonomy-label">ロボットオペレーティングシステム</span><span class="taxonomy-count">9</span></a></li>
         <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E3%83%A9%E3%83%9C"><span class="taxonomy-label">ロボティクスラボ</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/categories/%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92/" data-taxonomy-term="%E3%83%AD%E3%83%9C%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9%E6%BC%94%E7%BF%92"><span class="taxonomy-label">ロボティクス演習</span><span class="taxonomy-count">6</span></a></li>
@@ -226,6 +229,14 @@ if (!doNotTrack) {
                     <a href="/ai-robot/ps/c8x5n64/">Turtlebot3の制御</a>
                 </h5>
                 <p>Turtlebot3の自律移動プログラムを実装します．</p>
+            </div>
+        
+            
+            <div class="entry">
+                <h5>
+                    <a href="/ai-robot/ps/711ga6p2/">LiDARを用いた障害物検知</a>
+                </h5>
+                <p>LiDARを用いた障害物検知を実装します．</p>
             </div>
         
             
