@@ -589,7 +589,9 @@ ROS2のコマンドラインで情報を習得して確認する，Python言語�
 <p>Turtlebot3の上部にはLiDAR(Light Detection And Ranging)と呼ばれるセンサが搭載されています．
 本講義の前半では座学形式でLiDARの仕組みを学び，後半ではLiDARを用いた障害物検知プログラミングの方法について取り組みます．</p>
 <h2 id="turtlebot3に搭載されているlidar">Turtlebot3に搭載されているLiDAR</h2>
-<p>Turtlebot3の上部には搭載されているLiDARの基本スペックは下記の表の通りです．
+<p>Turtlebot3の上部には搭載されているLDS-02は，レーザ光を照射し，対象物に反射した光を受けて計測して距離を測ります．
+周囲360°を観測するために，レーザー光の投光及び受光ユニットが機会的に回転します．
+LiDARの基本スペックは下記の表の通りです．
 詳細なスペックについては<a href="https://emanual.robotis.com/docs/en/platform/turtlebot3/appendix_lds_02/">こちらのページ</a>を参照してください．</p>
 <p><img src="LiDAR.JPG#center" alt="LiDAR"></p>
 <table>
@@ -685,7 +687,7 @@ ROS2のコマンドラインで情報を習得して確認する，Python言語�
 <code>Topic</code>の中にある<code>Reliability Policy</code>を<code>Reliable</code>から<code>System Default</code>に変更します．
 上記の設定でLiDARが配信しているトピックを可視化することができます．
 可視化される点群が小さくて見づらい場合には，<code>Size(m)</code>の値を大きくしてください．</p>
-<p><img src="rviz.JPG#center" alt="rviz"></p>
+<p><img src="rviz.png#center" alt="rviz"></p>
 <p>次に，LiDARに関連するノードとトピックを確認しましょう．
 まずは起動しているノードを確認します．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
@@ -752,7 +754,7 @@ ROS2のコマンドラインで情報を習得して確認する，Python言語�
 </span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Action Clients:
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>上記の出力結果からLiDARは，<code>/scan</code>というトピック名で配信されています．
+</div><p>上記の出力結果からLiDARは，<code>/scan</code>というトピック名で配信されていることが確認できました．
 また，メッセージとしては<code>sensor_msgs/msg/LaserScan</code>を使用することが分かります．
 配信されるデータの中身を調べてみましょう．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
@@ -829,7 +831,47 @@ ROS2のコマンドラインで情報を習得して確認する，Python言語�
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">                             # the array empty.
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="障害物検知プログラム">障害物検知プログラム</h2>
+</div><p>配信しているデータの種類が多いので少し分かりにくくなっています．
+関連するものだけを下記の表にまとめました．</p>
+<table>
+<thead>
+<tr>
+<th>変数名</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>angle_min</td>
+<td>float32</td>
+<td>測定範囲の下限</td>
+</tr>
+<tr>
+<td>angle_max</td>
+<td>float32</td>
+<td>測定範囲の上限</td>
+</tr>
+<tr>
+<td>angle_increment</td>
+<td>float32</td>
+<td>角度分解能</td>
+</tr>
+<tr>
+<td>ranges</td>
+<td>float32の配列</td>
+<td>測定した距離</td>
+</tr>
+</tbody>
+</table>
+<p>LDS-02は周囲360°の距離を計測可能できますが，サンプリングレートが固定されているため角度分解能がスキャン周波数によって異なります．
+そのため，角度の測定範囲の開始が0[rad]ではなく，若干ずれた<code>angle_min</code>[rad]から始まります．
+角度分解能はangle_increment[rad]として配信されます．
+<img src="angle.jpg#" width="40%"/></p>
+<h2 id="障害物検知プログラム">障害物検知プログラム</h2>
+<p>LiDARから配信されたトピックを購読し，前方の障害物までの距離を計測するプログラムを実装します．
+下記のサンプルプログラムでは，LiDARで前方30[°]を観測し，障害物までの平均距離を表示します．
+これまでに学んだ方法にてワークスペースとパッケージを作成し， 下記のサンプルプログラムを入力してください．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -904,7 +946,7 @@ ROS2のコマンドラインで情報を習得して確認する，Python言語�
 </span></span><span style="display:flex;"><span>    <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="measurement.jpg#center" alt="LiDAR"></p>
+</div><p>画像のような環境で実行すると下記のような出力結果が得られます．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -913,23 +955,123 @@ ROS2のコマンドラインで情報を習得して確認する，Python言語�
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run detect_obstacle detect_obstacle_node
-</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5616785692317146 [m]
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5611785735402789 [m]
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5610000022820064 [m]
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5607857171978269 [m]
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5628275891830181 [m]
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5617499968835286 [m]
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5615357096706118 [m]
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.562185181511773 [m]
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5146363600817594 [m]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5147878805073824 [m]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5146875071376562 [m]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5159696981545651 [m]
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">0.5160294127464294 [m]
 </span></span></span></code></pre></td></tr></table>
 </div>
+</div><p><img src="measurement.jpg#center" alt="LiDAR"></p>
+<p>プログラムを実行した環境は，LiDARの中心から壁までの最短距離が50.0cm，最長距離が51.8cmでした．
+ターミナルに出力した結果は約51.5cmですので，障害物までのおおよその距離を計測できていることがわかります．</p>
+<h2 id="プログラムの内容">プログラムの内容</h2>
+<p>プログラムの内容を確認しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">rclpy</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">rclpy.node</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Node</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">sensor_msgs.msg</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">LaserScan</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">math</span>
+</span></span></code></pre></td></tr></table>
 </div>
+</div><p>必要なモジュールを読み込んでいます．
+LiDARから配信されるトピックを購読するために，sensor_msgsパッケージのLaserScanをimportしています．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">DetectObstacle</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Node</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">super</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;detect_obstacle_node&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">qos</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">qos</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">QoSProfile</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">depth</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">qos</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">reliability</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">qos</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">QoSReliabilityPolicy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">BEST_EFFORT</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose_sub</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">create_subscription</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">LaserScan</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;scan&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">scan_callback</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">qos</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>_init__関数内でトピック<code>/scan</code>を購読した際のコールバック関数を定義しています．
+これまで扱ってきたサンプルプログラムとは異なり，
+今回はQoS(Quality of Service)を設定しています．
+QoSは通信品質に関わる設定です．
+実環境で運用する場合，通信状況によってはセンサから得られるデータは確実に全てを購読できる訳ではありません．
+サンプルプログラムでは，過去<code>10</code>フレームのデータを保存し，<code>Reliability</code>を<code>BEST_EFFORT</code>とします．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>   <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">scan_callback</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">scan</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">angle</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">scan</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">angle_min</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">total_distance</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.0</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">cnt</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#204a87">range</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">scan</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ranges</span><span style="color:#000;font-weight:bold">)):</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">angle</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">((</span><span style="color:#0000cf;font-weight:bold">11</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">math</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pi</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">6</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">or</span> <span style="color:#000">angle</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">math</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pi</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">12</span><span style="color:#000;font-weight:bold">)):</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">scan</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ranges</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">scan</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ranges</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">]):</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#000">total_distance</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">total_distance</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">scan</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ranges</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#000">cnt</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">cnt</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">angle</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">angle</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">scan</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">angle_increment</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">total_distance</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">cnt</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;[m]&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>LiDARから配信されるトピックを購読すると<code>scan_callback</code>メソッドが実行されます．
+先でも述べたように，LDS-02は周囲360°の距離を1°ずつ測定できますが，
+実際にはスキャン周波数によってずれが生じます．
+前方30°(11π/6 ~ π/12)までの距離のみを加算し，加算した回数で割ることでLiDARから障害物までの平均距離を計算しています．
+ただし，距離が計測できなかった場合には<code>scan.ranges[i]</code>に<code>inf</code>が入っています．
+<code>inf</code>まで加算すると平均距離を計算することができなくなるため，<code>inf</code>であった場合には計算から除きます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">None</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">init</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">DetectObstacle</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">spin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">node</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">destroy_node</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shutdown</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">__name__</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;__main__&#39;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>main関数は以前と同じ内容ですので省略します．</p>
+
 </div>
 
 
