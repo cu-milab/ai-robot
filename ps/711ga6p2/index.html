@@ -30,7 +30,7 @@
 <meta itemprop="name" content="LiDARを用いた障害物検知">
 <meta itemprop="description" content="LiDARを用いた障害物検知を実装します．">
 
-<meta itemprop="wordCount" content="725">
+<meta itemprop="wordCount" content="726">
 <meta itemprop="keywords" content="Turtlebot3,LiDAR,トピック通信," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LiDARを用いた障害物検知"/>
 <meta name="twitter:description" content="LiDARを用いた障害物検知を実装します．"/>
@@ -477,7 +477,8 @@ LiDARの基本スペックは下記の表の通りです．
 そのため，角度の測定範囲の開始が0[rad]ではなく，若干ずれた<code>angle_min</code>[rad]から始まります．
 角度分解能はangle_increment[rad]として配信されます．</p>
 <!-- <img src="./angle.jpg#" width="40%"/> -->
-<p><img src="angle.jpg#center" alt="angle"></p>
+<img src="./angle.jpg#" width="40%"/>
+ ![angle](angle.jpg#center)
 <h2 id="障害物検知プログラム">障害物検知プログラム</h2>
 <p>LiDARから配信されたトピックを購読し，前方の障害物までの距離を計測するプログラムを実装します．
 下記のサンプルプログラムでは，LiDARで前方30[°]を観測し，障害物までの平均距離を表示します．
