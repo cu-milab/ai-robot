@@ -307,7 +307,6 @@ LiDARの基本スペックは下記の表の通りです．
 角度分解能はangle_increment[rad]として配信されます．&lt;/p&gt;
 &lt;!-- &lt;img src=&#34;./angle.jpg#&#34; width=&#34;40%&#34;/&gt; --&gt;
 &lt;img src=&#34;./angle.jpg#&#34; width=&#34;40%&#34;/&gt;
- ![angle](angle.jpg#center)
 &lt;h2 id=&#34;障害物検知プログラム&#34;&gt;障害物検知プログラム&lt;/h2&gt;
 &lt;p&gt;LiDARから配信されたトピックを購読し，前方の障害物までの距離を計測するプログラムを実装します．
 下記のサンプルプログラムでは，LiDARで前方30[°]を観測し，障害物までの平均距離を表示します．
@@ -405,7 +404,7 @@ LiDARの基本スペックは下記の表の通りです．
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-style:italic&#34;&gt;0.5160294127464294 [m]
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;measurement.jpg#center&#34; alt=&#34;LiDAR&#34;&gt;&lt;/p&gt;
+&lt;/div&gt;&lt;img src=&#34;./measurement.jpg#&#34; width=&#34;40%&#34;/&gt;
 &lt;p&gt;プログラムを実行した環境は，LiDARの中心から壁までの最短距離が50.0cm，最長距離が51.8cmでした．
 ターミナルに出力した結果は約51.5cmですので，障害物までのおおよその距離を計測できていることがわかります．&lt;/p&gt;
 &lt;h2 id=&#34;プログラムの内容&#34;&gt;プログラムの内容&lt;/h2&gt;
