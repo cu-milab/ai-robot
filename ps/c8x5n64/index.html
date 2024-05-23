@@ -30,7 +30,7 @@
 <meta itemprop="name" content="Turtlebot3の制御">
 <meta itemprop="description" content="Turtlebot3の自律移動プログラムを実装します．">
 
-<meta itemprop="wordCount" content="20">
+<meta itemprop="wordCount" content="27">
 <meta itemprop="keywords" content="Turtlebot3," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Turtlebot3の制御"/>
 <meta name="twitter:description" content="Turtlebot3の自律移動プログラムを実装します．"/>
@@ -127,10 +127,12 @@ if (!doNotTrack) {
         <nav id="TableOfContents">
   <ul>
     <li><a href="#目的">目的</a></li>
+    <li><a href="#注意点">注意点</a></li>
     <li><a href="#課題">課題</a>
       <ul>
         <li><a href="#turtlebot3に関するノードトピックの確認">Turtlebot3に関するノード，トピックの確認</a></li>
         <li><a href="#turtlebot3の自律移動">Turtlebot3の自律移動</a></li>
+        <li><a href="#カメラを用いたセンシング">カメラを用いたセンシング</a></li>
       </ul>
     </li>
   </ul>
@@ -198,6 +200,10 @@ if (!doNotTrack) {
 <p>ここまでに学んだことを生かし，Turtlebot3の自律走行プログラムを実装します．
 ROS2のコマンドラインで情報を習得して確認する，Python言語に実装するまでを各チーム単位で取り組み，
 トピック通信の仕組みから実装までを復習します．</p>
+<h2 id="注意点">注意点</h2>
+<p>Turtlebot3を用いて作業する場合には，ホームディレクトリにワークスペースを作成してください，
+ワークスペースの名前には学籍番号を入れてください．
+例えば，<code>er2000_ws</code>とうにしてください．</p>
 <h2 id="課題">課題</h2>
 <p>本講義では課題を順番に解く形式で進めます．課題がどうしても解けない場合には，教員もしくはTAにアドバイスをもらってください．</p>
 <h3 id="turtlebot3に関するノードトピックの確認">Turtlebot3に関するノード，トピックの確認</h3>
@@ -215,6 +221,11 @@ ROS2のコマンドラインで情報を習得して確認する，Python言語�
 <li><a href="./../../ps/tbaet4s/">トピック通信の実装</a>のサンプルプログラムにおける<code>timer_callback</code>関数を削除し，
 代わりに<code>setMoveVector</code>関数を初期化メソッド内で実行しなさい．</li>
 <li>Turtlebot3で正方形の軌跡を描かせるプログラムを作成しなさい．</li>
+</ol>
+<h3 id="カメラを用いたセンシング">カメラを用いたセンシング</h3>
+<ol>
+<li>ロボットオペレーティングの講義にて<code>ROS2による画像処理</code>を学びました．
+サンプルプログラムを改良し，白色の通貨，黒色の紙を見せたら停止するプログラムを作成しないさい．</li>
 </ol>
 
 	
