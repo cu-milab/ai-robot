@@ -60,7 +60,7 @@
 最も下の天板にはモーター及びカメラ，2段目の天板にはOpenCR(制御用ボード)，3段目にはRaspberry Pi4(2GB)，4段目にはLiDARが搭載されています．
 Turtlebot3の2段目の前方にスライド式の電源スイッチがあります．
 電源スイッチをONにすると電源が入り，Raspberry Pi4に挿入されているmicroSDカードからUbuntuが起動します．
-その際，LiDARが回転し，音がなります．
+その際，LiDARが回転して音がなります．
 OSの起動が完了し，Wifiに接続(自動的)されると使用可能な状態になります．&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;power.JPG#center&#34; alt=&#34;電源&#34;&gt;&lt;/p&gt;
 &lt;p&gt;終了する際には，Ubuntuをシャットダウンしてから電源スイッチをオフにする必要があります．
