@@ -45,7 +45,7 @@ SDカードにubuntuをインストール turtlebotに搭載されているRaspb
 https://www.raspberrypi.com/software/
 Raspberry Pi Imagerを起動． OSを選択 =&gt; Other gerneral-purpose OS =&gt; Ubuntu =&gt; Ubuntu Server 22.04.3 LTS(64bit) ストレージの選択 =&gt; SDカード カスタマイズ =&gt; 設定を編集する =&gt; 一般 ホスト名：tb01(数字はシールと同じ) ユーザー名：ros パスワード：ros WiFi (/etc/netplan/50-cloud-init.yamlで後から変更可能) SSID：robolabB1 (適宜変更) パスワード：roboticslab wifiを使う国：JP ロケール設定をする タイムゾーン：Asia/Tokyo キーボードレイアウト：jp カスタマイズ =&gt; 設定を編集する =&gt; サービス SSHを有効にする パスワード認証を使う 書き込み 設定変更 ubuntu自動更新の無効化 /etc/apt/apt.conf.d/20auto-upgradesを開き，下記のように編集 APT::Periodic::Update-Package-Lists &#34;0&#34;; APT::Periodic::Unattended-Upgrade &#34;0&#34;; ネットワーク接続関係 初期設定では，ネットワークに接続するまで待機するため無効化する． $ systemctl mask systemd-networkd-wait-online.service サスペンドとスリープの無効化 $ sudo systemctl mask sleep.">
 <meta itemprop="dateModified" content="2024-04-03T18:01:17+09:00" />
-<meta itemprop="wordCount" content="339">
+<meta itemprop="wordCount" content="341">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="メモ"/>
 <meta name="twitter:description" content="tb3管理表 https://docs.google.com/spreadsheets/d/1Dsn0B4qgr0d_l07FCjJ3_7MTArnQmQWde6SJHWU4wHE/edit#gid=0
@@ -457,15 +457,16 @@ Server版では，下記のファイルを編集することでホスト名を�
 <p>バッテリーは3つのセルで構成されている．
 目安となる電圧仕様は下記の通りである．</p>
 <ul>
-<li>最高電圧：4.2 [V/cell]</li>
-<li>標準電圧：3.7 [V/cell]</li>
-<li>最低電圧：3.2 [V/cell]</li>
+<li>最高電圧：4.2 <a href="12.6V">V/cell</a></li>
+<li>標準電圧：3.7 <a href="11.1V">V/cell</a></li>
+<li>必要電圧：3.5 <a href="10.5V">V/cell</a></li>
+<li>最低電圧：3.2 <a href="9.6V">V/cell</a></li>
 </ul>
 <p>Turtlebot3を使用する期間に入ったら満充電して保管する．
 満充電後，必ず機体からパワー端子接続を外す．</p>
 <h3 id="バッテリーに関しての注意事項">バッテリーに関しての注意事項</h3>
 <p>Turtlebot3の使用中にバッテリー低下が原因でピープ音を発するが，電圧が標準電圧近くまで低下しているためである．
-ただちに使用を停止してバッテリーを充電する必要がある．
+ピープ音を発したらバッテリーを充電する必要がある．
 最低電圧を下回るまで使用した場合には，付随する充電器で充電することが不可能(故障)となる．
 低電圧の状態で再充電すると発火等の危険があるため，一般的な充電器では充電できないように設計されている．</p>
 <p>バッテリーを長期的(一ヶ月以上)に使用しない場合には，3.7 ~ 3.8 [V/cell]とし，自己自然放電を防ぐために必ず機体からパワー端子を外す．
