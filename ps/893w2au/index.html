@@ -30,7 +30,7 @@
 <meta itemprop="name" content="地図の作成とナビゲーション">
 <meta itemprop="description" content="シミュレータを用いてナビゲーションを体験します．">
 
-<meta itemprop="wordCount" content="491">
+<meta itemprop="wordCount" content="585">
 <meta itemprop="keywords" content="stage,ナビゲーション," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="地図の作成とナビゲーション"/>
 <meta name="twitter:description" content="シミュレータを用いてナビゲーションを体験します．"/>
@@ -133,6 +133,7 @@ if (!doNotTrack) {
         <nav id="TableOfContents">
   <ul>
     <li><a href="#目的">目的</a></li>
+    <li><a href="#準備">準備</a></li>
     <li><a href="#ロボットシミュレータstageの起動">ロボットシミュレータSTAGEの起動</a></li>
     <li><a href="#地図作成">地図作成</a></li>
     <li><a href="#ナビゲーション">ナビゲーション</a></li>
@@ -203,7 +204,55 @@ if (!doNotTrack) {
 ナビゲーションを実現するためには，ロボット自身が地図上のどこに存在するかを推定し，障害物を回避しながら最適な経路を計画，そして経路通りにロボットを走行させる必要があります．
 ROSではナビゲーション関連のパッケージが用意されているため，簡単に試すことができます．
 今回はロボットシミュレータstageを用いてナビゲーションを体験します．</p>
-<h2 id="ロボットシミュレータstageの起動">ロボットシミュレータSTAGEの起動</h2>
+<h2 id="準備">準備</h2>
+<p>必要なパッケージを事前にインストールしておきます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt update
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-bondcpp
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install libsuitesparse-dev
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902">$</span> mkdir tmp
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> tmp
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> wget http://ceres-solver.org/ceres-solver-2.2.0.tar.gz
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt-get install cmake
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt-get install libgoogle-glog-dev libgflags-dev
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt-get install libatlas-base-dev
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt-get install libeigen3-dev
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt-get install libsuitesparse-dev
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902">$</span> tar zxf ceres-solver-2.2.0.tar.gz
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> mkdir ceres-bin
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ceres-bin
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> cmake ../ceres-solver-2.2.0
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> make -j3
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> make <span style="color:#204a87">test</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo make install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ロボットシミュレータstageの起動">ロボットシミュレータSTAGEの起動</h2>
 <p>以前にgithubからクローンしたstageシミュレータを使用します．
 下記のコマンドにより正常に起動するか確認しましょう．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
