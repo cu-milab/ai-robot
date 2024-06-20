@@ -30,7 +30,7 @@
 <meta itemprop="name" content="最終課題">
 <meta itemprop="description" content="自動運転を模した課題に取り組みます．">
 
-<meta itemprop="wordCount" content="355">
+<meta itemprop="wordCount" content="359">
 <meta itemprop="keywords" content="Turtlebot3," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="最終課題"/>
 <meta name="twitter:description" content="自動運転を模した課題に取り組みます．"/>
@@ -135,9 +135,9 @@ if (!doNotTrack) {
         <li><a href="#追加課題3">追加課題3</a></li>
       </ul>
     </li>
-    <li><a href="#参考動画">参考動画</a></li>
     <li><a href="#カメラから得られる画像">カメラから得られる画像</a></li>
     <li><a href="#サンプルプログラム">サンプルプログラム</a></li>
+    <li><a href="#参考動画">参考動画</a></li>
   </ul>
 </nav>
       </div>
@@ -227,12 +227,6 @@ if (!doNotTrack) {
 <p>ゴール用パネルの後ろに設置した障害物を認識し，障害物に衝突する前に停止させてください．
 ただし，ゴール用パネル上で停止させてください．
 ゴール用パネルにTurtlebot3の機体半分以上が入り，停止することができれば停車成功とみなします．</p>
-<h2 id="参考動画">参考動画</h2>
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/WO3EWSNXqdo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
 <h2 id="カメラから得られる画像">カメラから得られる画像</h2>
 <p>ライントレースを行うには黒いラインを検知する必要があります．
 Turtlebot3に搭載されたカメラは，車体前方の下部に若干下を向くように設置されています．
@@ -407,7 +401,17 @@ Turtlebot3に搭載されたカメラは，車体前方の下部に若干下を�
 </span></span><span style="display:flex;"><span>    <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h2 id="参考動画">参考動画</h2>
+<p>基本課題と追加課題をクリアした例です．
+サンプルプログラムでは，ライントレースの際に機体を左右に降るため滑らかなライントレースができません．
+PID制御を導入することで安定した走行が可能となります．
+余力がある人は是非取り組んでみてください．
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/WO3EWSNXqdo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+</p>
+
 	
 </div>
 
