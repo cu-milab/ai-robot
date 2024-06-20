@@ -939,6 +939,16 @@ QoSは通信品質に関わる設定です．
 &lt;/div&gt;
 
 &lt;h2 id=&#34;カメラから得られる画像&#34;&gt;カメラから得られる画像&lt;/h2&gt;
+&lt;p&gt;ライントレースを行うには黒いラインを検知する必要があります．
+Turtlebot3に搭載されたカメラは，車体前方の下部に若干下を向くように設置されています．
+例えば，下記のようなシーンの場合，黒色のラインが少しだけ観測できます．
+最短で約2cm先の黒色のラインを検知できますが，2cm以内のラインは検知できないので注意してください．&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;turtlebot3_1.jpg#center&#34; alt=&#34;turtlebot3_1&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;camera1.png#center&#34; alt=&#34;image1&#34;&gt;&lt;/p&gt;
+&lt;p&gt;追加課題1では標識を認識する必要があります．
+下記のようなシーンでは，解像度は低いですが標識を観測することができます．&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;turtlebot3_2.jpg#center&#34; alt=&#34;turtlebot3_2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;camera2.png#center&#34; alt=&#34;image2&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;サンプルプログラム&#34;&gt;サンプルプログラム&lt;/h2&gt;
 &lt;p&gt;下記はシンプルなライントレースプログラムです．
 黒いラインを検知したら右前に，白いパネルを検知したら左前に進みます．
