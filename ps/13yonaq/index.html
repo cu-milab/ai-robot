@@ -19,21 +19,21 @@
 <link rel="icon" type="image/png" href="/ai-robot/favicons/android-192x192.png" sizes="192x192">
 
 <title>最終課題 | 中部大学AIロボティクス学科</title>
-<meta name="description" content="これまでに学んだことを生かし，最終課題に取り組みます．">
+<meta name="description" content="自動運転を模した課題に取り組みます．">
 <meta property="og:title" content="最終課題" />
-<meta property="og:description" content="これまでに学んだことを生かし，最終課題に取り組みます．" />
+<meta property="og:description" content="自動運転を模した課題に取り組みます．" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/13yonaq/" /><meta property="article:section" content="project" />
 
 <meta property="og:site_name" content="Goldydocs2" />
 
 <meta itemprop="name" content="最終課題">
-<meta itemprop="description" content="これまでに学んだことを生かし，最終課題に取り組みます．">
+<meta itemprop="description" content="自動運転を模した課題に取り組みます．">
 
-<meta itemprop="wordCount" content="5">
+<meta itemprop="wordCount" content="27">
 <meta itemprop="keywords" content="Turtlebot3," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="最終課題"/>
-<meta name="twitter:description" content="これまでに学んだことを生かし，最終課題に取り組みます．"/>
+<meta name="twitter:description" content="自動運転を模した課題に取り組みます．"/>
 
 
 
@@ -127,7 +127,14 @@ if (!doNotTrack) {
         <nav id="TableOfContents">
   <ul>
     <li><a href="#目的">目的</a></li>
-    <li><a href="#課題">課題</a></li>
+    <li><a href="#課題">課題</a>
+      <ul>
+        <li><a href="#基本課題">基本課題</a></li>
+        <li><a href="#追加課題1">追加課題1</a></li>
+        <li><a href="#追加課題2">追加課題2</a></li>
+        <li><a href="#追加課題3">追加課題3</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
       </div>
@@ -173,7 +180,7 @@ if (!doNotTrack) {
             
 <div class="td-content">
 	<h1>最終課題</h1>
-	<div class="lead">これまでに学んだことを生かし，最終課題に取り組みます．</div>
+	<div class="lead">自動運転を模した課題に取り組みます．</div>
 	<header class="article-meta">
 		<div class="taxonomy taxonomy-terms-article taxo-tags">
   <h5 class="taxonomy-title">Tags:</h5>
@@ -191,9 +198,37 @@ if (!doNotTrack) {
   </header>
 	<h2 id="目的">目的</h2>
 <p>これまでに学んだ内容を生かし，自動運転にちなんだ課題に取り組みます．
-ROSの仕組みの理解やオープンソースソフトウェアとのインテグレーション，プログラミングの実装力，
-トライ&amp;エラーによる問題解決，センシング技術など課題を介して様々なスキルを身につけてください．</p>
+課題を介してROSの仕組みの理解やオープンソースソフトウェアとのインテグレーション，プログラミングの実装力，
+トライ&amp;エラーによる問題解決，センシング技術など様々なスキルを身につけてください．</p>
 <h2 id="課題">課題</h2>
+<p>自動運転に模した課題に取り組みます．
+課題は基本課題と3つの追加課題で構成されています．
+最低でも基本課題をクリアしてから追加課題に取り組みましょう．
+コースは下記の写真の通りです．</p>
+<p><img src="course.jpg#center" alt="最終課題"></p>
+<h3 id="基本課題">基本課題</h3>
+<p>黒色のラインを検知し，ラインに沿ってTurtlebot3を走行させます．
+スタートからゴールまで黒いラインをトレースして走行させてください．
+走行中にTurtlebot3の一部が黒いラインの上にいなければ走行失敗とみなします．</p>
+<h3 id="追加課題1">追加課題1</h3>
+<p>コース上に設置された徐行標識を認識して走行スピードを低下させてください．
+コース上のどの位置からでも標識を認識して良いこととします．
+徐行標識を認識後，1秒間以上走行速度を半分以下に制限してください．
+標識認識は1回のみとし，2回以上の認識は追加課題の達成失敗とします．</p>
+<h3 id="追加課題2">追加課題2</h3>
+<p>黒色のライン上に設置された赤色の駐車ラインを認識し，駐車スペースに駐車してください．
+駐車動作中はライントレースはしなくても構いません．
+駐車スペース用パネルにTurtlebot3の機体半分以上が入り，1秒間以上停止することができれば駐車成功とみなします．
+駐車後，黒色のラインに復帰してライントレースを再開してください．</p>
+<h3 id="追加課題3">追加課題3</h3>
+<p>ゴール用パネルの後ろに設置した障害物を認識し，障害物に衝突する前に停止させてください．
+ただし，ゴール用パネル上で停止させてください．
+ゴール用パネルにTurtlebot3の機体半分以上が入り，停止することができれば停車成功とみなします．</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/WO3EWSNXqdo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
 
 	
 </div>
