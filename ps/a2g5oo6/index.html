@@ -30,7 +30,7 @@
 <meta itemprop="name" content="マーカー認識">
 <meta itemprop="description" content="ArUcoを用いてマーカーを認識します．">
 
-<meta itemprop="wordCount" content="378">
+<meta itemprop="wordCount" content="384">
 <meta itemprop="keywords" content="インストール,画像処理," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="マーカー認識"/>
 <meta name="twitter:description" content="ArUcoを用いてマーカーを認識します．"/>
@@ -219,11 +219,13 @@ https://aruco-ros2.readthedocs.io/en/latest/installation.html
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-image-transport ros-humble-image-transport-plugins
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-camera-calibration
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-aruco
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-tf-transformations
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>前回の講義と同様に，ROS2でカメラから画像トピックを得るために<code>v4l2_camera</code>を使用します．</p>
@@ -441,7 +443,7 @@ SAVEボタンが緑色になりますのでクリックすると<code>/tmp/calib
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> vim ~/colcon_ws/src/ros2_aruco/ros2_aruco/config/ruco_parameters.yaml
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> vim ~/colcon_ws/src/ros2_aruco/ros2_aruco/config/aruco_parameters.yaml
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>パラメータ等を編集します．
