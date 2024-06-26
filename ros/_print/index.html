@@ -183,7 +183,15 @@ if (!doNotTrack) {
     
     
 	
-<li>9: <a href="#pg-9011e8a8e419378b5e2b1e62dbf8ff7e">プログラムからナビゲーションを実行</a></li>
+<li>9: <a href="#pg-703cb8b966e90c4b29b0d179a416f7c5">プログラムからナビゲーションを実行</a></li>
+
+
+    
+  
+    
+    
+	
+<li>10: <a href="#pg-9011e8a8e419378b5e2b1e62dbf8ff7e">プログラムからナビゲーションを実行</a></li>
 
 
     
@@ -2766,7 +2774,394 @@ ros2 service call -r 1 /map_server/load_map nav2_msgs/srv/LoadMap "{map_url: /ho
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-9011e8a8e419378b5e2b1e62dbf8ff7e">9 - プログラムからナビゲーションを実行</h1>
+	<h1 id="pg-703cb8b966e90c4b29b0d179a416f7c5">9 - プログラムからナビゲーションを実行</h1>
+    <div class="lead">プログラムからナビゲーションを実行する方法を学びます．</div>
+	<h2 id="目的">目的</h2>
+<p>前回の講義では，ROSで用意されているパッケージを利用して地図の作成とナビゲーションを行いました．
+ナビゲーションの際には，データを可視化するツールであるrviz2から目標位置を設定することで，経路計画及び経路に沿った走行が行われることを確認しました．
+rviz2を用いた方法ではGUI操作が必須となります．
+今回は目標位置をプログラムから与えることで，人間の手を必要としない自律走行を試します．</p>
+<h2 id="rviz2から目標位置を設定">rviz2から目標位置を設定</h2>
+<p><a href="./../..//ps/893w2au/">前回の講義</a>で学んだ内容を簡単に復習します．
+一部に設定ファイルを編集する必要がありますので，設定していない人は<a href="./../..//ps/893w2au/">前回の講義資料</a>を参考にしてください．
+ナビゲーションを実行するために下記を順番に実行します．</p>
+<p>まずはstageシミュレーターを起動します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch stage_ros2 stage.launch.py world:<span style="color:#ce5c00;font-weight:bold">=</span>cave
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>次にナビゲーションに必要なノードを実行します．
+地図の絶対パスを指定します．
+下記の例をパスに含まれるアカウント名を修正して実行してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch nav2_bringup bringup_launch.py  use_sim_time:<span style="color:#ce5c00;font-weight:bold">=</span>True  map:<span style="color:#ce5c00;font-weight:bold">=</span>/home/yuu/stage_ws/src/stage_ros2/map/map.yaml params_file:<span style="color:#ce5c00;font-weight:bold">=</span>/opt/ros/humble/share/nav2_bringup/params/nav2_params_stage.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>static_transform_publisherにより，フレームodomとワールド座標系を表すmapを繋ぎます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run tf2_ros static_transform_publisher --x <span style="color:#0000cf;font-weight:bold">0</span> --y <span style="color:#0000cf;font-weight:bold">0</span> --z <span style="color:#0000cf;font-weight:bold">0</span> --roll <span style="color:#0000cf;font-weight:bold">0</span> --pitch <span style="color:#0000cf;font-weight:bold">0</span> --yaw <span style="color:#0000cf;font-weight:bold">0</span> --frame-id map --child-frame-id odom
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>rviz2を起動します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch stage_ros2 rviz.launch.py config:<span style="color:#ce5c00;font-weight:bold">=</span>cave
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>rviz2の起動後，Displaysの左下にあるAddボタンをクリックし，可視化したい項目のメニューを表示します．
+項目の中からMapを選びOKをクリックしてください．
+DisplaysにMapが追加されるのでダブルクリックし，Topicにて/mapを入力します．
+作成した地図を表示する設定が完了しました(まだ地図は表示されません)． 下記のコマンドを実行して地図を読み込みます．
+map_urlにて地図の絶対パスを与えます，アカウント名が含まれますので修正して実行してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 service call /map_server/load_map nav2_msgs/srv/LoadMap <span style="color:#4e9a06">&#34;{map_url: /home/yuu/stage_ws/src/stage_ros2/map/map.yaml}&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>これで準備が整いました．
+<code>rviz2</code>の画面上部にある<code>2D Goal Pose</code>というボタンにてナビゲーションの目標位置・姿勢を設定することができます．</p>
+<h2 id="rviz2から配信されるトピックの確認">rviz2から配信されるトピックの確認</h2>
+<p>上記の方法でナビゲーションの目標位置・姿勢を設定するとrviz2からトピックが配信されます．
+どのようなトピックが配信されるか確認しましょう．</p>
+<p>まずはrviz2が配信するトピックを確認します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 node info /rviz2 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/rviz2
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Subscribers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /base_scan: sensor_msgs/msg/LaserScan
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /clock: rosgraph_msgs/msg/Clock
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /map: nav_msgs/msg/OccupancyGrid
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /map_updates: map_msgs/msg/OccupancyGridUpdate
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /parameter_events: rcl_interfaces/msg/ParameterEvent
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Publishers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /clicked_point: geometry_msgs/msg/PointStamped
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /goal_pose: geometry_msgs/msg/PoseStamped
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /initialpose: geometry_msgs/msg/PoseWithCovarianceStamped
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /parameter_events: rcl_interfaces/msg/ParameterEvent
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /rosout: rcl_interfaces/msg/Log
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Service Servers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /rviz2/describe_parameters: rcl_interfaces/srv/DescribeParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /rviz2/get_parameter_types: rcl_interfaces/srv/GetParameterTypes
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /rviz2/get_parameters: rcl_interfaces/srv/GetParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /rviz2/list_parameters: rcl_interfaces/srv/ListParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /rviz2/set_parameters: rcl_interfaces/srv/SetParameters
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    /rviz2/set_parameters_atomically: rcl_interfaces/srv/SetParametersAtomically
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Service Clients:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Action Servers:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">  Action Clients:
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Publishersの項目を見ると5つのトピックを配信することがわかります．
+この中の<code>/goal_pose</code>が目標位置・姿勢のトピックとなります．
+メッセージは<code>geometry_msgs/msg/PoseStamped</code>であることがわかります．
+具体的にどのようなデータを配信しているか確認してみましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 interface show geometry_msgs/msg/PoseStamped
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> A Pose with reference coordinate frame and timestamp
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">std_msgs/Header header
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	builtin_interfaces/Time stamp
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		int32 sec
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		uint32 nanosec
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	string frame_id
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Pose pose
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Point position
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		float64 x
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		float64 y
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		float64 z
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Quaternion orientation
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		float64 x 0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		float64 y 0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		float64 z 0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		float64 w 1
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>情報量が多いので分かりにくいですが，時間とフレームid，ロボットの目標位置・姿勢の情報を配信します．
+具体的な例を見るために<code>echo</code>コマンドで確認してみましょう．
+まずは下記のコマンドを実行します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic <span style="color:#204a87">echo</span> /goal_pose
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>配信されていない時は何の情報も表示されます．
+この状態でrviz2の<code>2D Goal Pose</code>からロボットの目標位置・姿勢を設定してみましょう．
+設定すると<code>echo</code>コマンドを実行したターミナルに下記のような情報が表示されました．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">header:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  stamp:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    sec: 4712
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    nanosec: 100000000
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  frame_id: map
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">pose:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  position:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    x: 1.9941736459732056
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    y: 0.6447784304618835
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    z: 0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  orientation:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    x: 0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    y: 0.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    z: 0.02481465068905508
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    w: 0.9996920691448843
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">---
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>stamp</code>はROS内部のシステム上の時間，<code>frame_id</code>は基準となるtfフレーム，
+<code>pose</code>の<code>position</code>は位置，<code>orientation</code>は姿勢の情報を表しています．
+これらの情報をプログラムから配信することで，rviz2を用いたGUI操作を必要としない自律走行を実現することができます．</p>
+<h2 id="プログラミング">プログラミング</h2>
+<p>下記のプログラムを入力して実行してください．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">rclpy</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">rclpy.node</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Node</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">geometry_msgs.msg</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">PoseStamped</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">time</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">Goal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Node</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">super</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;set_goal_node&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ps_pub</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">create_publisher</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">PoseStamped</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;goal_pose&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">time</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">sleep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1.0</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">setGoal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">px</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">py</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">pz</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">oz</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ow</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">PoseStamped</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">position</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">px</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">position</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">py</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">position</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">z</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pz</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">orientation</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">z</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">oz</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">orientation</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">w</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ow</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">header</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">stamp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">get_clock</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">now</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">to_msg</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">header</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">frame_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;map&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ps_pub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">publish</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">goal_point</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">None</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">init</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Goal</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">setGoal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">3.0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1.0</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">spin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">node</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">destroy_node</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shutdown</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">__name__</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;__main__&#39;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="プログラムの内容">プログラムの内容</h2>
+<p><a href="./../..//ps/tbaet4s/">トピック通信の実装</a>にて使用したサンプルプログラムをベースとしたプログラムになっています．
+目新しい内容のみ解説します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>   <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">setGoal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">px</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">py</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">pz</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">oz</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ow</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">PoseStamped</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">position</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">px</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">position</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">py</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">position</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">z</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pz</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">orientation</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">z</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">oz</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">orientation</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">w</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ow</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">header</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">stamp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">get_clock</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">now</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">to_msg</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">goal_point</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">header</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">frame_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;map&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ps_pub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">publish</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">goal_point</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>setGoal</code>メソッドにてロボットの目標位置・姿勢のトピックを配信しています．
+ロボットの位置は<code>goal_point.pose.position</code>の<code>x,y,z</code>に代入しています．
+姿勢はクォータニオン(四元数)で表現されます．
+3次元ベクトルで姿勢を表現するオイラー角が有名ですが，計算する上で幾つかの問題を抱えているため，
+ROS2では姿勢を4次元ベクトル(x, y, z, w)で表現するクォータニオンが用いられます．
+4つのパラメータで表現すると姿勢をイメージしにくいですが，
+こちらの<a href="https://www.andre-gaschler.com/rotationconverter/">3D Rotation Converter</a>がとても便利です．</p>
+<p>stageシミュレータは2次元平面上を走行する2輪車をモデルとしています．
+そのため，ロボットの姿勢はオイラー角のz軸まわり(ヨー角)に限定されます．
+(x軸とy軸まわりにロボットを回転したら車体が傾いてしまいます．)
+クォータニオンで表現した場合，ヨー角を回転させるとzとwのみが変化します．
+そのため，プログラムではzとwのみを与えるようにしています．</p>
+<p><code>goal_point.header.stamp</code>にはROS内部のシステム上の時間を与えます．
+ROS内部のシステム上の時間は，<code>self.get_clock().now().to_msg()</code>で取得します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">None</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">init</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Goal</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">setGoal</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">3.0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1.0</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>27行目でロボットの位置・姿勢を配信する<code>setGoal</code>メソッドを実行しています．
+第1，2，3引数は，それぞれロボットの座標x，y，z，
+第4，5引数はクォータニオンで表現されるロボットの姿勢z，wを表しています．</p>
+<h2 id="課題">課題</h2>
+<ol>
+<li>ロボットの目標位置・姿勢を変えてサンプルプログラムを実行しなさい．</li>
+<li>予め決めた2つの目標位置・姿勢を往復するようなプログラムを作成しなさい．</li>
+</ol>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-9011e8a8e419378b5e2b1e62dbf8ff7e">10 - プログラムからナビゲーションを実行</h1>
     <div class="lead">プログラムからナビゲーションを実行する方法を学びます．</div>
 	<h2 id="目的">目的</h2>
 <p>前回の講義では，ROSで用意されているパッケージを利用して地図の作成とナビゲーションを行いました．
