@@ -18,22 +18,22 @@
 <link rel="icon" type="image/png" href="/ai-robot/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/ai-robot/favicons/android-192x192.png" sizes="192x192">
 
-<title>シミュレータstageのセットアップ | 中部大学AIロボティクス学科</title>
-<meta name="description" content="シミュレータstageを使用するための準備と動作を確認します．">
-<meta property="og:title" content="シミュレータstageのセットアップ" />
-<meta property="og:description" content="シミュレータstageを使用するための準備と動作を確認します．" />
+<title>2軸アームロボットの制御 | 中部大学AIロボティクス学科</title>
+<meta name="description" content="2軸アームロボットを制御します．">
+<meta property="og:title" content="2軸アームロボットの制御" />
+<meta property="og:description" content="2軸アームロボットを制御します．" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/neagc43/" /><meta property="article:section" content="ros" />
+<meta property="og:url" content="https://cu-milab.github.io/ai-robot/ps/z24e2hg/" /><meta property="article:section" content="ros" />
 
 <meta property="og:site_name" content="Goldydocs2" />
 
-<meta itemprop="name" content="シミュレータstageのセットアップ">
-<meta itemprop="description" content="シミュレータstageを使用するための準備と動作を確認します．">
+<meta itemprop="name" content="2軸アームロボットの制御">
+<meta itemprop="description" content="2軸アームロボットを制御します．">
 
-<meta itemprop="wordCount" content="306">
-<meta itemprop="keywords" content="stage,インストール," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="シミュレータstageのセットアップ"/>
-<meta name="twitter:description" content="シミュレータstageを使用するための準備と動作を確認します．"/>
+<meta itemprop="wordCount" content="389">
+<meta itemprop="keywords" content="RRBot,運動制御,トピック通信," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2軸アームロボットの制御"/>
+<meta name="twitter:description" content="2軸アームロボットを制御します．"/>
 
 
 
@@ -98,8 +98,8 @@ if (!doNotTrack) {
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-ai-robotros-li">
   <a href="/ai-robot/ros/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-ai-robotros"><span class="">ロボットオペレーティングシステム</span></a>
   <ul class="ul-1">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-ai-robotpsneagc43-li">
-  <a href="/ai-robot/ps/neagc43/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsneagc43"><span class="td-sidebar-nav-active-item">シミュレータstageのセットアップ</span></a>
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsneagc43-li">
+  <a href="/ai-robot/ps/neagc43/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsneagc43"><span class="">シミュレータstageのセットアップ</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsh11gzp1-li">
   <a href="/ai-robot/ps/h11gzp1/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsh11gzp1"><span class="">ノードやトピックのリマップと名前空間</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsa22gy2p-li">
@@ -116,8 +116,8 @@ if (!doNotTrack) {
   <a href="/ai-robot/ps/893w2au/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotps893w2au"><span class="">地図の作成とナビゲーション</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsbyl02g9-li">
   <a href="/ai-robot/ps/byl02g9/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsbyl02g9"><span class="">プログラムからナビゲーションを実行</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ai-robotpsz24e2hg-li">
-  <a href="/ai-robot/ps/z24e2hg/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsz24e2hg"><span class="">2軸アームロボットの制御</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-ai-robotpsz24e2hg-li">
+  <a href="/ai-robot/ps/z24e2hg/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-ai-robotpsz24e2hg"><span class="td-sidebar-nav-active-item">2軸アームロボットの制御</span></a>
 </li>
   </ul>
 </li>
@@ -137,16 +137,9 @@ if (!doNotTrack) {
         <nav id="TableOfContents">
   <ul>
     <li><a href="#目的">目的</a></li>
-    <li><a href="#ロボットシミュレータstage">ロボットシミュレータSTAGE</a></li>
-    <li><a href="#環境作成と動作確認">環境作成と動作確認</a>
-      <ul>
-        <li><a href="#stageのセットアップ">stageのセットアップ</a></li>
-        <li><a href="#stageの動作確認">stageの動作確認</a></li>
-        <li><a href="#worldファイルの種類">worldファイルの種類</a></li>
-        <li><a href="#rviz2によるデータの可視化">rviz2によるデータの可視化</a></li>
-        <li><a href="#キーボードによるロボットの操作">キーボードによるロボットの操作</a></li>
-      </ul>
-    </li>
+    <li><a href="#準備">準備</a></li>
+    <li><a href="#rrbotの起動">rrbotの起動</a></li>
+    <li><a href="#トピックの確認">トピックの確認</a></li>
   </ul>
 </nav>
       </div>
@@ -188,19 +181,20 @@ if (!doNotTrack) {
   <li class="breadcrumb-item">
     <a href="https://cu-milab.github.io/ai-robot/ros/">ロボットオペレーティングシステム</a></li>
   <li class="breadcrumb-item active" aria-current="page">
-    シミュレータstageのセットアップ</li>
+    2軸アームロボットの制御</li>
   </ol>
 </nav>
             
 <div class="td-content">
-	<h1>シミュレータstageのセットアップ</h1>
-	<div class="lead">シミュレータstageを使用するための準備と動作を確認します．</div>
+	<h1>2軸アームロボットの制御</h1>
+	<div class="lead">2軸アームロボットを制御します．</div>
 	<header class="article-meta">
 		<div class="taxonomy taxonomy-terms-article taxo-tags">
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/stage/" data-taxonomy-term="stage"><span class="taxonomy-label">stage</span></a></li>
-    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/" data-taxonomy-term="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="taxonomy-label">インストール</span></a></li>
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/rrbot/" data-taxonomy-term="rrbot"><span class="taxonomy-label">RRBot</span></a></li>
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E9%81%8B%E5%8B%95%E5%88%B6%E5%BE%A1/" data-taxonomy-term="%E9%81%8B%E5%8B%95%E5%88%B6%E5%BE%A1"><span class="taxonomy-label">運動制御</span></a></li>
+    <li><a class="taxonomy-term" href="https://cu-milab.github.io/ai-robot/tags/%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1/" data-taxonomy-term="%E3%83%88%E3%83%94%E3%83%83%E3%82%AF%E9%80%9A%E4%BF%A1"><span class="taxonomy-label">トピック通信</span></a></li>
     </ul>
 </div>
 <div class="taxonomy taxonomy-terms-article taxo-categories">
@@ -212,18 +206,65 @@ if (!doNotTrack) {
 
   </header>
 	<h2 id="目的">目的</h2>
-<p>本講義で使用するロシミュレータstageをインストールします．
-なお，既に他の講義にてROS2をインストールしていることを前提としています．
-インストールしていない場合には，<a href="./../../ps/we1emyp/">こちらのページ</a>を参考にROS2をインストールしてください．</p>
-<h2 id="ロボットシミュレータstage">ロボットシミュレータSTAGE</h2>
-<p>ロボティクス演習では，ロボットシミュレータとしてturtlesimを使用しています．
-本シミュレータはシンプルであるため，ROS2の勉強には最適ですが，センサーが搭載されていないことからセンシングを伴うロボットの制御には利用できません．
-そこで，本講義ではセンサが搭載されたstageを利用します．
-ROS2に対応した<a href="https://github.com/tuw-robotics/stage_ros2">stageのオープンソースソフトウェア</a>を利用させていただきます．</p>
-<h2 id="環境作成と動作確認">環境作成と動作確認</h2>
-<h3 id="stageのセットアップ">stageのセットアップ</h3>
-<p>stageを使用するためおワークスペースを作成し，そこにgithubよりリポジトリをクローンします．
-下記の手順で環境を作成してください．</p>
+<p>これまでに扱ってきたロボットは2輪走行車でした．
+今回は軸数の少ない簡易的なアームロボットを使用し，ローレベルな制御を学びます．</p>
+<h2 id="準備">準備</h2>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> mkdir -p ~/ros2_ws/src
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ~/ros2_ws/src
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> git clone https://github.com/ros-controls/ros2_control_demos -b humble
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ~/ros2_ws/
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> rosdep update --rosdistro<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$ROS_DISTRO</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt-get update
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> rosdep install --from-paths ./ -i -y --rosdistro <span style="color:#4e9a06">${</span><span style="color:#000">ROS_DISTRO</span><span style="color:#4e9a06">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+<div class="alert alert-primary" role="alert">
+
+
+    ros-humble-gazebo-rosパッケージのインストールに失敗したというエラーが発生しますが，この後の処理に支障がないため進めてください．
+
+</div>
+
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ~/ros2_ws/
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> . /opt/ros/<span style="color:#4e9a06">${</span><span style="color:#000">ROS_DISTRO</span><span style="color:#4e9a06">}</span>/setup.sh
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon build --merge-install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="rrbotの起動">rrbotの起動</h2>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> /ros2_ws
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">source</span> install/setup.bash
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch ros2_control_demo_example_1 view_robot.launch.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="rrbot1.png#center" alt="rrbot1"></p>
+<h2 id="トピックの確認">トピックの確認</h2>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -238,156 +279,33 @@ ROS2に対応した<a href="https://github.com/tuw-robotics/stage_ros2">stageの
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt-get install git cmake g++ libjpeg8-dev libpng-dev libglu1-mesa-dev libltdl-dev libfltk1.1-dev
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> mkdir stage_ws
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> stage_ws
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> mkdir src
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> src
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> git clone --branch ros2 https://github.com/tuw-robotics/Stage.git
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> git clone --branch humble https://github.com/tuw-robotics/stage_ros2.git
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ~/stage_ws
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon build --symlink-install --cmake-args -DOpenGL_GL_PREFERENCE<span style="color:#ce5c00;font-weight:bold">=</span>LEGACY
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon build --symlink-install --packages-select stage_ros2        
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span>ros2 topic list 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/clicked_point
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/goal_pose
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/initialpose
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/joint_states
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/parameter_events
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/robot_description
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/rosout
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/tf
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/tf_static
+</span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>stageシミュレータ用ではありませんが，キーボード操作によりロボットを動かすパッケージもインストールしましょう．</p>
-<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-teleop-tools
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="stageの動作確認">stageの動作確認</h3>
-<p>stageシミュレータの動作確認を行います．
-stageはアンダーレイ環境ではなく，オーバーレイ環境下で動作するため，
-ターミナルを起動するたびに<code>source</code>コマンドで<code>setup.bash</code>を実行してください．</p>
-
-
-<div class="alert alert-primary" role="alert">
-
-
-    apt等のコマンドでROS2のパッケージをインストールして動作する環境をアンダーレイ，
-自作のワークスペースで動作する環境をオーバーレイ環境と呼びます．
-同一の名前のパッケージが存在する場合には，オーバーレイの環境が優先(上書き)されます．
-
-</div>
-
-<p>stageシミュレーターを起動するためには，引数でworldファイルを指定する必要があります．
-今回はworldファイルとしてcaveを指定します．</p>
-<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ~/stage_ws
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">source</span> install/setup.bash
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch stage_ros2 stage.launch.py world:<span style="color:#ce5c00;font-weight:bold">=</span>cave
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 topic info  /joint_states
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Type: sensor_msgs/msg/JointState
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Publisher count: 1
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Subscription count: 1
+</span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>正常に起動すると下記のような画面が表示されます．</p>
-<p><img src="stage.png#center" alt="シミュレータ画像"></p>
-<p>赤色の四角はロボット，緑色の四角は移動可能な障害物，黒色は固定された障害物です．
-また，ロボットの前方は，扇の形で色が濃くなっていますが，これはLiDARで測定している範囲を表しています．</p>
-<h3 id="worldファイルの種類">worldファイルの種類</h3>
-<p>stageシミュレーターでは幾つかのworldファイルが用意されています．
-それぞれ，ロボットの台数やLiDAR，カメラの有無，環境マップが異なります．</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">ファイル名</th>
-<th style="text-align:center">ロボットの台数</th>
-<th style="text-align:center">LiDAR</th>
-<th style="text-align:center">カメラ(カラー，距離)</th>
-<th style="text-align:center">環境マップ</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">cave.world</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">あり</td>
-<td style="text-align:center">なし</td>
-<td style="text-align:center">cave</td>
-</tr>
-<tr>
-<td style="text-align:left">cave_seven_robots.world</td>
-<td style="text-align:center">7</td>
-<td style="text-align:center">あり</td>
-<td style="text-align:center">なし</td>
-<td style="text-align:center">cave</td>
-</tr>
-<tr>
-<td style="text-align:left">cave_three_robots.world</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">あり</td>
-<td style="text-align:center">2台のみあり</td>
-<td style="text-align:center">cave</td>
-</tr>
-<tr>
-<td style="text-align:left">hallway.world</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">あり</td>
-<td style="text-align:center">なし</td>
-<td style="text-align:center">hallway</td>
-</tr>
-<tr>
-<td style="text-align:left">lines.world</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">あり</td>
-<td style="text-align:center">なし</td>
-<td style="text-align:center">line</td>
-</tr>
-<tr>
-<td style="text-align:left">willow-four-erratics-multisensor.world</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">あり</td>
-<td style="text-align:center">あり</td>
-<td style="text-align:center">willow-full</td>
-</tr>
-</tbody>
-</table>
-<p>先ほど起動したシミュレータを終了し，別のworldファイルを引数として指定してみましょう．
-ここでは<code>world</code>ファイルに<code>willow-four-erratics-multisensor</code>を指定して実行します．</p>
-<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch stage_ros2 stage.launch.py world:<span style="color:#ce5c00;font-weight:bold">=</span>willow-four-erratics-multisensor
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>上記を実行すると下記のようなウィンドウが起動します．</p>
-<p><img src="willow1.png#center" alt="willow-full1"></p>
-<p>ロボットが画面外にいるので，ドラッグして視点を移動し，ロボットを探しましょう．
-ロボットはcaveと少し違いがありますが，赤い矩形で表示されています．</p>
-<p><img src="willow2.png#center" alt="willow-full2"></p>
-<h3 id="rviz2によるデータの可視化">rviz2によるデータの可視化</h3>
-<p>可視化ツールであるrvizにより，ロボットやセンサ情報を可視化しましょう．
-worldファイルにcaveを指定して改めてstageシミュレーターを起動します．
-stageの情報を読み込みながらrvizを起動する際には，下記のコマンドを実行します．</p>
-<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch stage_ros2 rviz.launch.py config:<span style="color:#ce5c00;font-weight:bold">=</span>cave
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>上記を実行するとrvizが起動します．
-初期の状態では，rvizの真ん中のエリアにロボットの3次元位置，姿勢を表す赤緑青色の軸，
-LiDARで取得した点群データが赤色の点で表示されます．</p>
-<p><img src="rviz1.png#center" alt="rviz2を実行した際の出力"></p>
-<p>シミュレータとrvizの視点を揃えると，LiDARで正確に点群データを取得できていることが確認できます．</p>
-<p><img src="rviz2.png#center" alt="設定や視点を変えた際の出力"></p>
-<h3 id="キーボードによるロボットの操作">キーボードによるロボットの操作</h3>
-<p>キーボードを用いてロボットを操作しましょう．
-stage用のパッケージが用意されている訳ではないため，汎用性の高い<code>teleop_twist_keyboard</code>パッケージを利用します．
-下記のコマンドを実行しましょう．</p>
-<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
@@ -417,40 +335,79 @@ stage用のパッケージが用意されている訳ではないため，汎用
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 run teleop_twist_keyboard  teleop_twist_keyboard
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 interface show sensor_msgs/msg/JointState
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#8f5902">#</span> This is a message that holds data to describe the state of a <span style="color:#204a87">set</span> of torque controlled joints.
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># The state of each joint (revolute or prismatic) is defined by:</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>  * the position of the joint <span style="color:#ce5c00;font-weight:bold">(</span>rad or m<span style="color:#ce5c00;font-weight:bold">)</span>,
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>  * the velocity of the joint <span style="color:#ce5c00;font-weight:bold">(</span>rad/s or m/s<span style="color:#ce5c00;font-weight:bold">)</span> and
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>  * the effort that is applied in the joint <span style="color:#ce5c00;font-weight:bold">(</span>Nm or N<span style="color:#ce5c00;font-weight:bold">)</span>.
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Each joint is uniquely identified by its name</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> The header specifies the <span style="color:#204a87">time</span> at which the joint states were recorded. All the joint states
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> in one message have to be recorded at the same time.
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># This message consists of a multiple arrays, one for each part of the joint state.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> The goal is to make each of the fields optional. When e.g. your joints have no
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> effort associated with them, you can leave the effort array empty.
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># All arrays in this message should have the same size, or be empty.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> This is the only way to uniquely associate the joint name with the correct
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> states.
 </span></span><span style="display:flex;"><span><span style="color:#a40000">
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">This node takes keypresses from the keyboard and publishes them
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">as Twist messages. It works best with a US keyboard layout.
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">---------------------------
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Moving around:
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">   u    i    o
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">   j    k    l
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">   m    ,    .
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">std_msgs/Header header
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	builtin_interfaces/Time stamp
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		int32 sec
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		uint32 nanosec
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	string frame_id
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">For Holonomic mode (strafing), hold down the shift key:
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">---------------------------
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">   U    I    O
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">   J    K    L
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">   M    &lt;    &gt;
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">t : up (+z)
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">b : down (-z)
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">anything else : stop
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">q/z : increase/decrease max speeds by 10%
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">w/x : increase/decrease only linear speed by 10%
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">e/c : increase/decrease only angular speed by 10%
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">CTRL-C to quit
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">currently:	speed 0.5	turn 1.0 
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">string[] name
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float64[] position
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float64[] velocity
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float64[] effort
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>表示のように，<code>i</code>で前進，<code>k</code>で後退，<code>j</code>と<code>l</code>でそれぞれ左，右回転となります．</p>
-
+</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span>ros2 topic <span style="color:#204a87">echo</span> joint_states
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">header:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  stamp:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    sec: 1719449664
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    nanosec: 199619835
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  frame_id: &#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">name:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- joint1
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- joint2
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">position:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- -1.9867431941301852
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- -0.7640353333530374
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">velocity: []
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">effort: []
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">---
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
 	
 </div>
 
