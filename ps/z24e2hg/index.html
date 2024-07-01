@@ -30,7 +30,7 @@
 <meta itemprop="name" content="2軸アームロボットの制御">
 <meta itemprop="description" content="2軸アームロボットを制御します．">
 
-<meta itemprop="wordCount" content="389">
+<meta itemprop="wordCount" content="340">
 <meta itemprop="keywords" content="RRBot,運動制御,トピック通信," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="2軸アームロボットの制御"/>
 <meta name="twitter:description" content="2軸アームロボットを制御します．"/>
@@ -140,6 +140,7 @@ if (!doNotTrack) {
     <li><a href="#準備">準備</a></li>
     <li><a href="#rrbotの起動">rrbotの起動</a></li>
     <li><a href="#トピックの確認">トピックの確認</a></li>
+    <li><a href="#プログラム">プログラム</a></li>
   </ul>
 </nav>
       </div>
@@ -207,8 +208,11 @@ if (!doNotTrack) {
   </header>
 	<h2 id="目的">目的</h2>
 <p>これまでに扱ってきたロボットは2輪走行車でした．
-今回は軸数の少ない簡易的なアームロボットを使用し，ローレベルな制御を学びます．</p>
+今回は軸数の少ない簡易的なロボットアームを使用し，ローレベルな制御を学びます．
+講義の前半ではスライド資料を用いて運動学について説明し，講義の後半では本Webページを用いて実習を行います．</p>
 <h2 id="準備">準備</h2>
+<p>3リンク2ジョイントの簡易的なロボットアームrrbot(Revolute-Revolute Manipulator Robot)を使用するために準備します．
+パッケージをgithubのリポジトリからクローンし，依存するパッケージをインストールします．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -229,7 +233,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> rosdep install --from-paths ./ -i -y --rosdistro <span style="color:#4e9a06">${</span><span style="color:#000">ROS_DISTRO</span><span style="color:#4e9a06">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div>
+</div><p>
 
 <div class="alert alert-primary" role="alert">
 
@@ -238,6 +242,7 @@ if (!doNotTrack) {
 
 </div>
 
+これでパッケージをビルドする準備が整いました．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -245,12 +250,14 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ~/ros2_ws/
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> . /opt/ros/<span style="color:#4e9a06">${</span><span style="color:#000">ROS_DISTRO</span><span style="color:#4e9a06">}</span>/setup.sh
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon build --merge-install
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">source</span> ~/.bashrc
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ~/ros2_ws/
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon build
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="rrbotの起動">rrbotの起動</h2>
+<p>それではロボットアームrrbotを起動しましょう．
+下記のlaunchより起動できます．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -260,10 +267,11 @@ if (!doNotTrack) {
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> /ros2_ws
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">source</span> install/setup.bash
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch ros2_control_demo_example_1 view_robot.launch.py
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch ros2_control_demo_example_1 rrbot.launch.py
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="rrbot1.png#center" alt="rrbot1"></p>
+</div><p>起動するとrviz2が立ち上がり，3リンク2ジョイントのロボットが表示されます．</p>
+<p><img src="rrbot1.png#center" alt="rrbot1"></p>
 <h2 id="トピックの確認">トピックの確認</h2>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -277,12 +285,20 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span>ros2 topic list 
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic list 
 </span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/clicked_point
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/dynamic_joint_states
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/forward_position_controller/commands
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/forward_position_controller/transition_event
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/goal_pose
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/initialpose
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/joint_state_broadcaster/transition_event
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/joint_states
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/parameter_events
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/robot_description
@@ -299,13 +315,68 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 topic info  /joint_states
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Type: sensor_msgs/msg/JointState
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Publisher count: 1
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic info /forward_position_controller/commands
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Type: std_msgs/msg/Float64MultiArray
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Publisher count: 0
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Subscription count: 1
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 interface show std_msgs/msg/Float64MultiArray
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> This was originally provided as an example message.
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> It is deprecated as of Foxy
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> It is recommended to create your own semantically meaningful message.
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> However <span style="color:#204a87;font-weight:bold">if</span> you would like to <span style="color:#204a87;font-weight:bold">continue</span> using this please use the equivalent in example_msgs.
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#8f5902">#</span> Please look at the MultiArrayLayout message definition <span style="color:#204a87;font-weight:bold">for</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> documentation on all multiarrays.
+</span></span><span style="display:flex;"><span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">MultiArrayLayout  layout        # specification of data layout
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	#
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	#
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	MultiArrayDimension[] dim #
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		string label   #
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		uint32 size    #
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		uint32 stride  #
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	uint32 data_offset        #
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float64[]         data          # array of data
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 topic pub /forward_position_controller/commands std_msgs/msg/Float64MultiArray <span style="color:#4e9a06">&#34;data:
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000;font-style:italic">- 0.5
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 0.5&#34;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="プログラム">プログラム</h2>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
@@ -335,79 +406,40 @@ if (!doNotTrack) {
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">ros2 interface show sensor_msgs/msg/JointState
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#8f5902">#</span> This is a message that holds data to describe the state of a <span style="color:#204a87">set</span> of torque controlled joints.
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># The state of each joint (revolute or prismatic) is defined by:</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>  * the position of the joint <span style="color:#ce5c00;font-weight:bold">(</span>rad or m<span style="color:#ce5c00;font-weight:bold">)</span>,
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>  * the velocity of the joint <span style="color:#ce5c00;font-weight:bold">(</span>rad/s or m/s<span style="color:#ce5c00;font-weight:bold">)</span> and
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>  * the effort that is applied in the joint <span style="color:#ce5c00;font-weight:bold">(</span>Nm or N<span style="color:#ce5c00;font-weight:bold">)</span>.
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Each joint is uniquely identified by its name</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> The header specifies the <span style="color:#204a87">time</span> at which the joint states were recorded. All the joint states
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> in one message have to be recorded at the same time.
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># This message consists of a multiple arrays, one for each part of the joint state.</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> The goal is to make each of the fields optional. When e.g. your joints have no
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> effort associated with them, you can leave the effort array empty.
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># All arrays in this message should have the same size, or be empty.</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> This is the only way to uniquely associate the joint name with the correct
-</span></span><span style="display:flex;"><span><span style="color:#8f5902">#</span> states.
-</span></span><span style="display:flex;"><span><span style="color:#a40000">
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">std_msgs/Header header
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	builtin_interfaces/Time stamp
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		int32 sec
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">		uint32 nanosec
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	string frame_id
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#a40000">
-</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#000;font-style:italic">string[] name
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float64[] position
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float64[] velocity
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float64[] effort
-</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">rclpy</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">rclpy.node</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Node</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">std_msgs.msg</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Float64MultiArray</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">time</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">math</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">rrbotControl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Node</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87">super</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">__init__</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;rrbot_control_node&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ps_pub</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">create_publisher</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Float64MultiArray</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;forward_position_controller/commands&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">time</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">sleep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1.0</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">setPose</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">p1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">p2</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">pose</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Float64MultiArray</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">pose</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">p1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">p2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ps_pub</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">publish</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pose</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">None</span><span style="color:#000;font-weight:bold">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">init</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rrbotControl</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">setPose</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">math</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pi</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">math</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">pi</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">spin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">node</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">node</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">destroy_node</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">rclpy</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shutdown</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">__name__</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#39;__main__&#39;</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span>ros2 topic <span style="color:#204a87">echo</span> joint_states
-</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">header:
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  stamp:
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    sec: 1719449664
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">    nanosec: 199619835
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  frame_id: &#39;&#39;
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">name:
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- joint1
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- joint2
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">position:
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- -1.9867431941301852
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- -0.7640353333530374
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">velocity: []
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">effort: []
-</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">---
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
+</div><p><img src="rrbot2.png#center" alt="rrbot2"></p>
+
 	
 </div>
 
