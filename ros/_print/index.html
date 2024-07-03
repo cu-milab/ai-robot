@@ -3172,16 +3172,22 @@ ROS内部のシステム上の時間は，<code>self.get_clock().now().to_msg()<
 パッケージをgithubのリポジトリからクローンし，依存するパッケージをインストールします．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> mkdir -p ~/ros2_ws/src
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install python3-rosdep2
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo rosdep init
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install ros-humble-controller-manager
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> mkdir -p ~/ros2_ws/src
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ~/ros2_ws/src
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> git clone https://github.com/ros-controls/ros2_control_demos -b humble
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> <span style="color:#204a87">cd</span> ~/ros2_ws/
@@ -3227,9 +3233,11 @@ ROS内部のシステム上の時間は，<code>self.get_clock().now().to_msg()<
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch ros2_control_demo_example_1 rrbot.launch.py
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>起動するとrviz2が立ち上がり，3リンク2ジョイントのロボットが表示されます．</p>
+</div><p>rviz2が立ち上がり，3リンク2ジョイントのロボットが表示されます．
+また，ロボットを動かすためのコントローラーも起動します．</p>
 <p><img src="rrbot1.png#center" alt="rrbot1"></p>
 <h2 id="トピックの確認">トピックの確認</h2>
+<p>どのようなトピックがアクティブであるかを確認します．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -3264,7 +3272,9 @@ ROS内部のシステム上の時間は，<code>self.get_clock().now().to_msg()<
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/tf_static
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>たくさんのトピックが配信/購読されていますが，コントローラが購読するトピックは<code>/forward_position_controller/commands</code>です．
+下記のコマンドで使用するメッセージ型を調べましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
@@ -3278,7 +3288,9 @@ ROS内部のシステム上の時間は，<code>self.get_clock().now().to_msg()<
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Subscription count: 1
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p><code>std_msgs/msg/Float64MultiArray</code>であることがわかりました．
+実際にどのようなデータを扱っているかを調べます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
@@ -3320,7 +3332,11 @@ ROS内部のシステム上の時間は，<code>self.get_clock().now().to_msg()<
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">float64[]         data          # array of data
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p><code>float64</code>のリストとして表現されるdataを受け渡していることがわかります．
+<code>std_msgs/msg/Float64MultiArray</code>は汎用的なメッセージの型であるため，リストの大きさが定義されていませんが，
+rrbotの場合にはリストの要素のサイズは2となり，それぞれの値はラジアンで表現される各ジョイントの変位(角度)を表します．</p>
+<p><code>pub</code>コマンドで関節角度を配信し，ロボットが制御できるかを確認しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
@@ -3332,7 +3348,12 @@ ROS内部のシステム上の時間は，<code>self.get_clock().now().to_msg()<
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">- 0.5&#34;
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="プログラム">プログラム</h2>
+</div><p>2つのジョイントの関節角度をそれぞれ0.5としてトピックを配信します．
+トピックを配信後，ロボットがゆっくりと動作を開始し，下記のような姿勢になります．
+<img src="rrbot2.png#center" alt="rrbot2"></p>
+<h2 id="プログラム">プログラム</h2>
+<p>先ほどは<code>pub</code>コマンドでトピックを配信しましたが，プログラムで配信します．
+<a href="./../..//ps/tbaet4s/">トピック通信の実装</a>にて使用したサンプルプログラムをベースとしたプログラムになっています．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -3395,7 +3416,15 @@ ROS内部のシステム上の時間は，<code>self.get_clock().now().to_msg()<
 </span></span><span style="display:flex;"><span>    <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="rrbot2.png#center" alt="rrbot2"></p>
+</div><p>サンプルプログラムでは，2つの関節角度を<code>math.pi * 0.5</code>，度数法で表すと90度としてトピックを配信しています．
+サンプルプログラムを実行すると下記のような結果が得られます．</p>
+<p><img src="rrbot3.png#center" alt="rrbot3"></p>
+<h2 id="課題">課題</h2>
+<ol>
+<li>サンプルプログラムにおける関節角度の値を変えてプログラムを実行しなさい．</li>
+<li>順運動学により手先位置を計算し，ターミナルに出力しなさい．</li>
+<li>手先位置を与え，逆運動学により関節角度を計算してターミナルに出力しなさい．</li>
+</ol>
 
 </div>
 
