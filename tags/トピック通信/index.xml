@@ -1984,7 +1984,7 @@ ROS内部のシステム上の時間は，&lt;code&gt;self.get_clock().now().to_
     </item>
     
     <item>
-      <title>Ros: 2軸アームロボットの制御</title>
+      <title>Ros: 2軸ロボットアームの制御</title>
       <link>https://cu-milab.github.io/ai-robot/ps/z24e2hg/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
