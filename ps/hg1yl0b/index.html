@@ -30,7 +30,7 @@
 <meta itemprop="name" content="MoveIt!を用いたロボットアームの動作計画">
 <meta itemprop="description" content="MoveIt!を用いたロボットアームの動作計画について学びます．">
 
-<meta itemprop="wordCount" content="121">
+<meta itemprop="wordCount" content="213">
 <meta itemprop="keywords" content="ロボットアーム,運動制御,MoveIt!,動作計画," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MoveIt!を用いたロボットアームの動作計画"/>
 <meta name="twitter:description" content="MoveIt!を用いたロボットアームの動作計画について学びます．"/>
@@ -213,53 +213,45 @@ if (!doNotTrack) {
 	<h2 id="目的">目的</h2>
 <p>ROS2では，ロボットの動作計画を行うためのライブラリとしてMoveIt!が用意されています．
 MoveIt!を利用することで，目標姿勢までの軌跡を計算する動作計画や障害物との干渉判定を容易に行うことができます．
-今回はMoveIt!を用いてロボットアームの動作計画を体験します．</p>
+講義の前半では動作計画について学び，後半ではMoveIt!を用いてロボットアームの動作計画を体験します．</p>
 <h2 id="準備">準備</h2>
+<p>まずはrosdepとaptをアップデートします．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install python3-rosdep
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo rosdep init
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install python3-rosdep
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo rosdep init
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> rosdep update
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt update
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt dist-upgrade
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>次に関連パッケージをインストールします．
+<code>colcon mixin</code>は，<code>colcon build</code>する際の引数を簡単に呼び出すためのものです．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install python3-colcon-common-extensions
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install python3-colcon-mixin
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install python3-vcstool
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon mixin update default
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt install python3-vcstool
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>ワークスペースを作成し，ホスティングサービスであるgithubからパッケージをダウンロードします．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
@@ -271,23 +263,22 @@ MoveIt!を利用することで，目標姿勢までの軌跡を計算する動�
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> git clone --branch humble https://github.com/ros-planning/moveit2_tutorials
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>関連するパッケージをダウンロードとインストールします．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> vcs import &lt; moveit2_tutorials/moveit2_tutorials.repos
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt update <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> rosdep install -r --from-paths . --ignore-src --rosdistro <span style="color:#000">$ROS_DISTRO</span> -y
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo apt update <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> rosdep install -r --from-paths . --ignore-src --rosdistro <span style="color:#000">$ROS_DISTRO</span> -y
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div><p>ワークスペースをビルドします．
+多くのパッケージをビルドするため30分ほど要します．
+一部のPCではフリーズしたように見えますが，内部的には動いてますので強制停止しないようにしてください．
+PCのスペックが高性能(メモリが32GB)の場合には，<code>colcon build</code>の追加オプション<code>--executor sequential</code>を無くすと高速にビルドできます．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
@@ -297,7 +288,44 @@ MoveIt!を利用することで，目標姿勢までの軌跡を計算する動�
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> colcon build --mixin release --executor sequential
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+</div>
+
+<div class="alert alert-primary" role="alert">
+
+
+    <p>メモリ不足でエラーが発生が発生する場合には，一時的にスワップ領域を割り当てるとエラーを回避できます．
+ただし，ストレージの一部をメモリとして利用することになるため，ビルドにはさらに時間を要することになりますので注意してください．</p>
+<p>ストレージに空きがあるかを確認します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> df -h
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>例えば，8GBのスワップ領域を作成する場合には下記のコマンドを実行します．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo fallocate -l 8G /swapfile
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo chmod <span style="color:#0000cf;font-weight:bold">600</span> /swapfile
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo mkswap /swapfile
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo swapon /swapfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上記は一時的な処置ですので，再起動すればスワップ領域は解放されます．</p>
+
+
+</div>
+
+<p>ビルドが完了したらsourceコマンドを実行しましょう．</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
@@ -306,6 +334,8 @@ MoveIt!を利用することで，目標姿勢までの軌跡を計算する動�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="実行">実行</h2>
+<p>これまでの内容でMoveIt!を使う準備が整いました．
+下記のlaunchファイルを起動してみましょう．</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -314,7 +344,49 @@ MoveIt!を利用することで，目標姿勢までの軌跡を計算する動�
 <pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> ros2 launch moveit2_tutorials demo.launch.py
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="moveit1.png#center" alt="moveit1"></p>
+</div><p>launchファイルを実行するとrviz2が起動します．
+以前にrviz2を起動した時とは異なり，ウィンドウの左下に<code>MotionPlanning</code>の項目が追加されています．</p>
+<p><img src="moveit1.png#center" alt="moveit1">
+<code>MotionPlanning</code>の<code>context</code>タブを開きましょう．
+このウィンドウで<code>Plannning Library</code>を選ぶことができます．
+初期の状態では，<code>ompl</code>の<code>unspecified</code>が設定されています．
+<code>unspecified</code>をクリックすると他の動作計画法に切り替えることができます．</p>
+<p><img src="moveit0.png#center" alt="moveit0">
+所望する動作計画法がある場合には，こちらから設定しましょう．
+なお，<code>unspecified</code>のままにした場合には，RRTConnectkが用いられます．</p>
+<p><img src="moveit0_1.png#center" alt="moveit0_1">
+<code>planning</code>タブに移動しましょう．
+<code>Query</code>の<code>Goal State</code>を<code>current</code>から<code>random</code>に変更すると，オレンジ色で表現されたロボットアームの姿勢が変化します．
+このオレンジ色で表現されたロボットアームは，目標姿勢を表します．
+リンクが赤色で表現された場合には干渉を表しますので，もう一度<code>random</code>を選択して違う姿勢にしましょう．
+ロボットのエンドエフェクター付近には，赤緑青色の矢印と円状のマーカーが表示されています．
+これはインタラクティブマーカーと呼ばれるもので，このマーカーを用いてロボットの位置・姿勢を調整することができます．
+矢印をドラッグすると移動，円状のマーカーをドラッグすると回転させることができます．</p>
+<p><img src="moveit2.png#center" alt="moveit2"></p>
+<p>それでは，動作計画を行いロボットを動かしてみましょう．
+<code>Plan</code>ボタンで動作計画を行うことができます．
+<code>Plan</code>を実行後，問題ない動きであることを確認したら<code>Exeute</code>ボタンで実行できます．</p>
+<p>動作計画法によってはアルゴリズムで乱数を使用している場合があります．
+その場合，<code>Plan</code>を実行する度にロボットの軌道が変わることがあります．
+今回はシミュレーションですので大きな問題は発生しませんが，実機で扱う場合には注意が必要です．</p>
+<p><img src="moveit1.gif#center" alt="moveit1"></p>
+<p>次に3次元空間中に障害物を配置してみましょう．
+<code>Scene Objects</code>タブを選択してください．
+左下の0.2という数字が3つ並んでいますが，これはXYZ方向の障害物の大きさを表します．
+大きさを変更したい場合には数値を変えてください．
+また，形状を変えたい場合には<code>Box</code>をクリックし，希望する形状を選択してください．
+大きさと形状を設定後，<code>+</code>ボタンをクリックすると3次元空間中に障害物が出現します．</p>
+<p>障害物もインタラクティブマーカーで位置・姿勢を変更できます．
+また，<code>Scene Objects</code>の<code>Change object pose/scale</code>からも位置・姿勢を変更できる他，大きさも変えることが可能です．</p>
+<p><img src="moveit3.png#center" alt="moveit3"></p>
+<p>ロボットの軌道上に障害物を配置して動作計画を行います．
+障害物に衝突しない軌道を生成することができました．</p>
+<p><img src="moveit2.gif#center" alt="moveit2"></p>
+<p><code>Displays</code>の<code>Trajectory</code>にある<code>Show Tail</code>の項目にチェックを入れるとロボットの軌道を可視化できます．
+ただし，多くの処理が発生し，PCによっては動きが重くなるので注意してください．
+<code>Tail Step Size</code>を大きくすると，軌跡の描画間隔を大きくできます．
+動きが多少は軽くなりますので，ちょうど良い値に調整してください．</p>
+<p><img src="moveit4.png#center" alt="moveit4"></p>
 
 	
 </div>
