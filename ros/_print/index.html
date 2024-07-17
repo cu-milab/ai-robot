@@ -3551,9 +3551,11 @@ PCのスペックが高性能(メモリが32GB)の場合には，<code>colcon bu
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo fallocate -l 8G /swapfile
+<pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> swapoff /swapfile
+</span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo fallocate -l 8G /swapfile
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo chmod <span style="color:#0000cf;font-weight:bold">600</span> /swapfile
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo mkswap /swapfile
 </span></span><span style="display:flex;"><span><span style="color:#8f5902">$</span> sudo swapon /swapfile
