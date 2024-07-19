@@ -348,6 +348,33 @@ ROS2で使える状態であるかを確認しましょう．
 &lt;code&gt;voltage&lt;/code&gt;が約11.1[V]，&lt;code&gt;percentage&lt;/code&gt;が約30[%]以下でピープ音を発します．
 電圧が10.9[V]付近まで下がるとピープ音が鳴る間隔が短くなりますのでバッテリーの充電が必要です．
 ただちに電源をオフにして教員に連絡してください．&lt;/p&gt;
+&lt;h2 id=&#34;データのコピー&#34;&gt;データのコピー&lt;/h2&gt;
+&lt;p&gt;作成したパッケージをノートPCにバックアップを取りたい場合には&lt;code&gt;scp&lt;/code&gt;というコマンドを使いましょう．
+以下のコマンドはノートPC(sshでTurtlebot3にログインしない)で実行することを想定しています．
+また，&lt;code&gt;ssh&lt;/code&gt;を実行する際と同様に{HOST_NAME}には，Turtlebot3の上部天板に貼ってある白シールの文字列を入力してください．
+ただし，大文字アルファベットは小文字アルファベットに置き換えてください．&lt;/p&gt;
+&lt;h3 id=&#34;turtlebot3からノートpcにパッケージをコピー&#34;&gt;Turtlebot3からノートPCにパッケージをコピー&lt;/h3&gt;
+&lt;p&gt;Turtlebo3にて作成したパッケージ&lt;code&gt;auto_run&lt;/code&gt;ディレクトリをノートPCのホームディレクトリにコピーする場合には下記のコマンドを実行します．&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902&#34;&gt;$&lt;/span&gt; scp -r ros@&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;HOST_NAME&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;.local:/home/ros/ar20000_ws/src/auto_run ~/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;上記はディレクトリをコピーする例ですが，ファイル単体をコピーする場合にはオプションの&lt;code&gt;-r&lt;/code&gt;を削除して実行してください．&lt;/p&gt;
+&lt;h3 id=&#34;ノートpcからturtlebot3にパッケージをコピー&#34;&gt;ノートPCからTurtlebot3にパッケージをコピー&lt;/h3&gt;
+&lt;p&gt;ノートPC上のパッケージ&lt;code&gt;auto_run&lt;/code&gt;ディレクトリをTurtlebo3にコピーする場合には下記のコマンドを実行します．&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;&#34;&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902&#34;&gt;$&lt;/span&gt; scp -r ~/auto_run ros@&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;HOST_NAME&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;.local:/home/ros/ar20000_ws/src/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;上記はディレクトリをコピーする例ですが，ファイル単体をコピーする場合にはオプションの&lt;code&gt;-r&lt;/code&gt;を削除して実行してください．&lt;/p&gt;
 
       </description>
     </item>
