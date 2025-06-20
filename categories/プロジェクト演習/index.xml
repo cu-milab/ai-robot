@@ -346,8 +346,7 @@ ROS2で使える状態であるかを確認しましょう．
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;code&gt;voltage&lt;/code&gt;がバッテリー電圧，&lt;code&gt;percentage&lt;/code&gt;はバッテリー残量をパーセンテージで表した数値となります．
 &lt;code&gt;voltage&lt;/code&gt;が約11.1[V]，&lt;code&gt;percentage&lt;/code&gt;が約30[%]以下でピープ音を発します．
-電圧が10.9[V]付近まで下がるとピープ音が鳴る間隔が短くなりますのでバッテリーの充電が必要です．
-ただちに電源をオフにして教員に連絡してください．&lt;/p&gt;
+ピープ音がなったら予備のバッテリーに交換するので教員に申し出てください．&lt;/p&gt;
 &lt;h2 id=&#34;データのコピー&#34;&gt;データのコピー&lt;/h2&gt;
 &lt;p&gt;作成したパッケージをノートPCにバックアップを取りたい場合には&lt;code&gt;scp&lt;/code&gt;というコマンドを使いましょう．
 以下のコマンドはノートPC(sshでTurtlebot3にログインしない)で実行することを想定しています．
